@@ -15,12 +15,16 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
-// Root routes
-Route.get('/', ({response}) => {
+// ROOT ROUTES
+Route.get('/', ({ response }) => {
   response.redirect('admin')
 })
 
-// Admin panel routes
+// ADMIN PANEL ROUTES
+Route.get("admin/", ({ view }) => {
+  return view.render('admin.index')
+})
+
 Route.group(() => {
   Route.get('/', 'Admin/PortalborrowController.index')
   Route.get('/:id', 'Admin/PortalborrowController.show')
@@ -40,13 +44,25 @@ Route
   .get('/admin/dashboard', 'Admin/HomeController.dashboard')
   .middleware('auth')
 
+
+
 // Auth routes
-Route
-  .any('/admin/auth/login', 'Admin/AuthController.login')
+Route.group(() => {
+  Route
+    .any('login', 'Admin/AuthController.login')
 
-Route
-  .any('/admin/auth/logout', 'Admin/AuthController.logout')
+  Route
+    .any('logout', 'Admin/AuthController.logout')
+}).prefix('admin/auth')
 
-Route.get("admin/", ({view}) => {
-  return view.render('admin.index')
+// User routes
+Route.group(() => {
+  Route
+    .get('/', 'Admin/UserController.index')
+  Route
+    .get('/:id', 'Admin/UserController.detail')
 })
+  .middleware('auth')
+  .prefix('admin/users')
+
+
