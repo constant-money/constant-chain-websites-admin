@@ -25,15 +25,17 @@ Route.get("admin/", ({ view }) => {
   return view.render('admin.index')
 })
 
-Route.group(() => {
-  Route.get('/', 'Admin/PortalborrowController.index')
-  Route.get('/:id', 'Admin/PortalborrowController.show')
-  Route.get('/:id/edit', 'Admin/PortalborrowController.edit')
-  Route.post('/find', 'Admin/PortalborrowController.find')
-  Route.post('/', 'Admin/PortalborrowController.store')
-  Route.put('/:id', 'Admin/PortalborrowController.update')
-  Route.delete('/:id', 'Admin/PortalborrowController.destroy')
-}).prefix('admin/portalborrow')
+// ADMIN PORTAL BORROW
+Route.resource('admin/portalborrow','Admin/PortalborrowController')
+// Route.group(() => {
+//   Route.get('/', 'Admin/PortalborrowController.index').as('portalborrow.index')
+//   Route.get('/:id', 'Admin/PortalborrowController.show').as('portalborrow.show')
+//   Route.get('/:id/edit', 'Admin/PortalborrowController.edit').as('portalborrow.edit')
+//   Route.post('/find', 'Admin/PortalborrowController.find')
+//   Route.post('/', 'Admin/PortalborrowController.store')
+//   Route.put('/:id', 'Admin/PortalborrowController.update')
+//   Route.delete('/:id', 'Admin/PortalborrowController.destroy')
+// }).prefix('admin/portalborrow')
 
 // Home routes
 Route
