@@ -15,6 +15,10 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
+// Root routes
+Route.get('/', ({response}) => {
+  response.redirect('admin')
+})
 
 // Home routes
 Route
