@@ -15,15 +15,17 @@ class AuthController {
                 }
             } catch (err) {
                 return view.render('admin/auth/login', {
-                    errMessage: err.toString()
+                    errMessage: 'Cannot verify user password',
                 })
             }
         }
         return view.render('admin/auth/login')
     }
     async logout({ response, auth }) {
-        await auth.logout()
-        return response.route('AuthController.login')
+        if (auth.user != null) {
+            await auth.logout()
+        }
+        return response.route('Admin/AuthController.login')
     }
 }
 
