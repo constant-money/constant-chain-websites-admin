@@ -16,11 +16,18 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+Route
+  .get('/', 'HomeController.index')
+  .middleware('auth')
 
 // Users routes
 
 Route.get("users", (params) => {
-  console.log("testing route",Object.keys(params));
-  return {users: ["user 1", "user 2"]};
+  console.log("testing route", Object.keys(params));
+  return { users: ["user 1", "user 2"] };
 }).formats(['json'])
+
+// Auth routes
+Route
+  .get('/auth/login', 'AuthController.login')
+  .middleware('guest')
