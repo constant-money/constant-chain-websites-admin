@@ -18,9 +18,8 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 
-// Users routes
+// Admin panel routes
 
-Route.get("users", (params) => {
-  console.log("testing route",Object.keys(params));
-  return {users: ["user 1", "user 2"]};
-}).formats(['json'])
+Route.get("admin/", ({view}) => {
+  return view.render('admin.index')
+})
