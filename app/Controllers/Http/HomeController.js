@@ -1,12 +1,15 @@
 'use strict'
 
 class HomeController {
-    async index({ auth, params }) {
-        //
+    async index({ response, auth, params }) {
         if (auth.user.id !== Number(params.id)) {
-            return 'You cannot see someone else\'s profile'
-          }
-          return auth.user
+            return response.route('AuthController.login')
+        }
+        return response.route('HomeController.dashboard')
+    }
+
+    async dashboard({ response, auth, params }) {
+        return 'Darhboard'
     }
 }
 

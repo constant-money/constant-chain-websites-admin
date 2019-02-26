@@ -16,8 +16,13 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
+// Home routes
 Route
   .get('/', 'HomeController.index')
+  .middleware('auth')
+
+Route
+  .get('/dashboard', 'HomeController.dashboard')
   .middleware('auth')
 
 // Users routes
@@ -29,5 +34,7 @@ Route.get("users", (params) => {
 
 // Auth routes
 Route
-  .get('/auth/login', 'AuthController.login')
-  .middleware('guest')
+  .any('/auth/login', 'AuthController.login')
+
+Route
+  .any('/auth/logout', 'AuthController.logout')
