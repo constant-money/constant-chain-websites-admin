@@ -11,6 +11,14 @@ class UserController {
         }
         return 0
     }
+
+    async _getUser(id) {
+        return await Database
+            .table('users')
+            .where('id', id)
+            .first()
+    }
+
     async _getUsers(email, page, limit) {
         let q = Database
             .table('users')
@@ -38,7 +46,7 @@ class UserController {
             .count()
     }
 
-    async index({ request, response, auth, view, params }) {
+    async index({ request, view }) {
         let { email, page, limit } = request.all()
         if (email == undefined) {
             email = ''
@@ -51,13 +59,22 @@ class UserController {
         }
         const users = await this._getUsers(email, page, limit)
         const countUsers = (await this._getCountUsers(email, page, limit))[0]['count(*)']
-        console.log(countUsers)
         return view.render('admin/users/index', {
             email: email,
             page: page,
             limit: limit,
             totalPage: this._getTotalPage(countUsers, limit),
             users: users,
+        })
+    }
+
+    async detail({ request, response, view, params }) {
+        const user = await this._getUser(params.id)
+        if (user == undefined) {
+            return response.route('Admin/UserController.index')
+        }
+        return view.render('admin/users/detail', {
+            user: user,
         })
     }
 }

@@ -1,0 +1,42 @@
+@layout('template.admin-master')
+
+@section('content_name')
+USER'S DETAIL
+@endsection
+
+@section('content')
+  <div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="email">Email:</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="email" disabled value="{{ user.email }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pwd">First Name:</label>
+                <div class="col-sm-10"> 
+                    <input type="firstname" class="form-control" id="firstname" disabled value="{{ user.first_name }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pwd">Last Name:</label>
+                <div class="col-sm-10"> 
+                    <input type="lastname" class="form-control" id="firstname" disabled value="{{ user.last_name }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pwd">Last Name:</label>
+                <div class="col-sm-10"> 
+                    <input type="lastname" class="form-control" id="lastname" disabled value="{{ user.last_name }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="pwd">Payment Address:</label>
+                <div class="col-sm-10"> 
+                    <input type="payment_address" class="form-control" id="payment_address" disabled value="{{ user.payment_address }}">
+                </div>
+            </div>            
+          </form>
+  </div>
+@endsection

@@ -40,7 +40,7 @@ Route.get("admin/", ({ view }) => {
   return view.render('admin.index')
 })
 
-// Users routes
+// Auth routes
 Route.group(() => {
   Route
     .any('login', 'Admin/AuthController.login')
@@ -49,9 +49,12 @@ Route.group(() => {
     .any('logout', 'Admin/AuthController.logout')
 }).prefix('admin/auth')
 
+// User routes
 Route.group(() => {
   Route
     .get('/', 'Admin/UserController.index')
+  Route
+    .get('/:id', 'Admin/UserController.detail')
 })
   .middleware('auth')
   .prefix('admin/users')
