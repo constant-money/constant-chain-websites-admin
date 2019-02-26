@@ -20,6 +20,17 @@ Route.get('/', ({response}) => {
   response.redirect('admin')
 })
 
+// Admin panel routes
+Route.group(() => {
+  Route.get('/', 'Admin/PortalborrowController.index')
+  Route.get('/:id', 'Admin/PortalborrowController.show')
+  Route.get('/:id/edit', 'Admin/PortalborrowController.edit')
+  Route.post('/find', 'Admin/PortalborrowController.find')
+  Route.post('/', 'Admin/PortalborrowController.store')
+  Route.put('/:id', 'Admin/PortalborrowController.update')
+  Route.delete('/:id', 'Admin/PortalborrowController.destroy')
+}).prefix('admin/portalborrow')
+
 // Home routes
 Route
   .get('/admin/index', 'Admin/HomeController.index')
@@ -28,13 +39,6 @@ Route
 Route
   .get('/admin/dashboard', 'Admin/HomeController.dashboard')
   .middleware('auth')
-
-// Admin panel routes
-
-Route.get("users", (params) => {
-  console.log("testing route", Object.keys(params));
-  return { users: ["user 1", "user 2"] };
-}).formats(['json'])
 
 // Auth routes
 Route
