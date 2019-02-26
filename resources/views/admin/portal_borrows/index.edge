@@ -1,0 +1,12 @@
+@layout('template.admin-master')
+
+@section('content')
+  @each(item in rows)
+  {{item.id}}
+  {{item.payment_address}}
+  @else
+    Empty
+  @endeach
+
+@endsection
+
