@@ -18,11 +18,11 @@ const Route = use('Route')
 
 // Home routes
 Route
-  .get('/', 'HomeController.index')
+  .get('/admin/index', 'Admin/HomeController.index')
   .middleware('auth')
 
 Route
-  .get('/dashboard', 'HomeController.dashboard')
+  .get('/admin/dashboard', 'Admin/HomeController.dashboard')
   .middleware('auth')
 
 // Admin panel routes
@@ -34,10 +34,11 @@ Route.get("users", (params) => {
 
 // Auth routes
 Route
-  .any('/auth/login', 'AuthController.login')
+  .any('/admin/auth/login', 'Admin/AuthController.login')
 
 Route
-  .any('/auth/logout', 'AuthController.logout')
+  .any('/admin/auth/logout', 'Admin/AuthController.logout')
+
 Route.get("admin/", ({view}) => {
   return view.render('admin.index')
 })
