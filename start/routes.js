@@ -16,7 +16,7 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 // Root routes
-Route.get('/', ({response}) => {
+Route.get('/', ({ response }) => {
   response.redirect('admin')
 })
 
@@ -36,13 +36,24 @@ Route.get("users", (params) => {
   return { users: ["user 1", "user 2"] };
 }).formats(['json'])
 
-// Auth routes
-Route
-  .any('/admin/auth/login', 'Admin/AuthController.login')
-
-Route
-  .any('/admin/auth/logout', 'Admin/AuthController.logout')
-
-Route.get("admin/", ({view}) => {
+Route.get("admin/", ({ view }) => {
   return view.render('admin.index')
 })
+
+// Users routes
+Route.group(() => {
+  Route
+    .any('login', 'Admin/AuthController.login')
+
+  Route
+    .any('logout', 'Admin/AuthController.logout')
+}).prefix('admin/auth')
+
+Route.group(() => {
+  Route
+    .get('/', 'Admin/UserController.index')
+})
+  .middleware('auth')
+  .prefix('admin/users')
+
+
