@@ -25,7 +25,7 @@ Route
   .get('/dashboard', 'HomeController.dashboard')
   .middleware('auth')
 
-// Users routes
+// Admin panel routes
 
 Route.get("users", (params) => {
   console.log("testing route", Object.keys(params));
@@ -38,3 +38,6 @@ Route
 
 Route
   .any('/auth/logout', 'AuthController.logout')
+Route.get("admin/", ({view}) => {
+  return view.render('admin.index')
+})
