@@ -20,7 +20,7 @@ LIST USERS
             <tbody>
                 @each(user in users)
                     <tr>
-                    <th scope="row">{{$loop.index + 1}}</th>
+                    <th scope="row">{{ (page - 1) * limit + $loop.index + 1}}</th>
                         <td>{{ user.email }}</td>
                         <td>{{ user.first_name }}</td>
                         <td>{{ user.last_name }}</td>

@@ -1,6 +1,7 @@
 'use strict'
 
-const Database = use('Database')
+const UserService = use('UserService')
+const CommonUtils = use('CommonUtils')
 
 class UserController {
     _getTotalPage(total, limit) {
@@ -10,40 +11,6 @@ class UserController {
             return Math.floor(total / limit) + 1
         }
         return 0
-    }
-
-    async _getUser(id) {
-        return await Database
-            .table('users')
-            .where('id', id)
-            .first()
-    }
-
-    async _getUsers(email, page, limit) {
-        let q = Database
-            .table('users')
-        if (email != null && email != '') {
-            q = q
-                .where('email', 'like', '%' + email + '%')
-        }
-        if (page != undefined && limit != undefined) {
-            q = q
-                .offset((page - 1) * limit)
-                .limit(limit)
-        }
-        return await q
-            .select('*')
-    }
-
-    async _getCountUsers(email) {
-        let q = Database
-            .table('users')
-        if (email != null && email != '') {
-            q = q
-                .where('email', 'like', '%' + email + '%')
-        }
-        return await q
-            .count()
     }
 
     async index({ request, view }) {
@@ -57,19 +24,19 @@ class UserController {
         if (limit == undefined || limit <= 0) {
             limit = 10
         }
-        const users = await this._getUsers(email, page, limit)
-        const countUsers = (await this._getCountUsers(email, page, limit))[0]['count(*)']
+        const users = await UserService.getUsers(email, page, limit)
+        const countUsers = (await UserService.getCountUsers(email, page, limit))[0]['count(*)']
         return view.render('admin/users/index', {
             email: email,
             page: page,
             limit: limit,
-            totalPage: this._getTotalPage(countUsers, limit),
+            totalPage: CommonUtils.getTotalPage(countUsers, limit),
             users: users,
         })
     }
 
     async detail({ request, response, view, params }) {
-        const user = await this._getUser(params.id)
+        const user = await UserService.getUser(params.id)
         if (user == undefined) {
             return response.route('Admin/UserController.index')
         }
