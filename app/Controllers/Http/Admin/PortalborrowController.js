@@ -23,13 +23,17 @@ class PortalborrowController {
    */
   async find ({ request, response, view }) {
     const {body} = request;
-    const {hash="", page=1} = body;
-    const result = Portalborrow.query().whereNull("deleted_at");
+    const {hash="", page=1, loan_amount} = body;
+    let query = Portalborrow.query().whereNull("deleted_at");
     if (hash) {
-      result.where("hash", hash)
+      query = query.where("hash", hash)
     }
+    if (loan_amount) {
+      query = query.where("loan_amount", loan_amount)
+    }
+    const result = await query.paginate(page)
 
-    return await result.paginate(page)
+    return view.render('admin.portal_borrows.index', {rows: result.rows});
   }
   /**
    * Show a list of all portalborrows.
@@ -48,7 +52,7 @@ class PortalborrowController {
     //   return view.render('admin.portal_borrows.index',data);
     // }
     const result = await Portalborrow.query().where("deleted_at",null).paginate(page);
-    console.log("paginateeee",result)
+
     return view.render('admin.portal_borrows.index', result);
   }
 
@@ -62,6 +66,7 @@ class PortalborrowController {
    * @param {View} ctx.view
    */
   async create ({ request, response, view }) {
+    return view.render('admin.portal_borrows.form')
   }
 
   /**
@@ -74,14 +79,20 @@ class PortalborrowController {
    */
   async store ({ request, response }) {
     const {body} = request;
-    const {hash, tx_id} = body;
+    const {start_date="", end_date=""} = body;
+    if (start_date) {
+      body.start_date = moment(start_date).format("YYYY-MM-DD HH:mm:ss")
+    }
+    if (end_date) {
+      body.end_date = moment(end_date).format("YYYY-MM-DD HH:mm:ss")
+    }
+    console.log("con co be be",body);
     const pb = new Portalborrow()
-    pb.hash = hash;
-    pb.tx_id = tx_id;
+    pb.fill(body);
 
     await pb.save()
-
-    return {data: "success"}
+    // return {data: "success"}
+    response.redirect("/admin/portalborrow")
   }
 
   /**
@@ -104,8 +115,11 @@ class PortalborrowController {
     // return await Portalborrow.findOrFail(id);
     const pb = await Portalborrow.query().whereNull("deleted_at").where('id',id).first();
     const borrow_responses = await pb.borrowresponses().paginate(page);
-
-    return {data:pb, borrow_responses}
+    pb.borrow_responses = borrow_responses
+    // return {data:pb, borrow_responses}
+    // return pb;
+    // console.log(pb);
+    return view.render('admin.portal_borrows.form', pb.toJSON() );
   }
 
   /**
@@ -133,6 +147,15 @@ class PortalborrowController {
   async update ({ params, request, response }) {
     const {id}= params;
     const {body} = request;
+    const {start_date="", end_date=""} = body;
+    // console.log(body);
+    if (start_date) {
+      body.start_date = moment(start_date).format("YYYY-MM-DD HH:mm:ss")
+    }
+    if (end_date) {
+      body.end_date = moment(end_date).format("YYYY-MM-DD HH:mm:ss")
+    }
+
     const pb = await Portalborrow.find(id);
     if (pb === null) {
       return {error: "object given by id not found"}
@@ -144,7 +167,8 @@ class PortalborrowController {
 
     await pb.save()
 
-    return {data: "success"}
+    // return {data: "success"}
+    response.redirect(`/admin/portalborrow/${id}`)
   }
 
   /**
@@ -163,7 +187,7 @@ class PortalborrowController {
       return {error: "object given by id not found"}
     }
     const now = moment().format("YYYY-MM-DD HH:mm:ss");
-    console.log(now)
+    // console.log(now)
     pb.deleted_at = now;
 
     await pb.save()

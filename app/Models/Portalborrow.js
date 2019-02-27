@@ -13,6 +13,12 @@ class Portalborrow extends Model {
   static get updatedAtColumn () {
     return 'updated_at'
   }
+  // static formatDates (field, value) {
+  //   if (field === 'start_date' || field === 'end_date' || field === 'deleted_at') {
+  //     return value.format('YYYY-MM-DD HH:mm:ss')
+  //   }
+  //   return super.formatDates(field, value)
+  // }
   borrowresponses () {
     return this.hasMany('App/Models/Portalborrowresponse','id', 'borrow_id')
   }
