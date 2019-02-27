@@ -13,31 +13,56 @@
     @endif
     <div class="form-group">
       <label for="amount">Amount</label>
-    <input type="number" class="form-control" id="amount" name="amount" aria-describedby="amount" placeholder="Enter Amount" value="{{amount ? amount : ''}}">
+    <input type="number" class="form-control" id="amount" name="amount" aria-describedby="amount" placeholder="Enter Amount" value="{{amount ? amount : ''}}" disabled>
       {{--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>  --}}
     </div>
     <div class="form-group">
       <label for="loan_amount">Loan Amount</label>
-      <input type="number" class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter Loan Amount" value="{{loan_amount ? loan_amount : ''}}">
+      <input type="number" class="form-control" id="loan_amount" name="loan_amount" placeholder="Enter Loan Amount" value="{{loan_amount ? loan_amount : ''}}" disabled>
     </div>
     <div class="form-group">
       <label for="payment_address">Payment Address</label>
-      <input type="text" class="form-control" id="payment_address" name="payment_address" placeholder="Enter Payment Addres" value="{{payment_address ? payment_address : ''}}">
+      <input type="text" class="form-control" id="payment_address" name="payment_address" placeholder="Enter Payment Addres" value="{{payment_address ? payment_address : ''}}" disabled>
     </div>
     <div class="form-group">
       <label for="status">Status</label>
-      <input type="number" class="form-control" id="status" name="status" placeholder="Enter Status" value="{{status ? status : ''}}">
+      <input type="number" class="form-control" id="status" name="status" placeholder="Enter Status" value="{{status ? status : ''}}" disabled />
     </div>
     <div class="form-group">
       <label for="start_date">Start Date</label>
-      <input class="form-control" id="start_date" name="start_date" value="{{start_date ? moment(start_date).format('DD-MM-YYYY') : ''}}" />
+      <input class="form-control" id="start_date" name="start_date" value="{{start_date ? moment(start_date).format('DD-MM-YYYY') : ''}}" disabled/>
     </div>
     <div class="form-group">
       <label for="end_date">End date</label>
-      <input class="form-control" id="end_date" name="end_date" value="{{end_date ? moment(end_date).format('DD-MM-YYYY') : ''}}"/>
+      <input class="form-control" id="end_date" name="end_date" value="{{end_date ? moment(end_date).format('DD-MM-YYYY') : ''}}" disabled />
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    {{--  <button type="submit" class="btn btn-primary">Submit</button>  --}}
   </form>
+
+  @if(borrow_responses)
+    <h4>Borrow Responses</h4>
+    <table class="table table-hover table-sm">
+      <thead class="thead-light">
+        <tr class="text-center">
+          <th scope="col">#</th>
+          <th scope="col">Constant Loan Response Transaction ID</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @each(item in borrow_responses.data)
+          <tr class="text-center">
+            <th scope="row">{{item.id}}</th>
+            <td class="text-truncate" style="max-width: 150px;">{{item.constant_loan_response_tx_id}}</td>
+            <td>{{item.action}}</td>
+          </tr>
+        @else
+          Empty
+        @endeach
+      </tbody>
+    </table>
+    @!component('admin.components.pagination', url_prefix=(route('Admin/PortalborrowController.show',{id}) + '?'), page=borrow_responses.page, lastPage=borrow_responses.lastPage, perPage=borrow_responses.perPage)
+  @endif
 @endsection
 
 @section('script')

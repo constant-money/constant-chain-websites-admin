@@ -22,8 +22,9 @@ class PortalborrowController {
    * @param {View} ctx.view
    */
   async find ({ request, response, view }) {
-    const {body} = request;
-    const {hash="", page=1, loan_amount} = body;
+    const {body, _qs} = request;
+    const {page=1, perPage=20} = _qs;
+    const {hash="", loan_amount} = body;
     let query = Portalborrow.query().whereNull("deleted_at");
     if (hash) {
       query = query.where("hash", hash)
@@ -31,9 +32,8 @@ class PortalborrowController {
     if (loan_amount) {
       query = query.where("loan_amount", loan_amount)
     }
-    const result = await query.paginate(page)
-
-    return view.render('admin.portal_borrows.index', {rows: result.rows});
+    const result = await query.paginate(page,perPage)
+    return view.render('admin.portal_borrows.index', result.toJSON());
   }
   /**
    * Show a list of all portalborrows.
@@ -46,14 +46,11 @@ class PortalborrowController {
    */
   async index ({ request, response, view }) {
     const {_qs} = request;
-    const {page=1} = _qs;
-    // if (page === undefined || page === "") {
-    //   const data = await Portalborrow.query().where("deleted_at",null).fetch() || [];
-    //   return view.render('admin.portal_borrows.index',data);
-    // }
-    const result = await Portalborrow.query().where("deleted_at",null).paginate(page);
+    const {page=1, perPage=20} = _qs;
+    
+    const result = await Portalborrow.query().where("deleted_at",null).paginate(page,perPage);
 
-    return view.render('admin.portal_borrows.index', result);
+    return view.render('admin.portal_borrows.index', result.toJSON());
   }
 
   /**
@@ -86,7 +83,6 @@ class PortalborrowController {
     if (end_date) {
       body.end_date = moment(end_date).format("YYYY-MM-DD HH:mm:ss")
     }
-    console.log("con co be be",body);
     const pb = new Portalborrow()
     pb.fill(body);
 
@@ -105,20 +101,16 @@ class PortalborrowController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
-    const {id,page=1} = params;
-    // try {
-    //   const result = await Portalborrow.findOrFail(id);
-    //   return {data: result}
-    // } catch (error) {
-    //   return {data: {}};
-    // }
-    // return await Portalborrow.findOrFail(id);
+    const {id} = params;
+    const {_qs} = request;
+    const {page=1, perPage=20} = _qs;
+    
     const pb = await Portalborrow.query().whereNull("deleted_at").where('id',id).first();
-    const borrow_responses = await pb.borrowresponses().paginate(page);
-    pb.borrow_responses = borrow_responses
+    const borrow_responses = await pb.borrowresponses().paginate(page,perPage);
+    if (borrow_responses && borrow_responses.rows.length > 0) {
+      pb.borrow_responses = borrow_responses.toJSON()
+    }
     // return {data:pb, borrow_responses}
-    // return pb;
-    // console.log(pb);
     return view.render('admin.portal_borrows.form', pb.toJSON() );
   }
 
