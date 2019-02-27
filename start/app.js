@@ -51,6 +51,8 @@ const aceProviders = [
 */
 const aliases = {
   UserModel: 'App/Models/User',
+  PortalborrowModel: 'App/Models/Portalborrow',
+  PortalborrowresponseModel: 'App/Models/Portalborrowresponse',
   UserService: 'App/Services/User',
   CommonUtils: 'App/Utilities/CommonUtils',
 }
