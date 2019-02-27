@@ -1,0 +1,35 @@
+@layout('template.admin-master')
+@section('content_name')
+Voter List
+@endsection
+@section('content')
+  <div>
+    <form name="form" method="GET">
+        <br>
+        <table class="table table-hover table-sm">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Voter</th>
+                <th scope="col">Board Type</th>
+                <th scope="col">Tx Hash</th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(votingBoardVote in votingBoardVotes)
+                    <tr>
+                    <th scope="row">{{ (page - 1) * perPage + $loop.index + 1}}</th>
+                        <td class="text-truncate" style="max-width: 100px;">{{ toText(votingBoardVote['$relations'].voter.email) }}</td>
+                        <td class="text-truncate" style="max-width: 30px;">{{ toText(['invalid', 'dcb', 'gov', 'cmb'][toInt(votingBoardVote.board_type)]) }}</td>
+                        <td class="text-truncate" style="max-width: 150px;">{{ toText(votingBoardVote.tx_id) }}</td>
+                    </tr>
+                @endeach
+            </tbody>
+        </table>
+        <br>
+        @!component('admin.components.pagination', url_prefix=(route('Admin/CandidateController.votings', {id : id}) + '?'), page=page, lastPage=lastPage, perPage=perPage)
+    </form>
+  </div>
+@endsection
+@section('suffix_script')
+@endsection

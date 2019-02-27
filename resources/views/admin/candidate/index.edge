@@ -1,0 +1,51 @@
+@layout('template.admin-master')
+@section('content_name')
+Candidate List
+@endsection
+@section('content')
+  <div>
+    <form name="form" method="GET">
+        <input class="form-control" name="email" type="text" placeholder="Search.." value="{{ email }}">
+        <br>
+        <table class="table table-hover table-sm">
+            <thead class="thead-light">
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Email</th>
+                <th scope="col">DCB</th>
+                <th scope="col">CMB</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(votingBoardCandidate in votingBoardCandidates)
+                    <tr>
+                    <th scope="row">{{ (page - 1) * perPage + $loop.index + 1}}</th>
+                        <td class="text-truncate" style="max-width: 100px;">{{ votingBoardCandidate['$relations'].user.email }}</td>
+                        <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.dcb }}</td>
+                        <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.cmb }}</td>
+                        <td class="text-truncate" style="max-width: 30px;">
+                            <a href="{{ route('Admin/CandidateController.detail', { id : votingBoardCandidate.id }) }}">View</a>
+                        </td>
+                        <td class="text-truncate" style="max-width: 30px;">
+                            <a href="{{ route('Admin/CandidateController.voters', { id : votingBoardCandidate.id }) }}">Voters</a>
+                        </td>
+                    </tr>
+                @endeach
+            </tbody>
+        </table>
+        <br>
+        @!component('admin.components.pagination', url_prefix=(route('Admin/CandidateController.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+    </form>
+  </div>
+@endsection
+@section('suffix_script')
+<script>
+    $(document).ready(function(){
+        $("#email").on("keyup", function() {
+            $("#form" ).submit();
+        });
+    });
+</script>
+@endsection

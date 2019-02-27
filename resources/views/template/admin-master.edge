@@ -17,7 +17,7 @@
     <div>
       @section('topbar')
       <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">CONSTANT ADMIN PANEL</a>
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin">CONSTANT ADMIN PANEL</a>
         <ul class="navbar-nav px-3">
           <li class="nav-item text-nowrap">
           <a class="nav-link" href="{{ route('Admin/AuthController.logout') }}">Sign out</a>
@@ -40,11 +40,17 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('Admin/UserController.index') }}">
                     <span data-feather="file"></span>
                     Users
                   </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('Admin/CandidateController.index') }}">
+                        <span data-feather="file"></span>
+                        Candidate
+                      </a>
+                    </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/admin/portalborrow">
                     <span data-feather="file"></span>
@@ -71,7 +77,7 @@
           </nav>
           @endsection
 
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-top: 60px">
+          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-top: 30px">
               <h2>
                 @!section('content_name')
               </h2>

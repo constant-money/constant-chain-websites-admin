@@ -1,22 +1,22 @@
 'use strict'
 
 const UserService = use('UserService')
-const CommonUtils = use('CommonUtils')
 
 class UserController {
-
+    /**
+     * Show a list of users.
+     * GET /users
+     *
+     * @param {object} ctx
+     * @param {Request} ctx.request
+     * @param {Response} ctx.response
+     * @param {View} ctx.view
+     */
     async index({ request, view }) {
-        let { email, page, perPage } = request.all()
-        if (email == undefined) {
-            email = ''
-        }
-        if (page == undefined || page <= 0) {
-            page = 1
-        }
-        if (perPage == undefined || perPage <= 0) {
-            perPage = 10
-        }
-        const usersQ = await UserService.getUsers(email, page, perPage)
+        const { email = '', page = 1, perPage = 20 } = request.all()
+        const usersQ = await UserService.getUsers(
+            { email: email, page: page, perPage: perPage }
+        )
         return view.render('admin/users/index', {
             email: email,
             page: usersQ.pages.page,
@@ -25,9 +25,18 @@ class UserController {
             users: usersQ.rows,
         })
     }
-
-    async detail({ request, response, view, params }) {
-        const user = await UserService.getUser(params.id)
+    /**
+     * Show a detail of user
+     * GET /users/:id
+     *
+     * @param {object} ctx
+     * @param {Request} ctx.request
+     * @param {Response} ctx.response
+     * @param {View} ctx.view
+     */
+    async detail({ response, view, params }) {
+        const { id = 0 } = params
+        const user = await UserService.getById(id)
         if (user == undefined) {
             return response.route('Admin/UserController.index')
         }
