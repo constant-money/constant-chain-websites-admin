@@ -47,7 +47,7 @@ class PortalborrowController {
   async index ({ request, response, view }) {
     const {_qs} = request;
     const {page=1, perPage=20} = _qs;
-    
+
     const result = await Portalborrow.query().where("deleted_at",null).paginate(page,perPage);
 
     return view.render('admin.portal_borrows.index', result.toJSON());
@@ -104,7 +104,7 @@ class PortalborrowController {
     const {id} = params;
     const {_qs} = request;
     const {page=1, perPage=20} = _qs;
-    
+
     const pb = await Portalborrow.query().whereNull("deleted_at").where('id',id).first();
     const borrow_responses = await pb.borrowresponses().paginate(page,perPage);
     if (borrow_responses && borrow_responses.rows.length > 0) {
