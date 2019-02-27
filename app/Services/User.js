@@ -10,7 +10,7 @@ class User {
             .where('id', id).first()
     }
 
-    async getUsers(email, page, perPage) {
+    async getUsers({ email, page, perPage }) {
         let q = UserModel
             .query()
             .whereNull('deleted_at')

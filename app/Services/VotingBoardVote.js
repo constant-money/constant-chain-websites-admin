@@ -11,11 +11,12 @@ class VotingBoardVote {
             .where('id', id).first()
     }
 
-    async getVotingBoardVotes(votingBoardCandidateId, page, perPage) {
+    async getVotingBoardVotes({ votingBoardCandidateId, page, perPage }) {
         let q = VotingBoardVoteModel
             .query()
             .with('voter')
             .whereNull('deleted_at')
+            .where('voting_board_candidate_id', '=', votingBoardCandidateId)
         return await q.paginate(page, perPage)
     }
 }

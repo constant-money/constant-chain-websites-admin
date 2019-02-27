@@ -15,7 +15,9 @@ class CandidateController {
      */
     async index({ request, view }) {
         const { email = '', page = 1, perPage = 20 } = request.all()
-        const votingBoardCandidatesQ = await VotingBoardCandidateService.getVotingBoardCandidates(email, page, perPage)
+        const votingBoardCandidatesQ = await VotingBoardCandidateService.getVotingBoardCandidates(
+            { email: email, page: page, perPage: perPage }
+        )
         return view.render('admin/candidate/index', {
             email: email,
             page: votingBoardCandidatesQ.pages.page,
@@ -55,7 +57,9 @@ class CandidateController {
     async voters({ request, view, params }) {
         const { id = 0 } = params
         const { page = 1, perPage = 20 } = request.all()
-        const votingBoardVotesQ = await VotingBoardVoteService.getVotingBoardVotes(id, page, perPage)
+        const votingBoardVotesQ = await VotingBoardVoteService.getVotingBoardVotes(
+            { votingBoardCandidateId: id, page: page, perPage: perPage }
+        )
         return view.render('admin/candidate/voters', {
             id: id,
             page: votingBoardVotesQ.pages.page,

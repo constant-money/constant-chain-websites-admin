@@ -14,7 +14,9 @@ class UserController {
      */
     async index({ request, view }) {
         const { email = '', page = 1, perPage = 20 } = request.all()
-        const usersQ = await UserService.getUsers(email, page, perPage)
+        const usersQ = await UserService.getUsers(
+            { email: email, page: page, perPage: perPage }
+        )
         return view.render('admin/users/index', {
             email: email,
             page: usersQ.pages.page,

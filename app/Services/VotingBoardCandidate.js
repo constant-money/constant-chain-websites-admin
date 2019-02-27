@@ -11,7 +11,7 @@ class VotingBoardCandidate {
             .where('id', id).first()
     }
 
-    async getVotingBoardCandidates(email, page, perPage) {
+    async getVotingBoardCandidates({ email, page, perPage }) {
         let q = VotingBoardCandidateModel
             .query()
             .with('user')
