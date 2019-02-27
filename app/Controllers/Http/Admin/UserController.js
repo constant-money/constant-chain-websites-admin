@@ -4,34 +4,25 @@ const UserService = use('UserService')
 const CommonUtils = use('CommonUtils')
 
 class UserController {
-    _getTotalPage(total, limit) {
-        if (total % limit == 0) {
-            return total / limit
-        } else {
-            return Math.floor(total / limit) + 1
-        }
-        return 0
-    }
 
     async index({ request, view }) {
-        let { email, page, limit } = request.all()
+        let { email, page, perPage } = request.all()
         if (email == undefined) {
             email = ''
         }
         if (page == undefined || page <= 0) {
             page = 1
         }
-        if (limit == undefined || limit <= 0) {
-            limit = 10
+        if (perPage == undefined || perPage <= 0) {
+            perPage = 10
         }
-        const users = await UserService.getUsers(email, page, limit)
-        const countUsers = (await UserService.getCountUsers(email, page, limit))[0]['count(*)']
+        const usersQ = await UserService.getUsers(email, page, perPage)
         return view.render('admin/users/index', {
             email: email,
-            page: page,
-            limit: limit,
-            totalPage: CommonUtils.getTotalPage(countUsers, limit),
-            users: users,
+            page: usersQ.pages.page,
+            perPage: usersQ.pages.perPage,
+            lastPage: usersQ.pages.lastPage,
+            users: usersQ.rows,
         })
     }
 

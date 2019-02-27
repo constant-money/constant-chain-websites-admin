@@ -50,7 +50,8 @@ const aceProviders = [
 |
 */
 const aliases = {
-  UserService: 'App/Services/UserService',
+  UserModel: 'App/Models/User',
+  UserService: 'App/Services/User',
   CommonUtils: 'App/Utilities/CommonUtils',
 }
 
