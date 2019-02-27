@@ -50,10 +50,15 @@ const aceProviders = [
 |
 */
 const aliases = {
+  // models
   UserModel: 'App/Models/User',
   PortalborrowModel: 'App/Models/Portalborrow',
   PortalborrowresponseModel: 'App/Models/Portalborrowresponse',
+  VotingBoardCandidateModel: 'App/Models/VotingBoardCandidate',
+  // services
   UserService: 'App/Services/User',
+  VotingBoardCandidateService: 'App/Services/VotingBoardCandidate',
+  // utils
   CommonUtils: 'App/Utilities/CommonUtils',
 }
 

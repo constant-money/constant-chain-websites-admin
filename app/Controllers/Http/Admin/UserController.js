@@ -1,7 +1,6 @@
 'use strict'
 
 const UserService = use('UserService')
-const CommonUtils = use('CommonUtils')
 
 class UserController {
 
@@ -14,7 +13,7 @@ class UserController {
             page = 1
         }
         if (perPage == undefined || perPage <= 0) {
-            perPage = 10
+            perPage = 20
         }
         const usersQ = await UserService.getUsers(email, page, perPage)
         return view.render('admin/users/index', {
@@ -27,7 +26,7 @@ class UserController {
     }
 
     async detail({ request, response, view, params }) {
-        const user = await UserService.getUser(params.id)
+        const user = await UserService.getById(params.id)
         if (user == undefined) {
             return response.route('Admin/UserController.index')
         }

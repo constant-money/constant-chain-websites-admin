@@ -1,0 +1,39 @@
+@layout('template.admin-master')
+@section('content_name')
+LIST VOTING BOARD CANDIDATE
+@endsection
+@section('content')
+  <div>
+    <form name="form" method="GET">
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Email</th>
+                <th scope="col">DCB</th>
+                <th scope="col">CMB</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(votingBoardCandidate in votingBoardCandidates)
+                    <tr>
+                    <th scope="row">{{ (page - 1) * perPage + $loop.index + 1}}</th>
+                        <td>{{ votingBoardCandidate['$relations'].user.email }}</td>
+                        <td>{{ votingBoardCandidate.dcb }}</td>
+                        <td>{{ votingBoardCandidate.cmb }}</td>
+                        <td>
+                            <a href="{{ route('Admin/VotingBoardCandidateController.detail', { id : votingBoardCandidate.id }) }}">View</a>
+                        </td>
+                    </tr>
+                @endeach
+            </tbody>
+        </table>
+        <br>
+        @!component('admin.components.pagination', url_prefix=(route('Admin/VotingBoardCandidateController.index') + '?'), page=page, lastPage=lastPage, perPage=perPage)
+    </form>
+  </div>
+@endsection
+@section('suffix_script')
+@endsection

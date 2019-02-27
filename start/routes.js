@@ -26,7 +26,7 @@ Route.get("admin/", ({ view }) => {
 })
 
 // ADMIN PORTAL BORROW
-Route.resource('admin/portalborrow','Admin/PortalborrowController')
+Route.resource('admin/portalborrow', 'Admin/PortalborrowController')
 // Route.group(() => {
 //   Route.get('/', 'Admin/PortalborrowController.index').as('portalborrow.index')
 //   Route.get('/:id', 'Admin/PortalborrowController.show').as('portalborrow.show')
@@ -66,5 +66,14 @@ Route.group(() => {
 })
   .middleware('auth')
   .prefix('admin/users')
+
+Route.group(() => {
+  Route
+    .get('/', 'Admin/VotingBoardCandidateController.index')
+  Route
+    .get('/:id', 'Admin/VotingBoardCandidateController.detail')
+})
+  .middleware('auth')
+  .prefix('admin/votingboardcandidate')
 
 
