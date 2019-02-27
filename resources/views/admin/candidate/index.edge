@@ -1,10 +1,11 @@
 @layout('template.admin-master')
 @section('content_name')
-LIST VOTING BOARD CANDIDATE
+Candidate List
 @endsection
 @section('content')
   <div>
     <form name="form" method="GET">
+        <input class="form-control" name="email" type="text" placeholder="Search.." value="{{ email }}">
         <br>
         <table class="table table-hover table-sm">
             <thead class="thead-light">
@@ -35,9 +36,16 @@ LIST VOTING BOARD CANDIDATE
             </tbody>
         </table>
         <br>
-        @!component('admin.components.pagination', url_prefix=(route('Admin/CandidateController.index') + '?'), page=page, lastPage=lastPage, perPage=perPage)
+        @!component('admin.components.pagination', url_prefix=(route('Admin/CandidateController.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
     </form>
   </div>
 @endsection
 @section('suffix_script')
+<script>
+    $(document).ready(function(){
+        $("#email").on("keyup", function() {
+            $("#form" ).submit();
+        });
+    });
+</script>
 @endsection

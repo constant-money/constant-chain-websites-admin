@@ -14,9 +14,10 @@ class CandidateController {
      * @param {View} ctx.view
      */
     async index({ request, view }) {
-        const { page = 1, perPage = 20 } = request.all()
-        const votingBoardCandidatesQ = await VotingBoardCandidateService.getVotingBoardCandidates(page, perPage)
+        const { email = '', page = 1, perPage = 20 } = request.all()
+        const votingBoardCandidatesQ = await VotingBoardCandidateService.getVotingBoardCandidates(email, page, perPage)
         return view.render('admin/candidate/index', {
+            email: email,
             page: votingBoardCandidatesQ.pages.page,
             perPage: votingBoardCandidatesQ.pages.perPage,
             lastPage: votingBoardCandidatesQ.pages.lastPage,
