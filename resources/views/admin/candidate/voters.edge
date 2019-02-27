@@ -19,7 +19,7 @@ Voter List
             <tbody>
                 @each(votingBoardVote in votingBoardVotes)
                     <tr>
-                    <th scope="row">{{ (page - 1) * perPage + $loop.index + 1}}</th>
+                    <th scope="row">{{ votingBoardVote.id }}</th>
                         <td class="text-truncate" style="max-width: 100px;">{{ toText(votingBoardVote['$relations'].voter.email) }}</td>
                         <td class="text-truncate" style="max-width: 30px;">{{ toText(['invalid', 'dcb', 'gov', 'cmb'][toInt(votingBoardVote.board_type)]) }}</td>
                         <td class="text-truncate" style="max-width: 150px;">{{ toText(votingBoardVote.tx_id) }}</td>
