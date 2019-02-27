@@ -6,13 +6,14 @@ LIST VOTING BOARD CANDIDATE
   <div>
     <form name="form" method="GET">
         <br>
-        <table class="table">
-            <thead>
+        <table class="table table-hover table-sm">
+            <thead class="thead-light">
                 <tr>
                 <th scope="col">#</th>
                 <th scope="col">Email</th>
                 <th scope="col">DCB</th>
                 <th scope="col">CMB</th>
+                <th scope="col"></th>
                 <th scope="col"></th>
                 </tr>
             </thead>
@@ -24,14 +25,17 @@ LIST VOTING BOARD CANDIDATE
                         <td>{{ votingBoardCandidate.dcb }}</td>
                         <td>{{ votingBoardCandidate.cmb }}</td>
                         <td>
-                            <a href="{{ route('Admin/VotingBoardCandidateController.detail', { id : votingBoardCandidate.id }) }}">View</a>
+                            <a href="{{ route('Admin/CandidateController.detail', { id : votingBoardCandidate.id }) }}">View</a>
+                        </td>
+                        <td>
+                            <a href="{{ route('Admin/CandidateController.votings', { id : votingBoardCandidate.id }) }}">Votings</a>
                         </td>
                     </tr>
                 @endeach
             </tbody>
         </table>
         <br>
-        @!component('admin.components.pagination', url_prefix=(route('Admin/VotingBoardCandidateController.index') + '?'), page=page, lastPage=lastPage, perPage=perPage)
+        @!component('admin.components.pagination', url_prefix=(route('Admin/CandidateController.index') + '?'), page=page, lastPage=lastPage, perPage=perPage)
     </form>
   </div>
 @endsection

@@ -3,18 +3,17 @@
 const UserService = use('UserService')
 
 class UserController {
-
+    /**
+     * Show a list of users.
+     * GET /users
+     *
+     * @param {object} ctx
+     * @param {Request} ctx.request
+     * @param {Response} ctx.response
+     * @param {View} ctx.view
+     */
     async index({ request, view }) {
-        let { email, page, perPage } = request.all()
-        if (email == undefined) {
-            email = ''
-        }
-        if (page == undefined || page <= 0) {
-            page = 1
-        }
-        if (perPage == undefined || perPage <= 0) {
-            perPage = 20
-        }
+        const { email = '', page = 1, perPage = 20 } = request.all()
         const usersQ = await UserService.getUsers(email, page, perPage)
         return view.render('admin/users/index', {
             email: email,
@@ -24,9 +23,18 @@ class UserController {
             users: usersQ.rows,
         })
     }
-
-    async detail({ request, response, view, params }) {
-        const user = await UserService.getById(params.id)
+    /**
+     * Show a detail of user
+     * GET /users/:id
+     *
+     * @param {object} ctx
+     * @param {Request} ctx.request
+     * @param {Response} ctx.response
+     * @param {View} ctx.view
+     */
+    async detail({ response, view, params }) {
+        const { id = 0 } = params
+        const user = await UserService.getById(id)
         if (user == undefined) {
             return response.route('Admin/UserController.index')
         }

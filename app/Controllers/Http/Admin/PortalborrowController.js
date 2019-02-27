@@ -42,16 +42,13 @@ class PortalborrowController {
    */
   async index ({ request, response, view }) {
     const {_qs} = request;
-    const {page} = _qs;
-    if (page === undefined || page === "") {
-      const data = await Portalborrow.query().where("deleted_at",null).fetch() || [];
-      // return {data}
-      return view.render('admin.portal_borrows.index',{rows:data});
-    }
-    // return await Portalborrow.query().where("deleted_at",null).paginate(page)
+    const {page=1} = _qs;
+    // if (page === undefined || page === "") {
+    //   const data = await Portalborrow.query().where("deleted_at",null).fetch() || [];
+    //   return view.render('admin.portal_borrows.index',data);
+    // }
     const result = await Portalborrow.query().where("deleted_at",null).paginate(page);
-    // console.log(result)
-    // return result;
+    console.log("paginateeee",result)
     return view.render('admin.portal_borrows.index', result);
   }
 

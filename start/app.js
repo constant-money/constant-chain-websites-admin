@@ -55,9 +55,11 @@ const aliases = {
   PortalborrowModel: 'App/Models/Portalborrow',
   PortalborrowresponseModel: 'App/Models/Portalborrowresponse',
   VotingBoardCandidateModel: 'App/Models/VotingBoardCandidate',
+  VotingBoardVoteModel: 'App/Models/VotingBoardVote',
   // services
   UserService: 'App/Services/User',
   VotingBoardCandidateService: 'App/Services/VotingBoardCandidate',
+  VotingBoardVoteService: 'App/Services/VotingBoardVote',
   // utils
   CommonUtils: 'App/Utilities/CommonUtils',
 }

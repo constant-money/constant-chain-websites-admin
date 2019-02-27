@@ -69,11 +69,13 @@ Route.group(() => {
 
 Route.group(() => {
   Route
-    .get('/', 'Admin/VotingBoardCandidateController.index')
+    .get('/', 'Admin/CandidateController.index')
   Route
-    .get('/:id', 'Admin/VotingBoardCandidateController.detail')
+    .get('/:id', 'Admin/CandidateController.detail')
+  Route
+    .get('/:id/votings', 'Admin/CandidateController.votings')
 })
   .middleware('auth')
-  .prefix('admin/votingboardcandidate')
+  .prefix('admin/candidate')
 
 
