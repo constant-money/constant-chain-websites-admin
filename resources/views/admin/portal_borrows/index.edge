@@ -1,6 +1,18 @@
 @layout('template.admin-master')
 
 @section('content')
+  <div class="form-group float-right">
+    <a href="/admin/portalborrow/create" class="btn btn-primary" style="color:white">New</a>
+  </div>
+
+  <form class="form-inline" method="POST" action="/admin/portalborrow/find" >
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="amount" class="sr-only">Amount</label>
+      <input type="number" class="form-control" name="loan_amount" id="loan_amount" placeholder="Loan Amount">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Find</button>
+  </form>
+
   <table class="table table-hover table-sm">
     <thead class="thead-light">
       <tr class="text-center">
@@ -16,7 +28,7 @@
     <tbody>
       @each(item in rows)
         <tr class="text-center">
-          <th scope="row">{{item.id}}</th>
+          <th scope="row"><a href="/admin/portalborrow/{{item.id}}">{{item.id}}</a></th>
           <td>{{item.amount}}</td>
           <td>{{item.loan_amount}}</td>
           <td class="text-truncate" style="max-width: 150px;" >{{item.payment_address}}</td>
