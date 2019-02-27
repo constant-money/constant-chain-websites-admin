@@ -25,6 +25,28 @@ class ViewProvider extends ServiceProvider {
         return 0
       }
     })
+    View.global('pageNumbers', (page, lastPage) => {
+      let pageNumbers = []
+      let pageTmps = []
+      for (let i = 1; i <= lastPage; i++) {
+        if (i == 1 || i == 2 || i == lastPage - 1 || i == lastPage) {
+          pageTmps.push(i)
+        } else if ((i - page) >= -2 && (i - page) <= 2) {
+          pageTmps.push(i)
+        } else if (page <= 3 && i <= 5) {
+          pageTmps.push(i)
+        } else if (page >= lastPage - 2 && i >= lastPage - 4) {
+          pageTmps.push(i)
+        }
+      }
+      for (let i = 0; i < pageTmps.length; i++) {
+        pageNumbers.push(pageTmps[i])
+        if (i < (pageTmps.length - 1) && pageTmps[i] != (pageTmps[i + 1] - 1)) {
+          pageNumbers.push(-1)
+        }
+      }
+      return pageNumbers
+    })
     View.global('currency', (amount, symbol) => {
       return String(`${amount} ${symbol}`).trim()
     })
