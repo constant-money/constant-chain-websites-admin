@@ -30,7 +30,7 @@ LIST USERS
             </tbody>
         </table>
         <br>
-        @!component('admin.components.pagination', url_prefix=(route('Admin/UserController.index') + '?email=' + email + '&'), current=page, total=totalPage, limit=limit)
+        @!component('admin.components.pagination', url_prefix=(route('Admin/UserController.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
     </form>
   </div>
 @endsection
