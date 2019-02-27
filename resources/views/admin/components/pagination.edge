@@ -1,5 +1,6 @@
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-end">
+        @if(page > 1)
         <li class="page-item">
             <a class="page-link" href="{{ urlPrefix }}page=1&perPage={{ perPage }}" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
@@ -20,11 +21,14 @@
         <li class="page-item"><a class="page-link" href="{{ urlPrefix }}page={{ pageIndex }}&perPage={{ perPage }}">{{ pageIndex }}</a></li>
         @endif
         @endeach
+
+        @if(page < lastPage)
         <li class="page-item">
             <a class="page-link" href="{{ urlPrefix }}page={{ lastPage }}&perPage={{ perPage }}" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
             <span class="sr-only">Next</span>
             </a>
         </li>
+        @endif
     </ul>
 </nav>
