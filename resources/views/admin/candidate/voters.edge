@@ -13,6 +13,7 @@ Voter List
                 <th scope="col">Voter</th>
                 <th scope="col">Board Type</th>
                 <th scope="col">Tx Hash</th>
+                <th scope="col">Date Created</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,12 +23,13 @@ Voter List
                         <td class="text-truncate" style="max-width: 100px;">{{ toText(votingBoardVote['$relations'].voter.email) }}</td>
                         <td class="text-truncate" style="max-width: 30px;">{{ toText(['invalid', 'dcb', 'gov', 'cmb'][toInt(votingBoardVote.board_type)]) }}</td>
                         <td class="text-truncate" style="max-width: 150px;">{{ toText(votingBoardVote.tx_id) }}</td>
+                        <td>{{moment(votingBoardVote.created_at).format("DD-MM-YYYY")}}</td>
                     </tr>
                 @endeach
             </tbody>
         </table>
         <br>
-        @!component('admin.components.pagination', url_prefix=(route('Admin/CandidateController.votings', {id : id}) + '?'), page=page, lastPage=lastPage, perPage=perPage)
+        @!component('admin.components.pagination', urlPrefix=(route('Admin/CandidateController.votings', {id : id}) + '?'), page=page, lastPage=lastPage, perPage=perPage)
     </form>
   </div>
 @endsection
