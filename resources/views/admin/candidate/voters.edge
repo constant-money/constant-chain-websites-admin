@@ -29,7 +29,7 @@ Voter List
             </tbody>
         </table>
         <br>
-        @!component('admin.components.pagination', url_prefix=(route('Admin/CandidateController.votings', {id : id}) + '?'), page=page, lastPage=lastPage, perPage=perPage)
+        @!component('admin.components.pagination', urlPrefix=(route('Admin/CandidateController.votings', {id : id}) + '?'), page=page, lastPage=lastPage, perPage=perPage)
     </form>
   </div>
 @endsection

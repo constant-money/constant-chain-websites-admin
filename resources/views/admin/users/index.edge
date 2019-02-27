@@ -34,7 +34,7 @@ User List
         </tbody>
     </table>
     <br>
-    @!component('admin.components.pagination', url_prefix=(route('Admin/UserController.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+    @!component('admin.components.pagination', urlPrefix=(route('Admin/UserController.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
 @endsection
 @section('suffix_script')
 <script>
