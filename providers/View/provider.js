@@ -13,13 +13,16 @@ class ViewProvider extends ServiceProvider {
       if (s == null || s == undefined) {
         return ''
       }
-      return s
+      return String(s).trim()
+    })
+    View.global('currency', (amount, symbol) => {
+      return String(`${amount} ${symbol}`).trim()
     })
     View.global('moment', moment)
     // CREATE LIST PAGE FOR PAGINATION
-    View.global('createPageList', (lastPage=1) => {
+    View.global('createPageList', (lastPage = 1) => {
       let list = [];
-      for (let i = 1;i<=lastPage;i++) {
+      for (let i = 1; i <= lastPage; i++) {
         list.push(i)
       }
       return list;

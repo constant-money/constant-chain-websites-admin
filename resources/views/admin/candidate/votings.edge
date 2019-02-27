@@ -10,28 +10,24 @@ LIST VOTING BOARD CANDIDATE
             <thead class="thead-light">
                 <tr>
                 <th scope="col">#</th>
-                <th scope="col">Email</th>
-                <th scope="col">DCB</th>
-                <th scope="col">CMB</th>
-                <th scope="col"></th>
+                <th scope="col">Voter</th>
+                <th scope="col">Board Type</th>
+                <th scope="col">Tx Hash</th>
                 </tr>
             </thead>
             <tbody>
-                @each(votingBoardCandidate in votingBoardCandidates)
+                @each(votingBoardVote in votingBoardVotes)
                     <tr>
                     <th scope="row">{{ (page - 1) * perPage + $loop.index + 1}}</th>
-                        <td>{{ votingBoardCandidate['$relations'].user.email }}</td>
-                        <td>{{ votingBoardCandidate.dcb }}</td>
-                        <td>{{ votingBoardCandidate.cmb }}</td>
-                        <td>
-                            <a href="{{ route('Admin/CandidateController.detail', { id : votingBoardCandidate.id }) }}">View</a>
-                        </td>
+                        <td>{{ text(votingBoardVote['$relations'].voter.email) }}</td>
+                        <td>{{ text(votingBoardVote.board_type) }}</td>
+                        <td>{{ text(votingBoardVote.tx_id) }}</td>
                     </tr>
                 @endeach
             </tbody>
         </table>
         <br>
-        @!component('admin.components.pagination', url_prefix=(route('Admin/CandidateController.index') + '?'), page=page, lastPage=lastPage, perPage=perPage)
+        @!component('admin.components.pagination', url_prefix=(route('Admin/CandidateController.votings', {id : id}) + '?'), page=page, lastPage=lastPage, perPage=perPage)
     </form>
   </div>
 @endsection

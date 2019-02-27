@@ -1,6 +1,7 @@
 'use strict'
 
 const VotingBoardCandidateService = use('VotingBoardCandidateService')
+const VotingBoardVoteService = use('VotingBoardVoteService')
 
 class CandidateController {
     /**
@@ -53,12 +54,13 @@ class CandidateController {
     async votings({ request, view, params }) {
         const { id = 0 } = params
         const { page = 1, perPage = 20 } = request.all()
-        const votingBoardCandidatesQ = await VotingBoardCandidateService.getVotingBoardCandidates(page, perPage)
+        const votingBoardVotesQ = await VotingBoardVoteService.getVotingBoardVotes(id, page, perPage)
         return view.render('admin/candidate/votings', {
-            page: votingBoardCandidatesQ.pages.page,
-            perPage: votingBoardCandidatesQ.pages.perPage,
-            lastPage: votingBoardCandidatesQ.pages.lastPage,
-            votingBoardCandidates: votingBoardCandidatesQ.rows,
+            id: id,
+            page: votingBoardVotesQ.pages.page,
+            perPage: votingBoardVotesQ.pages.perPage,
+            lastPage: votingBoardVotesQ.pages.lastPage,
+            votingBoardVotes: votingBoardVotesQ.rows,
         })
     }
 }
