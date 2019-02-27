@@ -21,14 +21,14 @@ LIST VOTING BOARD CANDIDATE
                 @each(votingBoardCandidate in votingBoardCandidates)
                     <tr>
                     <th scope="row">{{ (page - 1) * perPage + $loop.index + 1}}</th>
-                        <td>{{ votingBoardCandidate['$relations'].user.email }}</td>
-                        <td>{{ votingBoardCandidate.dcb }}</td>
-                        <td>{{ votingBoardCandidate.cmb }}</td>
-                        <td>
+                        <td class="text-truncate" style="max-width: 100px;">{{ votingBoardCandidate['$relations'].user.email }}</td>
+                        <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.dcb }}</td>
+                        <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.cmb }}</td>
+                        <td class="text-truncate" style="max-width: 30px;">
                             <a href="{{ route('Admin/CandidateController.detail', { id : votingBoardCandidate.id }) }}">View</a>
                         </td>
-                        <td>
-                            <a href="{{ route('Admin/CandidateController.votings', { id : votingBoardCandidate.id }) }}">Votings</a>
+                        <td class="text-truncate" style="max-width: 30px;">
+                            <a href="{{ route('Admin/CandidateController.voters', { id : votingBoardCandidate.id }) }}">Voters</a>
                         </td>
                     </tr>
                 @endeach

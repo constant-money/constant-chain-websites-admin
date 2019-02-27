@@ -51,11 +51,11 @@ class CandidateController {
      * @param {Response} ctx.response
      * @param {View} ctx.view
      */
-    async votings({ request, view, params }) {
+    async voters({ request, view, params }) {
         const { id = 0 } = params
         const { page = 1, perPage = 20 } = request.all()
         const votingBoardVotesQ = await VotingBoardVoteService.getVotingBoardVotes(id, page, perPage)
-        return view.render('admin/candidate/votings', {
+        return view.render('admin/candidate/voters', {
             id: id,
             page: votingBoardVotesQ.pages.page,
             perPage: votingBoardVotesQ.pages.perPage,

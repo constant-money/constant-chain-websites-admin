@@ -21,10 +21,12 @@ LIST USERS
                 @each(user in users)
                     <tr>
                     <th scope="row">{{ (page - 1) * perPage + $loop.index + 1}}</th>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.first_name }}</td>
-                        <td>{{ user.last_name }}</td>
-                    <td><a href="{{ route('Admin/UserController.detail', { id : user.id }) }}">View</a></td>
+                        <td class="text-truncate" style="max-width: 100px;">{{ user.email }}</td>
+                        <td class="text-truncate" style="max-width: 100px;">{{ user.first_name }}</td>
+                        <td class="text-truncate" style="max-width: 100px;">{{ user.last_name }}</td>
+                        <td class="text-truncate" style="max-width: 30px;">
+                            <a href="{{ route('Admin/UserController.detail', { id : user.id }) }}">View</a>
+                        </td>
                     </tr>
                 @endeach
             </tbody>
