@@ -45,9 +45,14 @@ class PortalborrowController {
     const {page} = _qs;
     if (page === undefined || page === "") {
       const data = await Portalborrow.query().where("deleted_at",null).fetch() || [];
-      return {data};
+      // return {data}
+      return view.render('admin.portal_borrows.index',{rows:data});
     }
-    return await Portalborrow.query().where("deleted_at",null).paginate(page)
+    // return await Portalborrow.query().where("deleted_at",null).paginate(page)
+    const result = await Portalborrow.query().where("deleted_at",null).paginate(page);
+    // console.log(result)
+    // return result;
+    return view.render('admin.portal_borrows.index', result);
   }
 
   /**
