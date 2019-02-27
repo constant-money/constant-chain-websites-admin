@@ -14,20 +14,20 @@ Candidate List
                 <th scope="col">Email</th>
                 <th scope="col">DCB</th>
                 <th scope="col">CMB</th>
-                <th scope="col"></th>
+                <th scope="col">Payment Address</th>
+                <th scope="col">Date Created</th>
                 <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 @each(votingBoardCandidate in votingBoardCandidates)
                     <tr>
-                    <th scope="row">{{ (page - 1) * perPage + $loop.index + 1}}</th>
+                    <th scope="row"><a href="{{ route('Admin/CandidateController.detail', { id : votingBoardCandidate.id }) }}">{{ (page - 1) * perPage + $loop.index + 1}}</a></th>
                         <td class="text-truncate" style="max-width: 100px;">{{ votingBoardCandidate['$relations'].user.email }}</td>
                         <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.dcb }}</td>
                         <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.cmb }}</td>
-                        <td class="text-truncate" style="max-width: 30px;">
-                            <a href="{{ route('Admin/CandidateController.detail', { id : votingBoardCandidate.id }) }}">View</a>
-                        </td>
+                        <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.payment_address }}</td>
+                        <td>{{moment(votingBoardCandidate.created_at).format("DD-MM-YYYY")}}</td>
                         <td class="text-truncate" style="max-width: 30px;">
                             <a href="{{ route('Admin/CandidateController.voters', { id : votingBoardCandidate.id }) }}">Voters</a>
                         </td>
