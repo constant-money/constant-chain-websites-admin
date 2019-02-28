@@ -1,0 +1,51 @@
+@layout('template.admin-master')
+@section('content_name')
+Proposal GOV
+@endsection
+@section('content')
+    <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="email" class="sr-only">Email</label>
+        <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ email }}">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Find</button>
+    </form>
+    <br>
+    <table class="table table-hover table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">User</th>
+            <th scope="col">Name</th>
+            <th scope="col">Tx ID</th>
+            <th scope="col">Date Created</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @each(votingProposalGOV in votingProposalGOVs)
+                <tr>
+                <th scope="row"><a href="#">{{ votingProposalGOV.id }}</a></th>
+                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalGOV['$relations'].user.email }}</td>
+                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalGOV.name }}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{ votingProposalGOV.tx_id }}</td>
+                    <td>{{moment(user.created_at).format("DD-MM-YYYY")}}</td>
+                    <td class="text-truncate" style="max-width: 30px;">
+                        <a href="{{ route('Admin/ProposalController.govVoterIndex', { id: votingProposalGOV.id }) }}">Voters</a>
+                    </td>
+                </tr>
+            @endeach
+        </tbody>
+    </table>
+    <br>
+    @!component('admin.components.pagination', urlPrefix=(route('Admin/ProposalController.govIndex', { id: id }) + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+@endsection
+@section('suffix_script')
+<script>
+    $(document).ready(function(){
+        $("#email").on("keyup", function() {
+            $("#form" ).submit();
+        });
+    });
+</script>
+@endsection

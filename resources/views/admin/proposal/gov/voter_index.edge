@@ -27,16 +27,18 @@ Voting Proposal GOV #{{ id }}
                 <tr>
                 <th scope="row"><a href="#">{{ votingProposalGOVVote.id }}</a></th>
                     <td class="text-truncate" style="max-width: 100px;">{{ votingProposalGOVVote['$relations'].voter.email }}</td>
-                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalGOVVote.tx_id }}</td>
-                    <td class="text-truncate" style="max-width: 50px;">{{ votingProposalGOVVote.vote_amount }}</td>
-                    <td class="text-truncate" style="max-width: 50px;">{{ votingProposalGOVVote.flag_status }}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{ votingProposalGOVVote.tx_id }}</td>
+                    <td class="text-truncate" style="max-width: 30px;">{{ votingProposalGOVVote.vote_amount }}</td>
+                    <td class="text-truncate" style="max-width: 30px;">
+                        {{ constant.PROPOSAL_FLAG_STATUS[votingProposalGOVVote.flag_status] }}
+                    </td>
                     <td>{{moment(user.created_at).format("DD-MM-YYYY")}}</td>
                 </tr>
             @endeach
         </tbody>
     </table>
     <br>
-    @!component('admin.components.pagination', urlPrefix=(route('Admin/ProposalController.dcbVoterIndex') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+    @!component('admin.components.pagination', urlPrefix=(route('Admin/ProposalController.govVoterIndex', { id: id }) + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
 @endsection
 @section('suffix_script')
 <script>

@@ -27,10 +27,10 @@ Route.get("admin/", ({ view }) => {
 
 // ADMIN PORTAL BORROW
 Route.post('admin/portalborrow/find', 'Admin/PortalborrowController.find')
-Route.get('admin/portalborrow/find', ({response}) => {
+Route.get('admin/portalborrow/find', ({ response }) => {
   response.redirect("/admin/portalborrow");
 })
-Route.resource('admin/portalborrow','Admin/PortalborrowController')
+Route.resource('admin/portalborrow', 'Admin/PortalborrowController')
 // Route.group(() => {
 //   Route.get('/', 'Admin/PortalborrowController.index').as('portalborrow.index')
 //   Route.get('/:id', 'Admin/PortalborrowController.show').as('portalborrow.show')
@@ -44,7 +44,7 @@ Route.resource('admin/portalborrow','Admin/PortalborrowController')
 Route.group(() => {
   Route.get('/', 'Admin/PortalborrowresponseController.index').as('portalborrowresponse.index')
   Route.post('/find', 'Admin/PortalborrowresponseController.find')
-  Route.get('/find', ({response}) => {
+  Route.get('/find', ({ response }) => {
     response.redirect("/admin/portalborrowresponse");
   })
   Route.get('/:id', 'Admin/PortalborrowresponseController.show').as('portalborrowresponse.show')
@@ -92,15 +92,15 @@ Route.group(() => {
   .middleware('auth')
   .prefix('admin/candidate')
 
-  Route.group(() => {
-    Route
-      .get('/', 'Admin/ProposalController.index')
-    Route
-      .get('/:id', 'Admin/ProposalController.detail')
-    Route
-      .get('/dcb/:id/voters', 'Admin/ProposalController.dcbVoterIndex')
-  })
-    .middleware('auth')
-    .prefix('admin/proposal')
+Route.group(() => {
+  Route
+    .get('/dcb', 'Admin/ProposalController.dcbIndex')
+  Route
+    .get('/dcb/:id/voters', 'Admin/ProposalController.dcbVoterIndex')
+  Route
+    .get('/gov/:id/voters', 'Admin/ProposalController.govVoterIndex')
+})
+  .middleware('auth')
+  .prefix('admin/proposal')
 
 

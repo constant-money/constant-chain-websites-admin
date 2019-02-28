@@ -56,12 +56,16 @@ const aliases = {
   PortalborrowresponseModel: 'App/Models/Portalborrowresponse',
   VotingBoardCandidateModel: 'App/Models/VotingBoardCandidate',
   VotingBoardVoteModel: 'App/Models/VotingBoardVote',
+  VotingProposalDCBModel: 'App/Models/VotingProposalDCB',
   VotingProposalDCBVoteModel: 'App/Models/VotingProposalDCBVote',
+  VotingProposalGOVVoteModel: 'App/Models/VotingProposalGOVVote',
   // services
   UserService: 'App/Services/User',
   VotingBoardCandidateService: 'App/Services/VotingBoardCandidate',
   VotingBoardVoteService: 'App/Services/VotingBoardVote',
+  VotingProposalDCBService: 'App/Services/VotingProposalDCB',
   VotingProposalDCBVoteService: 'App/Services/VotingProposalDCBVote',
+  VotingProposalGOVVoteService: 'App/Services/VotingProposalGOVVote',
   // utils
   CommonUtils: 'App/Utilities/CommonUtils',
 }

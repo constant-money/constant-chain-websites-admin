@@ -1,6 +1,6 @@
 @layout('template.admin-master')
 @section('content_name')
-DCB Proposal Voting #{{ id }}
+Proposal DCB
 @endsection
 @section('content')
     <form class="form-inline">
@@ -15,28 +15,30 @@ DCB Proposal Voting #{{ id }}
         <thead class="thead-light">
             <tr>
             <th scope="col">#</th>
-            <th scope="col">Voter</th>
-            <th scope="col">Amount</th>
+            <th scope="col">User</th>
+            <th scope="col">Name</th>
             <th scope="col">Tx ID</th>
-            <th scope="col">Flag Status</th>
             <th scope="col">Date Created</th>
+            <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            @each(votingProposalDCBVote in votingProposalDCBVotes)
+            @each(votingProposalDCB in votingProposalDCBs)
                 <tr>
-                <th scope="row"><a href="{{ route('Admin/UserController.detail', { id : user.id }) }}">{{ user.id }}</a></th>
-                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalDCBVote['$relations'].user.email }}</td>
-                    <td class="text-truncate" style="max-width: 50px;">{{ votingProposalDCBVote.amount }}</td>
-                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalDCBVote.tx_id }}</td>
-                    <td class="text-truncate" style="max-width: 50px;">{{ votingProposalDCBVote.flag_status }}</td>
+                <th scope="row"><a href="#">{{ votingProposalDCB.id }}</a></th>
+                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalDCB['$relations'].user.email }}</td>
+                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalDCB.name }}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{ votingProposalDCB.tx_id }}</td>
                     <td>{{moment(user.created_at).format("DD-MM-YYYY")}}</td>
+                    <td class="text-truncate" style="max-width: 30px;">
+                        <a href="{{ route('Admin/ProposalController.dcbVoterIndex', { id: votingProposalDCB.id }) }}">Voters</a>
+                    </td>
                 </tr>
             @endeach
         </tbody>
     </table>
     <br>
-    @!component('admin.components.pagination', urlPrefix=(route('Admin/UserController.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+    @!component('admin.components.pagination', urlPrefix=(route('Admin/ProposalController.dcbIndex', { id: id }) + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
 @endsection
 @section('suffix_script')
 <script>
