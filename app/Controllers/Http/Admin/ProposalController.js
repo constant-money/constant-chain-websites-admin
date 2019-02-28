@@ -52,16 +52,30 @@ class ProposalController {
      * @param {Response} ctx.response
      * @param {View} ctx.view
      */
-    // async detail({ response, view, params }) {
-    //     const { id = 0 } = params
-    //     const votingBoardCandidate = await VotingBoardCandidateDAO.getById(id)
-    //     if (votingBoardCandidate == undefined) {
-    //         return response.route('Admin/VotingBoardCandidateController.index')
-    //     }
-    //     return view.render('admin/candidate/detail', {
-    //         votingBoardCandidate: votingBoardCandidate,
-    //     })
-    // }
+    async dcbShow({ response, view, params }) {
+        const { id = 0 } = params
+        const votingProposalDCB = await VotingProposalDCBDAO.first(id)
+        if (votingProposalDCB == undefined) {
+            return response.route('Admin/ProposalController.dcbIndex')
+        }
+        return view.render('admin/proposal/dcb/form', {
+            id: id,
+            votingProposalDCB: votingProposalDCB,
+        })
+    }
+
+    async govShow({ response, view, params }) {
+        const { id = 0 } = params
+        const votingProposalGOV = await VotingProposalGOVDAO.first(id)
+        if (votingProposalGOV == undefined) {
+            return response.route('Admin/ProposalController.govIndex')
+        }
+        return view.render('admin/proposal/gov/form', {
+            id: id,
+            votingProposalGOV: votingProposalGOV,
+        })
+    }
+
     /**
      * Show a list of voting board candidates
      * GET /votingboardcandidate

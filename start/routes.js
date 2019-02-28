@@ -96,7 +96,11 @@ Route.group(() => {
   Route
     .get('/dcb', 'Admin/ProposalController.dcbIndex')
   Route
+    .get('/dcb/:id', 'Admin/ProposalController.dcbShow')
+  Route
     .get('/gov', 'Admin/ProposalController.govIndex')
+  Route
+    .get('/gov/:id', 'Admin/ProposalController.govShow')
   Route
     .get('/dcb/:id/voters', 'Admin/ProposalController.dcbVoterIndex')
   Route
