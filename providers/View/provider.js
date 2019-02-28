@@ -51,6 +51,16 @@ class ViewProvider extends ServiceProvider {
       return String(`${amount} ${symbol}`).trim()
     })
     View.global('moment', moment)
+
+    View.global('formatJSON', (jsonString) => {
+      try {
+        const obj = JSON.parse(jsonString)
+        const jsonStrFormat = JSON.stringify(obj,null,'\t');
+        return jsonStrFormat;
+      } catch (error) {
+        return jsonString
+      }
+    })
   }
 }
 
