@@ -63,6 +63,16 @@ class ViewProvider extends ServiceProvider {
     })
     View.global('constant', require('../../const'))
     View.global('moment', moment)
+
+    View.global('formatJSON', (jsonString) => {
+      try {
+        const obj = JSON.parse(jsonString)
+        const jsonStrFormat = JSON.stringify(obj,null,'\t');
+        return jsonStrFormat;
+      } catch (error) {
+        return jsonString
+      }
+    })
   }
 }
 
