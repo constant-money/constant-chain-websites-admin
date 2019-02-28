@@ -6,10 +6,10 @@ PORTAL BORROW RESPONSE
 
 @section('content')
 
-  <form class="form-inline" method="POST" action="/admin/portalborrow/find" >
+  <form class="form-inline" method="POST" action="/admin/portalborrowresponse/find" >
     <div class="form-group mx-sm-3 mb-2">
-      <label for="amount" class="sr-only">Amount</label>
-      <input type="number" class="form-control" name="loan_amount" id="loan_amount" placeholder="Loan Amount">
+      <label for="amount" class="sr-only">Action</label>
+      <input type="text" class="form-control" name="action" id="action" placeholder="Action">
     </div>
     <button type="submit" class="btn btn-primary mb-2">Find</button>
   </form>

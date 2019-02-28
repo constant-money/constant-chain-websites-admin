@@ -24,16 +24,16 @@ class PortalborrowresponseController {
   async find ({ request, response, view }) {
     const {body, _qs} = request;
     const {page=1, perPage=20} = _qs;
-    const {hash="", loan_amount} = body;
+    const {action=""} = body;
     let query = Portalborrowresponse.query().whereNull("deleted_at");
-    if (hash) {
-      query = query.where("hash", hash)
+    if (action) {
+      query = query.where("action", action)
     }
-    if (loan_amount) {
-      query = query.where("loan_amount", loan_amount)
+    const result = await query.paginate(page,perPage);
+    if (!result || result === null) {
+      return view.render('admin.portal_borrow_response.index');
     }
-    const result = await query.paginate(page,perPage)
-    return view.render('admin.portal_borrows.index', result.toJSON());
+    return view.render('admin.portal_borrow_response.index', result.toJSON());
   }
   /**
    * Show a list of all portalborrowresponses.
