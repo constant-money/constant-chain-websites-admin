@@ -55,7 +55,7 @@ Route.group(() => {
 Route.group(() => {
   Route.get('/', 'Admin/ProposalDcbController.index').as('proposal_dcb.index')
   Route.post('/find', 'Admin/ProposalDcbController.find')
-  Route.get('/find', ({response}) => {
+  Route.get('/find', ({ response }) => {
     response.redirect("/admin/portalborrowresponse");
   })
   Route.get('/:id', 'Admin/ProposalDcbController.show').as('proposal_dcb.show')
@@ -106,6 +106,8 @@ Route.group(() => {
 Route.group(() => {
   Route
     .get('/dcb', 'Admin/ProposalController.dcbIndex')
+  Route
+    .get('/gov', 'Admin/ProposalController.govIndex')
   Route
     .get('/dcb/:id/voters', 'Admin/ProposalController.dcbVoterIndex')
   Route

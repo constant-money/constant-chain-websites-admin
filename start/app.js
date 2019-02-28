@@ -57,15 +57,17 @@ const aliases = {
   VotingBoardCandidateModel: 'App/Models/VotingBoardCandidate',
   VotingBoardVoteModel: 'App/Models/VotingBoardVote',
   VotingProposalDCBModel: 'App/Models/VotingProposalDCB',
+  VotingProposalGOVModel: 'App/Models/VotingProposalGOV',
   VotingProposalDCBVoteModel: 'App/Models/VotingProposalDCBVote',
   VotingProposalGOVVoteModel: 'App/Models/VotingProposalGOVVote',
   // services
-  UserService: 'App/Services/User',
-  VotingBoardCandidateService: 'App/Services/VotingBoardCandidate',
-  VotingBoardVoteService: 'App/Services/VotingBoardVote',
-  VotingProposalDCBService: 'App/Services/VotingProposalDCB',
-  VotingProposalDCBVoteService: 'App/Services/VotingProposalDCBVote',
-  VotingProposalGOVVoteService: 'App/Services/VotingProposalGOVVote',
+  UserDAO: 'App/DAO/User',
+  VotingBoardCandidateDAO: 'App/DAO/VotingBoardCandidate',
+  VotingBoardVoteDAO: 'App/DAO/VotingBoardVote',
+  VotingProposalDCBDAO: 'App/DAO/VotingProposalDCB',
+  VotingProposalGOVDAO: 'App/DAO/VotingProposalGOV',
+  VotingProposalDCBVoteDAO: 'App/DAO/VotingProposalDCBVote',
+  VotingProposalGOVVoteDAO: 'App/DAO/VotingProposalGOVVote',
   // utils
   CommonUtils: 'App/Utilities/CommonUtils',
 }

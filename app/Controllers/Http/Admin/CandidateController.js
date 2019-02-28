@@ -1,7 +1,7 @@
 'use strict'
 
-const VotingBoardCandidateService = use('VotingBoardCandidateService')
-const VotingBoardVoteService = use('VotingBoardVoteService')
+const VotingBoardCandidateDAO = use('VotingBoardCandidateDAO')
+const VotingBoardVoteDAO = use('VotingBoardVoteDAO')
 
 class CandidateController {
     /**
@@ -15,7 +15,7 @@ class CandidateController {
      */
     async index({ request, view }) {
         const { email = '', page = 1, perPage = 20 } = request.all()
-        const votingBoardCandidatesQ = await VotingBoardCandidateService.find(
+        const votingBoardCandidatesQ = await VotingBoardCandidateDAO.find(
             { email: email, page: page, perPage: perPage }
         )
         return view.render('admin/candidate/index', {
@@ -37,7 +37,7 @@ class CandidateController {
      */
     async detail({ response, view, params }) {
         const { id = 0 } = params
-        const votingBoardCandidate = await VotingBoardCandidateService.first(id)
+        const votingBoardCandidate = await VotingBoardCandidateDAO.first(id)
         if (votingBoardCandidate == undefined) {
             return response.route('Admin/VotingBoardCandidateController.index')
         }
@@ -57,7 +57,7 @@ class CandidateController {
     async voters({ request, view, params }) {
         const { id = 0 } = params
         const { page = 1, perPage = 20 } = request.all()
-        const votingBoardVotesQ = await VotingBoardVoteService.find(
+        const votingBoardVotesQ = await VotingBoardVoteDAO.find(
             { votingBoardCandidateId: id, page: page, perPage: perPage }
         )
         return view.render('admin/candidate/voters', {
