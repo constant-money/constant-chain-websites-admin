@@ -3,7 +3,7 @@
 const VotingBoardVoteModel = use('VotingBoardVoteModel')
 
 class VotingBoardVote {
-    async getById(id) {
+    async first(id) {
         return await VotingBoardVoteModel
             .query()
             .with('voter')
@@ -11,7 +11,7 @@ class VotingBoardVote {
             .where('id', id).first()
     }
 
-    async getVotingBoardVotes({ votingBoardCandidateId, page, perPage }) {
+    async find({ votingBoardCandidateId, page, perPage }) {
         let q = VotingBoardVoteModel
             .query()
             .with('voter')

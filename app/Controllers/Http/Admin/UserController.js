@@ -14,7 +14,7 @@ class UserController {
      */
     async index({ request, view }) {
         const { email = '', page = 1, perPage = 20 } = request.all()
-        const usersQ = await UserService.getUsers(
+        const usersQ = await UserService.find(
             { email: email, page: page, perPage: perPage }
         )
         return view.render('admin/users/index', {
@@ -36,7 +36,7 @@ class UserController {
      */
     async detail({ response, view, params }) {
         const { id = 0 } = params
-        const user = await UserService.getById(id)
+        const user = await UserService.first(id)
         if (user == undefined) {
             return response.route('Admin/UserController.index')
         }

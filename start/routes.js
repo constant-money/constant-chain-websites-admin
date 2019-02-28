@@ -81,4 +81,15 @@ Route.group(() => {
   .middleware('auth')
   .prefix('admin/candidate')
 
+  Route.group(() => {
+    Route
+      .get('/', 'Admin/ProposalController.index')
+    Route
+      .get('/:id', 'Admin/ProposalController.detail')
+    Route
+      .get('/dcb/:id/voters', 'Admin/ProposalController.dcbVoterIndex')
+  })
+    .middleware('auth')
+    .prefix('admin/proposal')
+
 

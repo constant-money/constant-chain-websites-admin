@@ -50,6 +50,18 @@ class ViewProvider extends ServiceProvider {
     View.global('currency', (amount, symbol) => {
       return String(`${amount} ${symbol}`).trim()
     })
+    View.global('statusText', (statusInts, statusTexts, status) => {
+      if (statusTexts.length != statusInts.length) {
+        return ''
+      }
+      for (let i = 0; i < statusInts.length; i++) {
+        if (statusInts[i] == status) {
+          return statusTexts[i]
+        }
+      }
+      return ''
+    })
+    View.global('constant', require('../../const'))
     View.global('moment', moment)
   }
 }

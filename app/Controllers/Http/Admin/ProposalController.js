@@ -3,7 +3,9 @@
 const VotingBoardCandidateService = use('VotingBoardCandidateService')
 const VotingBoardVoteService = use('VotingBoardVoteService')
 
-class CandidateController {
+const VotingProposalDCBVoteService = use('VotingProposalDCBVoteService')
+
+class ProposalController {
     /**
      * Show a list of voting board candidates
      * GET /votingboardcandidate
@@ -37,7 +39,7 @@ class CandidateController {
      */
     async detail({ response, view, params }) {
         const { id = 0 } = params
-        const votingBoardCandidate = await VotingBoardCandidateService.first(id)
+        const votingBoardCandidate = await VotingBoardCandidateService.getById(id)
         if (votingBoardCandidate == undefined) {
             return response.route('Admin/VotingBoardCandidateController.index')
         }
@@ -54,20 +56,21 @@ class CandidateController {
      * @param {Response} ctx.response
      * @param {View} ctx.view
      */
-    async voters({ request, view, params }) {
+    async dcbVoterIndex({ request, view, params }) {
         const { id = 0 } = params
-        const { page = 1, perPage = 20 } = request.all()
-        const votingBoardVotesQ = await VotingBoardVoteService.find(
-            { votingBoardCandidateId: id, page: page, perPage: perPage }
+        const { email = '', page = 1, perPage = 20 } = request.all()
+        const votingProposalDCBVotes = await VotingProposalDCBVoteService.find(
+            { votingProposalDCBId: id, email: email, page: page, perPage: perPage }
         )
-        return view.render('admin/candidate/voters', {
+        return view.render('admin/proposal/dcb/voter_index', {
             id: id,
-            page: votingBoardVotesQ.pages.page,
-            perPage: votingBoardVotesQ.pages.perPage,
-            lastPage: votingBoardVotesQ.pages.lastPage,
-            votingBoardVotes: votingBoardVotesQ.rows,
+            email: email,
+            page: votingProposalDCBVotes.pages.page,
+            perPage: votingProposalDCBVotes.pages.perPage,
+            lastPage: votingProposalDCBVotes.pages.lastPage,
+            votingProposalDCBVotes: votingProposalDCBVotes.rows,
         })
     }
 }
 
-module.exports = CandidateController
+module.exports = ProposalController
