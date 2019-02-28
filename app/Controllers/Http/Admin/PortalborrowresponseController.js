@@ -90,6 +90,9 @@ class PortalborrowresponseController {
     const {id} = params;
 
     const result = await Portalborrowresponse.query().whereNull("deleted_at").where('id',id).first();
+    if (!result || result === null) {
+      return view.render('admin.portal_borrow_response.form');
+    }
     return view.render('admin.portal_borrow_response.form', result.toJSON() );
   }
 
