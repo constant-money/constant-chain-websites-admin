@@ -1,0 +1,51 @@
+@layout('template.admin-master')
+@section('content_name')
+Voting Proposal DCB #{{ id }}
+@endsection
+@section('content')
+    <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="email" class="sr-only">Email</label>
+        <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ email }}">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Find</button>
+    </form>
+    <br>
+    <table class="table table-hover table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Voter</th>
+            <th scope="col">Tx ID</th>
+            <th scope="col">Vote Amount</th>
+            <th scope="col">Flag Status</th>
+            <th scope="col">Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @each(votingProposalDCBVote in votingProposalDCBVotes)
+                <tr>
+                <th scope="row"><a href="#">{{ votingProposalDCBVote.id }}</a></th>
+                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalDCBVote['$relations'].voter.email }}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{ votingProposalDCBVote.tx_id }}</td>
+                    <td class="text-truncate" style="max-width: 30px;">{{ votingProposalDCBVote.vote_amount }}</td>
+                    <td class="text-truncate" style="max-width: 30px;">
+                        {{ constant.PROPOSAL_FLAG_STATUS[votingProposalDCBVote.flag_status] }}
+                    </td>
+                    <td>{{moment(user.created_at).format("DD-MM-YYYY")}}</td>
+                </tr>
+            @endeach
+        </tbody>
+    </table>
+    <br>
+    @!component('admin.components.pagination', urlPrefix=(route('Admin/ProposalController.dcbVoterIndex', { id: id }) + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+@endsection
+@section('suffix_script')
+<script>
+    $(document).ready(function(){
+        $("#email").on("keyup", function() {
+            $("#form" ).submit();
+        });
+    });
+</script>
+@endsection

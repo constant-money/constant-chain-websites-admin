@@ -1,6 +1,6 @@
 @layout('template.admin-master')
 @section('content_name')
-User List
+Voting Proposal GOV #{{ id }}
 @endsection
 @section('content')
     <form class="form-inline">
@@ -15,28 +15,28 @@ User List
         <thead class="thead-light">
             <tr>
             <th scope="col">#</th>
-            <th scope="col">Email</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Payment Address</th>
+            <th scope="col">Voter</th>
+            <th scope="col">Tx ID</th>
+            <th scope="col">Vote Amount</th>
+            <th scope="col">Flag Status</th>
             <th scope="col">Date Created</th>
             </tr>
         </thead>
         <tbody>
-            @each(user in users)
+            @each(votingProposalGOVVote in votingProposalGOVVotes)
                 <tr>
-                <th scope="row"><a href="{{ route('Admin/UserController.detail', { id : user.id }) }}">{{ user.id }}</a></th>
-                    <td class="text-truncate" style="max-width: 100px;">{{ user.email }}</td>
-                    <td class="text-truncate" style="max-width: 100px;">{{ user.first_name }}</td>
-                    <td class="text-truncate" style="max-width: 100px;">{{ user.last_name }}</td>
-                    <td class="text-truncate" style="max-width: 150px;">{{ user.payment_address }}</td>
+                <th scope="row"><a href="#">{{ votingProposalGOVVote.id }}</a></th>
+                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalGOVVote['$relations'].voter.email }}</td>
+                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalGOVVote.tx_id }}</td>
+                    <td class="text-truncate" style="max-width: 50px;">{{ votingProposalGOVVote.vote_amount }}</td>
+                    <td class="text-truncate" style="max-width: 50px;">{{ votingProposalGOVVote.flag_status }}</td>
                     <td>{{moment(user.created_at).format("DD-MM-YYYY")}}</td>
                 </tr>
             @endeach
         </tbody>
     </table>
     <br>
-    @!component('admin.components.pagination', urlPrefix=(route('Admin/UserController.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+    @!component('admin.components.pagination', urlPrefix=(route('Admin/ProposalController.dcbVoterIndex') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
 @endsection
 @section('suffix_script')
 <script>

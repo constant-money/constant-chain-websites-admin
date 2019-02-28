@@ -3,14 +3,14 @@
 const UserModel = use('UserModel')
 
 class User {
-    async getById(id) {
+    async first(id) {
         return await UserModel
             .query()
             .whereNull('deleted_at')
             .where('id', id).first()
     }
 
-    async getUsers({ email, page, perPage }) {
+    async find({ email, page, perPage }) {
         let q = UserModel
             .query()
             .whereNull('deleted_at')
