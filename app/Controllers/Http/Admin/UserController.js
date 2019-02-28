@@ -41,6 +41,7 @@ class UserController {
             return response.route('Admin/UserController.index')
         }
         return view.render('admin/users/form', {
+            id: id,
             user: user,
         })
     }

@@ -42,6 +42,7 @@ class CandidateController {
             return response.route('Admin/VotingBoardCandidateController.index')
         }
         return view.render('admin/candidate/form', {
+            id: id,
             votingBoardCandidate: votingBoardCandidate,
         })
     }
@@ -60,7 +61,7 @@ class CandidateController {
         const votingBoardVotesQ = await VotingBoardVoteDAO.find(
             { votingBoardCandidateId: id, page: page, perPage: perPage }
         )
-        return view.render('admin/candidate/voters', {
+        return view.render('admin/candidate/voter_index', {
             id: id,
             page: votingBoardVotesQ.pages.page,
             perPage: votingBoardVotesQ.pages.perPage,
