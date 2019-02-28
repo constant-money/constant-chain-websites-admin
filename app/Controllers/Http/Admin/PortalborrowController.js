@@ -106,6 +106,9 @@ class PortalborrowController {
     const {page=1, perPage=20} = _qs;
 
     const pb = await Portalborrow.query().whereNull("deleted_at").where('id',id).first();
+    if (!pb || pb === null) {
+      return view.render('admin.portal_borrows.form' );
+    }
     const borrow_responses = await pb.borrowresponses().paginate(page,perPage);
     if (borrow_responses && borrow_responses.rows.length > 0) {
       pb.borrow_responses = borrow_responses.toJSON()
