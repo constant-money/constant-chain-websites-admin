@@ -34,13 +34,13 @@ class UserController {
      * @param {Response} ctx.response
      * @param {View} ctx.view
      */
-    async detail({ response, view, params }) {
+    async show({ response, view, params }) {
         const { id = 0 } = params
         const user = await UserDAO.first(id)
         if (user == undefined) {
             return response.route('Admin/UserController.index')
         }
-        return view.render('admin/users/detail', {
+        return view.render('admin/users/form', {
             user: user,
         })
     }

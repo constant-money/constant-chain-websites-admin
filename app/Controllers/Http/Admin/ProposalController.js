@@ -31,15 +31,15 @@ class ProposalController {
 
     async govIndex({ request, view }) {
         const { email = '', page = 1, perPage = 20 } = request.all()
-        const votingProposalGOVBs = await VotingProposalGOVDAO.find(
+        const votingProposalGOVs = await VotingProposalGOVDAO.find(
             { email: email, page: page, perPage: perPage }
         )
         return view.render('admin/proposal/gov/index', {
             email: email,
-            page: votingProposalGOVBs.pages.page,
-            perPage: votingProposalGOVBs.pages.perPage,
-            lastPage: votingProposalGOVBs.pages.lastPage,
-            votingProposalGOVBs: votingProposalGOVBs.rows,
+            page: votingProposalGOVs.pages.page,
+            perPage: votingProposalGOVs.pages.perPage,
+            lastPage: votingProposalGOVs.pages.lastPage,
+            votingProposalGOVs: votingProposalGOVs.rows,
         })
     }
 

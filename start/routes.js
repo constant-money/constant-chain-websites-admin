@@ -76,7 +76,7 @@ Route.group(() => {
   Route
     .get('/', 'Admin/UserController.index')
   Route
-    .get('/:id', 'Admin/UserController.detail')
+    .get('/:id', 'Admin/UserController.show')
 })
   .middleware('auth')
   .prefix('admin/users')
@@ -85,7 +85,7 @@ Route.group(() => {
   Route
     .get('/', 'Admin/CandidateController.index')
   Route
-    .get('/:id', 'Admin/CandidateController.detail')
+    .get('/:id', 'Admin/CandidateController.show')
   Route
     .get('/:id/voters', 'Admin/CandidateController.voters')
 })
