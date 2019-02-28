@@ -51,6 +51,17 @@ Route.group(() => {
 
 }).prefix('admin/portalborrowresponse')
 
+// ADMIN PROPOSAL DCB
+Route.group(() => {
+  Route.get('/', 'Admin/ProposalDcbController.index').as('proposal_dcb.index')
+  Route.post('/find', 'Admin/ProposalDcbController.find')
+  Route.get('/find', ({response}) => {
+    response.redirect("/admin/portalborrowresponse");
+  })
+  Route.get('/:id', 'Admin/ProposalDcbController.show').as('proposal_dcb.show')
+
+}).prefix('admin/proposal_dcb')
+
 // Home routes
 Route
   .get('/admin/index', 'Admin/HomeController.index')
