@@ -125,6 +125,30 @@ class ProposalController {
             votingProposalGOVVotes: votingProposalGOVVotes.rows,
         })
     }
+
+    async dcbVoterShow({ response, view, params }) {
+        const { parentId = 0, id = 0 } = params
+        const votingProposalDCBVote = await VotingProposalDCBVoteDAO.first(id)
+        if (votingProposalDCBVote == undefined || votingProposalDCBVote.voting_proposal_dcb_id != parentId) {
+            return response.route('Admin/ProposalController.dcbVoterIndex', { id: parentId })
+        }
+        return view.render('admin/proposal/dcb/voter_form', {
+            id: id,
+            votingProposalDCBVote: votingProposalDCBVote,
+        })
+    }
+
+    async govVoterShow({ response, view, params }) {
+        const { parentId = 0, id = 0 } = params
+        const votingProposalGOVVote = await VotingProposalGOVVoteDAO.first(id)
+        if (votingProposalGOVVote == undefined || votingProposalGOVVote.voting_proposal_gov_id != parentId) {
+            return response.route('Admin/ProposalController.govVoterIndex', { id: parentId })
+        }
+        return view.render('admin/proposal/gov/voter_form', {
+            id: id,
+            votingProposalGOVVote: votingProposalGOVVote,
+        })
+    }
 }
 
 module.exports = ProposalController

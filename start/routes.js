@@ -104,7 +104,11 @@ Route.group(() => {
   Route
     .get('/dcb/:id/voters', 'Admin/ProposalController.dcbVoterIndex')
   Route
+    .get('/dcb/:parentId/voters/:id', 'Admin/ProposalController.dcbVoterShow')
+  Route
     .get('/gov/:id/voters', 'Admin/ProposalController.govVoterIndex')
+  Route
+    .get('/gov/:parentId/voters/:id', 'Admin/ProposalController.govVoterShow')
 })
   .middleware('auth')
   .prefix('admin/proposal')

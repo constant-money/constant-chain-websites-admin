@@ -7,6 +7,8 @@ class VotingProposalGOVVote {
         return await VotingProposalGOVVoteModel
             .query()
             .with('voter')
+            .with('secondVoter')
+            .with('thirdVoter')
             .whereNull('deleted_at')
             .where('id', id).first()
     }

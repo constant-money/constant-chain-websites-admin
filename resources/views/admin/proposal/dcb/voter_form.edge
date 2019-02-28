@@ -1,0 +1,78 @@
+@layout('template.admin-master')
+
+@section('content_name')
+Proposal DCB Vote #{{ id }}
+@endsection
+
+@section('content')
+  <div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="voter">Voter:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="voter" disabled value="{{ votingProposalDCBVote['$relations'].voter.email }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="second_voter">Second Voter:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="second_voter" disabled value="{{ votingProposalDCBVote['$relations'].secondVoter.email }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="third_voter">Third Voter:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="third_voter" disabled value="{{ votingProposalDCBVote['$relations'].thirdVoter.email }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="vote_amount">Vote Amout:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="vote_amount" disabled value="{{ votingProposalDCBVote.vote_amount }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="tx_id">Lv3 Transaction ID:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="tx_id" disabled value="{{ votingProposalDCBVote.tx_id }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="lv2_tx_id">Lv2 Transaction ID:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="lv2_tx_id" disabled value="{{ votingProposalDCBVote.lv2_tx_id }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="lv1_tx_id">Lv1 Transaction ID:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="lv1_tx_id" disabled value="{{ votingProposalDCBVote.lv1_tx_id }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="owner_tx_id">Owner Transaction ID:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="owner_tx_id" disabled value="{{ votingProposalDCBVote.owner_tx_id }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="sealer_tx_id">Sealer Transaction ID:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="sealer_tx_id" disabled value="{{ votingProposalDCBVote.sealer_tx_id }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="flag_status">Flag Status:</label>
+                <div class="col-sm-10"> 
+                    <input class="form-control" id="flag_status" name="flag_status" value="{{ votingProposalDCBVote.flag_status }}" disabled />
+                </div>
+            </div>
+            <div class="form-group">
+                    <label class="control-label col-sm-2" for="created_at">Date Created:</label>
+                <div class="col-sm-10"> 
+                    <input class="form-control" id="created_at" name="created_at" value="{{ votingProposalDCBVote.created_at ? moment(votingProposalDCBVote.created_at).format('DD-MM-YYYY') : ''}}" disabled />
+                </div>
+            </div>    
+          </form>
+  </div>
+@endsection

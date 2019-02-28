@@ -10,6 +10,12 @@ class VotingProposalGOVVote extends Model {
     voter() {
         return this.belongsTo('App/Models/User', 'voter_id', 'id')
     }
+    secondVoter() {
+        return this.belongsTo('App/Models/User', 'second_voter_id', 'id')
+    }
+    thirdVoter() {
+        return this.belongsTo('App/Models/User', 'third_voter_id', 'id')
+    }
 }
 
 module.exports = VotingProposalGOVVote
