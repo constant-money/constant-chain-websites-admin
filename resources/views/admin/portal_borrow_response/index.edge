@@ -1,0 +1,45 @@
+@layout('template.admin-master')
+
+@section('content_name')
+PORTAL BORROW RESPONSE
+@endsection
+
+@section('content')
+
+  <form class="form-inline" method="POST" action="/admin/portalborrowresponse/find" >
+    <div class="form-group mx-sm-3 mb-2">
+      <label for="amount" class="sr-only">Action</label>
+      <input type="text" class="form-control" name="action" id="action" placeholder="Action">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Find</button>
+  </form>
+
+  <table class="table table-hover table-sm">
+    <thead class="thead-light">
+      <tr class="text-center">
+        <th scope="col">#</th>
+        <th scope="col">Borrow</th>
+        <th scope="col">Constant Loan Response Transaction</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @each(item in data)
+        <tr class="text-center">
+          {{--  <th scope="row"><a href="/admin/portalborrowresponse/{{item.id}}">{{item.id}}</a></th>  --}}
+          <th scope="row"><a href="{{ route('portalborrowresponse.show',{id: item.id}) }}">{{item.id}}</a></th>
+          <td> <a href="{{route('Admin/PortalborrowController.show',{id: item.borrow_id})}}"> {{item.borrow_id}}
+          </a></td>
+          <td class="text-truncate" style="max-width: 150px;" >{{item.constant_loan_response_tx_id}}</td>
+          <td>{{item.action}}</td>
+        </tr>
+      @else
+        Empty
+      @endeach
+    </tbody>
+  </table>
+
+  @!component('admin.components.pagination', urlPrefix=(route('portalborrowresponse.index')+'?'), page=page, lastPage=lastPage, perPage=perPage)
+
+@endsection
+

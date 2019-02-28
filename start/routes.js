@@ -40,6 +40,17 @@ Route.resource('admin/portalborrow','Admin/PortalborrowController')
 //   Route.delete('/:id', 'Admin/PortalborrowController.destroy')
 // }).prefix('admin/portalborrow')
 
+// ADMIN PORTAL BORROW RESPONSE
+Route.group(() => {
+  Route.get('/', 'Admin/PortalborrowresponseController.index').as('portalborrowresponse.index')
+  Route.post('/find', 'Admin/PortalborrowresponseController.find')
+  Route.get('/find', ({response}) => {
+    response.redirect("/admin/portalborrowresponse");
+  })
+  Route.get('/:id', 'Admin/PortalborrowresponseController.show').as('portalborrowresponse.show')
+
+}).prefix('admin/portalborrowresponse')
+
 // Home routes
 Route
   .get('/admin/index', 'Admin/HomeController.index')

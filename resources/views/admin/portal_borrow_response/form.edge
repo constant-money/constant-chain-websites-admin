@@ -1,0 +1,28 @@
+@layout('template.admin-master')
+
+@section('content_name')
+  PORTAL BORROW RESPONSE DETAIL
+@endsection
+
+@section('content')
+  @if(!id)
+    @!component('admin.components.object_not_found')
+  @else
+    <form >
+        {{--  <input type="hidden" class="form-control" id="id" name="id" value="{{id}}">  --}}
+      <div class="form-group">
+        <label for="borrow_id">Borrow</label>
+      <input type="text" class="form-control" id="borrow_id"  value="{{borrow_id}}" disabled>
+        {{--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>  --}}
+      </div>
+      <div class="form-group">
+        <label for="constant_loan_response_tx_id">Constant Loan Response Transaction</label>
+        <input type="text" class="form-control" id="constant_loan_response_tx_id"  value="{{constant_loan_response_tx_id}}" disabled>
+      </div>
+      <div class="form-group">
+        <label for="action">Action</label>
+        <input type="text" class="form-control" id="action" value="{{action}}" disabled>
+      </div>
+    </form>
+  @endif
+@endsection

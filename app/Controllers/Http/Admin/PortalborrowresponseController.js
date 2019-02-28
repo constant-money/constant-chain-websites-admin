@@ -1,5 +1,9 @@
 'use strict'
 
+const moment = require("moment")
+
+const Portalborrowresponse = use('App/Models/Portalborrowresponse')
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -8,6 +12,29 @@
  * Resourceful controller for interacting with portalborrowresponses
  */
 class PortalborrowresponseController {
+  /**
+   * Show a list of portal borrows response by given condition.
+   * GET portalborrowresponse
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   * @param {View} ctx.view
+   */
+  async find ({ request, response, view }) {
+    const {body, _qs} = request;
+    const {page=1, perPage=20} = _qs;
+    const {action=""} = body;
+    let query = Portalborrowresponse.query().whereNull("deleted_at");
+    if (action) {
+      query = query.where("action", action)
+    }
+    const result = await query.paginate(page,perPage);
+    if (!result || result === null) {
+      return view.render('admin.portal_borrow_response.index');
+    }
+    return view.render('admin.portal_borrow_response.index', result.toJSON());
+  }
   /**
    * Show a list of all portalborrowresponses.
    * GET portalborrowresponses
@@ -18,6 +45,12 @@ class PortalborrowresponseController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    const {_qs} = request;
+    const {page=1, perPage=20} = _qs;
+
+    const result = await Portalborrowresponse.query().where("deleted_at",null).paginate(page,perPage);
+
+    return view.render('admin.portal_borrow_response.index', result.toJSON());
   }
 
   /**
@@ -30,6 +63,7 @@ class PortalborrowresponseController {
    * @param {View} ctx.view
    */
   async create ({ request, response, view }) {
+
   }
 
   /**
@@ -53,6 +87,13 @@ class PortalborrowresponseController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    const {id} = params;
+
+    const result = await Portalborrowresponse.query().whereNull("deleted_at").where('id',id).first();
+    if (!result || result === null) {
+      return view.render('admin.portal_borrow_response.form');
+    }
+    return view.render('admin.portal_borrow_response.form', result.toJSON() );
   }
 
   /**
