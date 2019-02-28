@@ -70,6 +70,7 @@ const aliases = {
   VotingProposalGOVVoteDAO: 'App/DAO/VotingProposalGOVVote',
   // utils
   CommonUtils: 'App/Utilities/CommonUtils',
+  ConstantApi: 'App/Utilities/ConstantApi',
 }
 
 /*

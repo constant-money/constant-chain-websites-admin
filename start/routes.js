@@ -21,9 +21,7 @@ Route.get('/', ({ response }) => {
 })
 
 // ADMIN PANEL ROUTES
-Route.get("admin/", ({ view }) => {
-  return view.render('admin.index')
-})
+Route.get('admin/', 'Admin/HomeController.index')
 
 // ADMIN PORTAL BORROW
 Route.post('admin/portalborrow/find', 'Admin/PortalborrowController.find')
