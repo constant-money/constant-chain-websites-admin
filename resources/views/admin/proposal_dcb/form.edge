@@ -1,0 +1,29 @@
+@layout('template.admin-master')
+
+@section('content_name')
+  PROPOSAL DCB DETAIL
+@endsection
+
+@section('content')
+  @if(!id)
+    @!component('admin.components.object_not_found')
+  @else
+  <form >
+      {{--  <input type="hidden" class="form-control" id="id" name="id" value="{{id}}">  --}}
+    <div class="form-group">
+      <label for="borrow_id">Transaction ID</label>
+    <input type="text" class="form-control" id="borrow_id"  value="{{tx_id}}" disabled />
+      {{--  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>  --}}
+    </div>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name"  value="{{name}}" disabled />
+    </div>
+
+    <div class="form-group">
+      <label for="action">Data</label>
+      <textarea style="min-height: 300px;" class="form-control" id="data" disabled>{{formatJSON(data)}}</textarea>
+    </div>
+  </form>
+  @endif
+@endsection
