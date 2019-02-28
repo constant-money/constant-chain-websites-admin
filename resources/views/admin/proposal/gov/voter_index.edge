@@ -26,7 +26,9 @@ Proposal GOV Voters #{{ id }}
             @each(votingProposalGOVVote in votingProposalGOVVotes)
                 <tr>
                 <th scope="row"><a href="{{ route('Admin/ProposalController.govVoterShow', { parentId: id, id: votingProposalGOVVote.id }) }}">{{ votingProposalGOVVote.id }}</a></th>
-                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalGOVVote['$relations'].voter.email }}</td>
+                    <td class="text-truncate" style="max-width: 100px;">
+                        <a href="{{ route('Admin/UserController.show', { id : votingProposalGOVVote['$relations'].voter.id }) }}">{{ votingProposalGOVVote['$relations'].voter.email }}</a>
+                    </td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingProposalGOVVote.tx_id }}</td>
                     <td class="text-truncate" style="max-width: 30px;">{{ votingProposalGOVVote.vote_amount }}</td>
                     <td class="text-truncate" style="max-width: 30px;">

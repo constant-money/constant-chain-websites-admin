@@ -26,7 +26,9 @@ Proposal DCB Voters #{{ id }}
             @each(votingProposalDCBVote in votingProposalDCBVotes)
                 <tr>
                 <th scope="row"><a href="{{ route('Admin/ProposalController.dcbVoterShow', { parentId: id, id: votingProposalDCBVote.id }) }}">{{ votingProposalDCBVote.id }}</a></th>
-                    <td class="text-truncate" style="max-width: 100px;">{{ votingProposalDCBVote['$relations'].voter.email }}</td>
+                    <td class="text-truncate" style="max-width: 100px;">
+                        <a href="{{ route('Admin/UserController.show', { id : votingProposalDCBVote['$relations'].voter.id }) }}">{{ votingProposalDCBVote['$relations'].voter.email }}</a>
+                    </td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingProposalDCBVote.tx_id }}</td>
                     <td class="text-truncate" style="max-width: 30px;">{{ votingProposalDCBVote.vote_amount }}</td>
                     <td class="text-truncate" style="max-width: 30px;">

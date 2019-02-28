@@ -27,7 +27,9 @@ Candidate List
             @each(votingBoardCandidate in votingBoardCandidates)
                 <tr>
                 <th scope="row"><a href="{{ route('Admin/CandidateController.show', { id : votingBoardCandidate.id }) }}">{{ votingBoardCandidate.id }}</a></th>
-                    <td class="text-truncate" style="max-width: 100px;">{{ votingBoardCandidate['$relations'].user.email }}</td>
+                    <td class="text-truncate" style="max-width: 100px;">
+                        <a href="{{ route('Admin/UserController.show', { id : votingBoardCandidate['$relations'].user.id }) }}">{{ votingBoardCandidate['$relations'].user.email }}</a>
+                    </td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.dcb }}</td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.cmb }}</td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.payment_address }}</td>
