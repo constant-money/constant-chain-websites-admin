@@ -22,7 +22,7 @@ class ExceptionHandler extends BaseExceptionHandler {
    */
   async handle(error, { request, response }) {
     if (error.name === 'InvalidSessionException') {
-      return response.route('Admin/AuthController.login')
+      return response.route('admin.auth.login')
     }
     response.status(error.status).send(error.message)
   }

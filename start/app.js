@@ -21,6 +21,7 @@ const providers = [
   '@adonisjs/shield/providers/ShieldProvider',
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/auth/providers/AuthProvider',
+  '@adonisjs/redis/providers/RedisProvider',
   path.join(__dirname, '..', 'providers', 'View/provider')
 ]
 
