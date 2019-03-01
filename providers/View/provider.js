@@ -61,6 +61,10 @@ class ViewProvider extends ServiceProvider {
       }
       return ''
     })
+    View.global('permission', (auth, action) => {
+      // TODO check permission base on auth and action
+      return true
+    })
     View.global('constant', require('../../const'))
     View.global('moment', moment)
 

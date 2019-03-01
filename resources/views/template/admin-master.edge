@@ -11,7 +11,7 @@
     {{ style('admin/css/dashboard') }}
     @!section('style')
 
-    <title>Constant Admin Panel</title>
+  <title>Constant Admin Panel</title>
   </head>
   <body>
     <div>
@@ -20,7 +20,7 @@
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin">CONSTANT ADMIN PANEL</a>
         <ul class="navbar-nav px-3">
           <li class="nav-item text-nowrap">
-          <a class="nav-link" href="{{ route('Admin/AuthController.logout') }}">Sign out</a>
+          <a class="nav-link" href="{{ route('admin.auth.logout') }}">Sign out</a>
           </li>
         </ul>
       </nav>
@@ -40,13 +40,13 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('Admin/UserController.index') }}">
+                <a class="nav-link" href="{{ route('admin.user.index') }}">
                     <span data-feather="file"></span>
                     Users
                   </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('Admin/CandidateController.index') }}">
+                    <a class="nav-link" href="{{ route('admin.candidate.index') }}">
                         <span data-feather="file"></span>
                         Candidate
                       </a>
@@ -64,13 +64,13 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{route('Admin/ProposalController.dcbIndex')}}">
+                  <a class="nav-link" href="{{route('admin.proposal.dcbindex')}}">
                     <span data-feather="file"></span>
                     Proposal DCB
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{route('Admin/ProposalController.govIndex')}}">
+                  <a class="nav-link" href="{{route('admin.proposal.govindex')}}">
                     <span data-feather="file"></span>
                     Proposal GOV
                   </a>
