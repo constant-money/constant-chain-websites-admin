@@ -9,6 +9,7 @@ class Permission {
     // } catch (e) {
     // }
     // TODO check user permission for this request
+    // users , roles (name), permissions (method, function), role_permissions (role_id, permission_id), user_roles (user_id, role_id)
     await next()
   }
 }
