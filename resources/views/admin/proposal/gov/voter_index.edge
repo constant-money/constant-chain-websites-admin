@@ -25,9 +25,9 @@ Proposal GOV Voters #{{ id }}
         <tbody>
             @each(votingProposalGOVVote in votingProposalGOVVotes)
                 <tr>
-                <th scope="row"><a href="{{ route('Admin/ProposalController.govVoterShow', { parentId: id, id: votingProposalGOVVote.id }) }}">{{ votingProposalGOVVote.id }}</a></th>
+                <th scope="row"><a href="{{ route('admin.proposal.govvotershow', { parentId: id, id: votingProposalGOVVote.id }) }}">{{ votingProposalGOVVote.id }}</a></th>
                     <td class="text-truncate" style="max-width: 100px;">
-                        <a href="{{ route('Admin/UserController.show', { id : votingProposalGOVVote['$relations'].voter.id }) }}">{{ votingProposalGOVVote['$relations'].voter.email }}</a>
+                        <a href="{{ route('admin.user.show', { id : votingProposalGOVVote['$relations'].voter.id }) }}">{{ votingProposalGOVVote['$relations'].voter.email }}</a>
                     </td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingProposalGOVVote.tx_id }}</td>
                     <td class="text-truncate" style="max-width: 30px;">{{ votingProposalGOVVote.vote_amount }}</td>
@@ -40,7 +40,7 @@ Proposal GOV Voters #{{ id }}
         </tbody>
     </table>
     <br>
-    @!component('admin.components.pagination', urlPrefix=(route('Admin/ProposalController.govVoterIndex', { id: id }) + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+    @!component('admin.components.pagination', urlPrefix=(route('admin.proposal.govvoterindex', { id: id }) + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
 @endsection
 @section('suffix_script')
 <script>

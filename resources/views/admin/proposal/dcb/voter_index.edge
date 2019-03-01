@@ -25,9 +25,9 @@ Proposal DCB Voters #{{ id }}
         <tbody>
             @each(votingProposalDCBVote in votingProposalDCBVotes)
                 <tr>
-                <th scope="row"><a href="{{ route('Admin/ProposalController.dcbVoterShow', { parentId: id, id: votingProposalDCBVote.id }) }}">{{ votingProposalDCBVote.id }}</a></th>
+                <th scope="row"><a href="{{ route('admin.proposal.dcbvotershow', { parentId: id, id: votingProposalDCBVote.id }) }}">{{ votingProposalDCBVote.id }}</a></th>
                     <td class="text-truncate" style="max-width: 100px;">
-                        <a href="{{ route('Admin/UserController.show', { id : votingProposalDCBVote['$relations'].voter.id }) }}">{{ votingProposalDCBVote['$relations'].voter.email }}</a>
+                        <a href="{{ route('admin.user.show', { id : votingProposalDCBVote['$relations'].voter.id }) }}">{{ votingProposalDCBVote['$relations'].voter.email }}</a>
                     </td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingProposalDCBVote.tx_id }}</td>
                     <td class="text-truncate" style="max-width: 30px;">{{ votingProposalDCBVote.vote_amount }}</td>
@@ -40,7 +40,7 @@ Proposal DCB Voters #{{ id }}
         </tbody>
     </table>
     <br>
-    @!component('admin.components.pagination', urlPrefix=(route('Admin/ProposalController.dcbVoterIndex', { id: id }) + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+    @!component('admin.components.pagination', urlPrefix=(route('admin.proposal.dcbvoterindex', { id: id }) + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
 @endsection
 @section('suffix_script')
 <script>

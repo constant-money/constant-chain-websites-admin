@@ -26,23 +26,23 @@ Candidate List
         <tbody>
             @each(votingBoardCandidate in votingBoardCandidates)
                 <tr>
-                <th scope="row"><a href="{{ route('Admin/CandidateController.show', { id : votingBoardCandidate.id }) }}">{{ votingBoardCandidate.id }}</a></th>
+                <th scope="row"><a href="{{ route('admin.candidate.show', { id : votingBoardCandidate.id }) }}">{{ votingBoardCandidate.id }}</a></th>
                     <td class="text-truncate" style="max-width: 100px;">
-                        <a href="{{ route('Admin/UserController.show', { id : votingBoardCandidate['$relations'].user.id }) }}">{{ votingBoardCandidate['$relations'].user.email }}</a>
+                        <a href="{{ route('admin.user.show', { id : votingBoardCandidate['$relations'].user.id }) }}">{{ votingBoardCandidate['$relations'].user.email }}</a>
                     </td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.dcb }}</td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.cmb }}</td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.payment_address }}</td>
                     <td>{{moment(votingBoardCandidate.created_at).format("DD-MM-YYYY")}}</td>
                     <td class="text-truncate" style="max-width: 30px;">
-                        <a href="{{ route('Admin/CandidateController.voters', { id : votingBoardCandidate.id }) }}">Voters</a>
+                        <a href="{{ route('admin.candidate.voterindex', { id : votingBoardCandidate.id }) }}">Voters</a>
                     </td>
                 </tr>
             @endeach
         </tbody>
     </table>
     <br>
-    @!component('admin.components.pagination', urlPrefix=(route('Admin/CandidateController.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+    @!component('admin.components.pagination', urlPrefix=(route('admin.candidate.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
 @endsection
 @section('suffix_script')
 <script>

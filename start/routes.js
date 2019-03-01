@@ -140,7 +140,7 @@ const groupRoutes = [
       {
         'method': 'GET',
         'route': '/:id/voters',
-        'controller': 'Admin/CandidateController.voters',
+        'controller': 'Admin/CandidateController.voterIndex',
       },
     ]
   },

@@ -55,7 +55,7 @@ class CandidateController {
      * @param {Response} ctx.response
      * @param {View} ctx.view
      */
-    async voters({ request, view, params }) {
+    async voterIndex({ request, view, params }) {
         const { id = 0 } = params
         const { page = 1, perPage = 20 } = request.all()
         const votingBoardVotesQ = await VotingBoardVoteDAO.find(

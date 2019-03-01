@@ -25,7 +25,7 @@ User List
         <tbody>
             @each(user in users)
                 <tr>
-                <th scope="row"><a href="{{ route('Admin/UserController.show', { id : user.id }) }}">{{ user.id }}</a></th>
+                <th scope="row"><a href="{{ route('admin.user.show', { id : user.id }) }}">{{ user.id }}</a></th>
                     <td class="text-truncate" style="max-width: 100px;">{{ user.email }}</td>
                     <td class="text-truncate" style="max-width: 100px;">{{ user.first_name }}</td>
                     <td class="text-truncate" style="max-width: 100px;">{{ user.last_name }}</td>
@@ -36,7 +36,7 @@ User List
         </tbody>
     </table>
     <br>
-    @!component('admin.components.pagination', urlPrefix=(route('Admin/UserController.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+    @!component('admin.components.pagination', urlPrefix=(route('admin.user.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
 @endsection
 @section('suffix_script')
 <script>
