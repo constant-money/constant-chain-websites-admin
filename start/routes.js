@@ -58,7 +58,148 @@ Route
   .get('/admin/dashboard', 'Admin/HomeController.dashboard')
   .middleware('auth')
 
+const adminGroupRoutes = [
+  {
+    'prefix': 'admin/auth',
+    'middleware': [],
+    'routes': [
+      {
+        'methods': ['ANY'],
+        'route': '/login',
+        'controller': 'Admin/AuthController.login',
+      },
+      {
+        'methods': ['ANY'],
+        'route': '/logout',
+        'controller': 'Admin/AuthController.logout',
+      },
+    ]
+  },
+  {
+    'prefix': 'admin/users',
+    'middleware': ['auth'],
+    'routes': [
+      {
+        'methods': ['GET'],
+        'route': '/',
+        'controller': 'Admin/UserController.index',
+      },
+      {
+        'methods': ['GET'],
+        'route': '/:id',
+        'controller': 'Admin/UserController.show',
+      },
+    ]
+  },
+  {
+    'prefix': 'admin/candidate',
+    'middleware': ['auth'],
+    'routes': [
+      {
+        'methods': ['GET'],
+        'route': '/',
+        'controller': 'Admin/CandidateController.index',
+      },
+      {
+        'methods': ['GET'],
+        'route': '/:id',
+        'controller': 'Admin/CandidateController.show',
+      },
+      {
+        'methods': ['GET'],
+        'route': '/:id/voters',
+        'controller': 'Admin/CandidateController.voterIndex',
+      },
+    ]
+  },
+  {
+    'prefix': 'admin/proposal',
+    'middleware': ['auth'],
+    'routes': [
+      {
+        'methods': ['GET'],
+        'route': '/dcb',
+        'controller': 'Admin/ProposalController.dcbIndex',
+      },
+      {
+        'methods': ['GET'],
+        'route': '/dcb/:id',
+        'controller': 'Admin/ProposalController.dcbShow',
+      },
+      {
+        'methods': ['GET'],
+        'route': '/gov',
+        'controller': 'Admin/ProposalController.govIndex',
+      },
+      {
+        'methods': ['GET'],
+        'route': '/gov/:id',
+        'controller': 'Admin/ProposalController.govShow',
+      },
+      {
+        'methods': ['GET'],
+        'route': '/dcb/:id/voters',
+        'controller': 'Admin/ProposalController.dcbVoterIndex',
+      },
+      {
+        'methods': ['GET'],
+        'route': '/dcb/:parentId/voters/:id',
+        'controller': 'Admin/ProposalController.dcbVoterShow',
+      },
+      {
+        'methods': ['GET'],
+        'route': '/gov/:id/voters',
+        'controller': 'Admin/ProposalController.govVoterIndex',
+      },
+      {
+        'methods': ['GET'],
+        'route': '/gov/:parentId/voters/:id',
+        'controller': 'Admin/ProposalController.govVoterShow',
+      },
+    ]
+  }
+]
 
+adminGroupRoutes.forEach(function (groupRoute) {
+  let gr = Route.group(() => {
+    groupRoute['routes'].forEach(function (route) {
+      let r = Route
+      route['methods'].forEach(function (method) {
+        if (method == 'GET') {
+          r = r
+            .get(route['route'], route['controller'])
+        }
+        if (method == 'POST') {
+          r = r
+            .post(route['route'], route['controller'])
+        }
+        if (method == 'PUT') {
+          r = r
+            .put(route['route'], route['controller'])
+        }
+        if (method == 'DELETE') {
+          r = r
+            .delete(route['route'], route['controller'])
+        }
+        if (method == 'ANY') {
+          r = r
+            .any(route['route'], route['controller'])
+        }
+      })
+      const asStr = route['controller'].toLowerCase().replace('controller', '').replace('/', '.')
+      r = r.as(asStr)
+      if (route['middleware'] != undefined) {
+        r = r.middleware(route['middleware'])
+      }
+      r = r.middleware('logger:' + asStr)
+      r = r.middleware('permission:' + asStr)
+    })
+  })
+  if (groupRoute['middleware'] != undefined) {
+    gr = gr.middleware(groupRoute['middleware'])
+  }
+  gr = gr.prefix(groupRoute['prefix'])
+});
 
 // Auth routes
 // Route.group(() => {
@@ -89,146 +230,6 @@ Route
 // })
 //   .middleware('auth')
 //   .prefix('admin/candidate')
-
-const groupRoutes = [
-  {
-    'prefix': 'admin/auth',
-    'middleware': [],
-    'routes': [
-      {
-        'method': 'ANY',
-        'route': '/login',
-        'controller': 'Admin/AuthController.login',
-      },
-      {
-        'method': 'ANY',
-        'route': '/logout',
-        'controller': 'Admin/AuthController.logout',
-      },
-    ]
-  },
-  {
-    'prefix': 'admin/users',
-    'middleware': ['auth'],
-    'routes': [
-      {
-        'method': 'GET',
-        'route': '/',
-        'controller': 'Admin/UserController.index',
-      },
-      {
-        'method': 'GET',
-        'route': '/:id',
-        'controller': 'Admin/UserController.show',
-      },
-    ]
-  },
-  {
-    'prefix': 'admin/candidate',
-    'middleware': ['auth'],
-    'routes': [
-      {
-        'method': 'GET',
-        'route': '/',
-        'controller': 'Admin/CandidateController.index',
-      },
-      {
-        'method': 'GET',
-        'route': '/:id',
-        'controller': 'Admin/CandidateController.show',
-      },
-      {
-        'method': 'GET',
-        'route': '/:id/voters',
-        'controller': 'Admin/CandidateController.voterIndex',
-      },
-    ]
-  },
-  {
-    'prefix': 'admin/proposal',
-    'middleware': ['auth'],
-    'routes': [
-      {
-        'method': 'GET',
-        'route': '/dcb',
-        'controller': 'Admin/ProposalController.dcbIndex',
-      },
-      {
-        'method': 'GET',
-        'route': '/dcb/:id',
-        'controller': 'Admin/ProposalController.dcbShow',
-      },
-      {
-        'method': 'GET',
-        'route': '/gov',
-        'controller': 'Admin/ProposalController.govIndex',
-      },
-      {
-        'method': 'GET',
-        'route': '/gov/:id',
-        'controller': 'Admin/ProposalController.govShow',
-      },
-      {
-        'method': 'GET',
-        'route': '/dcb/:id/voters',
-        'controller': 'Admin/ProposalController.dcbVoterIndex',
-      },
-      {
-        'method': 'GET',
-        'route': '/dcb/:parentId/voters/:id',
-        'controller': 'Admin/ProposalController.dcbVoterShow',
-      },
-      {
-        'method': 'GET',
-        'route': '/gov/:id/voters',
-        'controller': 'Admin/ProposalController.govVoterIndex',
-      },
-      {
-        'method': 'GET',
-        'route': '/gov/:parentId/voters/:id',
-        'controller': 'Admin/ProposalController.govVoterShow',
-      },
-    ]
-  }
-]
-
-groupRoutes.forEach(function (groupRoute) {
-  let gr = Route.group(() => {
-    groupRoute['routes'].forEach(function (route) {
-      let r = Route
-      if (route['method'] == 'GET') {
-        r = r
-          .get(route['route'], route['controller'])
-      }
-      if (route['method'] == 'POST') {
-        r = r
-          .post(route['route'], route['controller'])
-      }
-      if (route['method'] == 'PUT') {
-        r = r
-          .put(route['route'], route['controller'])
-      }
-      if (route['method'] == 'DELETE') {
-        r = r
-          .delete(route['route'], route['controller'])
-      }
-      if (route['method'] == 'ANY') {
-        r = r
-          .any(route['route'], route['controller'])
-      }
-      const asStr = route['controller'].toLowerCase().replace('controller', '').replace('/', '.')
-      r = r.as(asStr)
-      if (route['middleware'] != undefined) {
-        r = r.middleware(route['middleware'])
-      }
-      r = r.middleware('logger:' + asStr)
-    })
-  })
-  if (groupRoute['middleware'] != undefined) {
-    gr = gr.middleware(groupRoute['middleware'])
-  }
-  gr = gr.prefix(groupRoute['prefix'])
-});
 
 // Route.group(() => {
 //   Route
