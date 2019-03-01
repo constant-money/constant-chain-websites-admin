@@ -26,7 +26,27 @@ class AuthController {
                         } else {
                             throw new Error('token is invalid');
                         }
-                        return response.route('Admin/HomeController.index')
+                        const PermissionModel = use('App/Models/PermissionPermission')
+                        let allPer = await PermissionModel.query()
+                            .whereExists(function () {
+                                this.from('permission_role_permissions')
+                                    .whereRaw('`permission_permissions`.`id` = `permission_role_permissions`.`permission_id`')
+                                    .whereExists(function () {
+                                        this.from('permission_user_roles')
+                                            .whereRaw('`permission_user_roles`.`id` = `permission_role_permissions`.`role_id`')
+                                            .whereExists(function () {
+                                                this.from('users')
+                                                    .whereRaw('`users`.`id` = `permission_user_roles`.`user_id`')
+                                            })
+                                    })
+                            })
+                            .fetch()
+                        let permissions = []
+                        allPer.rows.forEach(per => {
+                            permissions.push(`${per.method}_${per.action}`)
+                        });
+                        session.put('PERMISSIONS', permissions)
+                        return response.route('admin.home.index')
                     } else {
                         await auth.logout()
                     }
@@ -44,12 +64,13 @@ class AuthController {
         }
         return view.render('admin/auth/login')
     }
-    async logout({ response, auth }) {
+    async logout({ response, session, auth }) {
         try {
             await auth.check()
             await auth.logout()
         } catch (error) {
         }
+        session.put('PERMISSIONS', [])
         return response.route('Admin/AuthController.login')
     }
 }

@@ -1,10 +1,9 @@
 'use strict'
 
-const PermissionModel = use('App/Models/PermissionPermission')
-const UserModel = use('App/Models/User')
+const UserDAO = use('UserDAO')
 
 class Permission {
-    async handle({ request, auth }, next, ...agrs) {
+    async handle({ request, auth, session, view }, next, ...agrs) {
         // try {
         //   await auth.check()
         //   const parameters = JSON.stringify(request.all())
@@ -20,28 +19,15 @@ class Permission {
         } catch (e) {
         }
         if (authorized) {
-            let p = await PermissionModel
-                .query()
-                .where('method', request.method())
-                .where('action', agrs[0][0])
-                .first()
-            let user = await UserModel
-                .query()
-                .whereNull('deleted_at')
-                .whereExists(function () {
-                    this.from('permission_user_roles')
-                        .whereRaw('`users`.`id` = `permission_user_roles`.`user_id`')
-                        .whereExists(function () {
-                            this.from('permission_role_permissions')
-                                .whereRaw('`permission_user_roles`.`id` = `permission_role_permissions`.`role_id`')
-                                .where('permission_id', p.id)
-                        })
-                })
-                .where('id', auth.user.id)
-                .first()
-            if (user == null || user == undefined) {
-                throw new Error('Accessed is denied');
+            if (! await UserDAO.permission(auth.user.id, request.method().toUpperCase(), agrs[0][0])) {
+                throw new Error('Sorry, your access is refused due to security reasons of our server and also our sensitive data. Please go back to the previous page to continue browsing.');
             }
+        }
+        if (view && typeof (view.share) === 'function') {
+            const permissions = session.get('PERMISSIONS')
+            view.share({
+                permissions: permissions
+            })
         }
         await next()
     }

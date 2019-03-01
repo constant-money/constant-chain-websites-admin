@@ -32,13 +32,13 @@ class Permission extends Command {
           if (method != 'HEAD') {
             let p = await Permission
               .query()
-              .where('method', method)
+              .where('method', method.toUpperCase())
               .where('action', r.name)
               .first()
             if (p == undefined || p == null) {
               console.log(`add permission ${method} ${r.name}`)
               p = new Permission()
-              p.method = method
+              p.method = method.toUpperCase()
               p.action = r.name
               await p.save()
             }

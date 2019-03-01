@@ -7,6 +7,7 @@ class ViewProvider extends ServiceProvider {
   }
 
   boot() {
+    const UserModel = this.app.use('App/Models/User')
     const View = this.app.use('Adonis/Src/View')
     View.global('time', () => new Date().getTime())
     View.global('toText', (s) => {
@@ -61,9 +62,14 @@ class ViewProvider extends ServiceProvider {
       }
       return ''
     })
-    View.global('permission', (auth, action) => {
-      // TODO check permission base on auth and action
-      return true
+    View.global('permission', (permissions, method, action) => {
+      if(permissions == null || permissions == undefined) {
+        return true
+      }
+      if (permissions.includes(`${method}_${action}`)) {
+        return true
+      }
+      return false
     })
     View.global('constant', require('../../const'))
     View.global('moment', moment)
@@ -71,7 +77,7 @@ class ViewProvider extends ServiceProvider {
     View.global('formatJSON', (jsonString) => {
       try {
         const obj = JSON.parse(jsonString)
-        const jsonStrFormat = JSON.stringify(obj,null,'\t');
+        const jsonStrFormat = JSON.stringify(obj, null, '\t');
         return jsonStrFormat;
       } catch (error) {
         return jsonString
