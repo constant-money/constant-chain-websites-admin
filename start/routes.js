@@ -89,7 +89,7 @@ Route.group(() => {
   Route
     .get('/:id', 'Admin/CandidateController.show')
   Route
-    .get('/:id/voters', 'Admin/CandidateController.voters')
+    .get('/:id/voters', 'Admin/CandidateController.voterIndex')
 })
   .middleware('auth')
   .prefix('admin/candidate')
