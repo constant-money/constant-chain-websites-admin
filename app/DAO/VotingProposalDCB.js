@@ -19,7 +19,7 @@ class VotingProposalDCB {
         if (email != '') {
             q.whereExists(function () {
                 this.from('users')
-                    .whereRaw('`users`.`id` = `voting_proposal_dcb`.`user_id`')
+                    .whereRaw('users.id = voting_proposal_dcb.user_id')
                     .where('users.email', 'like', '%' + email + '%')
             })
         }

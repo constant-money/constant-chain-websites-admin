@@ -96,6 +96,6 @@ module.exports = {
     port: Env.get('REDIS_PORT', 6379),
     password: Env.get('REDIS_PASSWORD', null),
     db: 0,
-    keyPrefix: ''
+    keyPrefix: 'adonis_'
   }
 }

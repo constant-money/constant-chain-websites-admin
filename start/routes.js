@@ -111,6 +111,17 @@ Route.group(() => {
   .middleware('auth')
   .prefix('admin/proposal')
 
+Route.group(() => {
+  Route
+    .get('/roles', 'Admin/AclController.roleIndex')
+  Route
+    .get('/roles/:id', 'Admin/AclController.roleShow')
+  Route
+    .post('/roles/:id', 'Admin/AclController.roleShow')
+})
+  .middleware('auth')
+  .prefix('admin/acl')
+
 // update name for route
 Route.list().forEach(r => {
   if (typeof (r.handler) == typeof ('')) {

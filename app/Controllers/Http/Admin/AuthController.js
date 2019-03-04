@@ -1,5 +1,8 @@
 'use strict'
 
+const ms = require('ms')
+const Config = use('Config')
+const Redis = use('Redis')
 const Hash = use('Hash')
 const ConstantApi = use('ConstantApi')
 class AuthController {
@@ -46,12 +49,18 @@ class AuthController {
                             permissions.push(`${per.method}_${per.action}`)
                         });
                         session.put('PERMISSIONS', permissions)
+
+                        // const age = Config.get('session.age', '2 hrs')
+                        // const ttl = (typeof (age) === 'number' ? age : ms(age)) / 1000 // in seconds
+                        // Redis.setex(`${auth.user.id}_PERMISSIONS`, ttl, JSON.stringify(permissions))
+
                         return response.route('admin.home.index')
                     } else {
                         await auth.logout()
                     }
                 }
             } catch (err) {
+                console.log(err)
                 try {
                     await auth.check()
                     await auth.logout()
@@ -70,7 +79,7 @@ class AuthController {
             await auth.logout()
         } catch (error) {
         }
-        session.put('PERMISSIONS', [])
+        session.put('PERMISSIONS', null)
         return response.route('Admin/AuthController.login')
     }
 }

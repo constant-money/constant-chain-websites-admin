@@ -25,13 +25,13 @@ class User {
             .whereNull('deleted_at')
             .whereExists(function () {
                 this.from('permission_user_roles')
-                    .whereRaw('`users`.`id` = `permission_user_roles`.`user_id`')
+                    .whereRaw('users.id = permission_user_roles.user_id')
                     .whereExists(function () {
                         this.from('permission_role_permissions')
-                            .whereRaw('`permission_user_roles`.`id` = `permission_role_permissions`.`role_id`')
+                            .whereRaw('permission_user_roles.id = permission_role_permissions.role_id')
                             .whereExists(function () {
                                 this.from('permission_permissions')
-                                    .whereRaw('`permission_permissions`.`id` = `permission_role_permissions`.`permission_id`')
+                                    .whereRaw('permission_permissions.id = permission_role_permissions.permission_id')
                                     .where('method', method)
                                     .where('action', action)
                             })

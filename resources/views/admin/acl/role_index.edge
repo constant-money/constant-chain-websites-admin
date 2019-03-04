@@ -1,0 +1,42 @@
+@layout('template.admin-master')
+@section('content_name')
+Roles
+@endsection
+@section('content')
+    <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="email" class="sr-only">Name</label>
+        <input type="text" class="form-control" name="email" id="email" placeholder="Name" value="{{ name }}">
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Find</button>
+    </form>
+    <br>
+    <table class="table table-hover table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @each(role in roles)
+                <tr>
+                <th scope="row"><a href="{{ route('admin.acl.roleshow', { id : role.id }) }}">{{ role.id }}</a></th>
+                    <td class="text-truncate" style="max-width: 100px;">{{ role.name }}</td>
+                    <td>{{moment(role.created_at).format("DD-MM-YYYY")}}</td>
+                </tr>
+            @endeach
+        </tbody>
+    </table>
+    <br>
+@endsection
+@section('suffix_script')
+<script>
+    $(document).ready(function(){
+        $("#email").on("keyup", function() {
+            $("#form" ).submit();
+        });
+    });
+</script>
+@endsection

@@ -1,0 +1,21 @@
+@layout('template.admin-master')
+
+@section('content_name')
+Role #{{ role.name }}
+@endsection
+
+@section('content')
+  <div>
+        <form class="form-horizontal" method="POST">
+                {{ csrfField() }}
+            @each(permission in permissions)
+            <div class="checkbox">
+                <label><input type="checkbox" name="permissions[{{ permission.id }}]" {{ roleCheckPermissions[permission.id] ? 'checked="checked"' : '' }} value="1"> {{ permission.action + ' ' + permission.method }}</label>
+            </div>    
+            @endeach
+            <div class="form-group mx-sm-3 mb-2">
+                <button type="submit" class="btn btn-primary mb-2">Save</button>
+            </div>
+        </form>
+  </div>
+@endsection
