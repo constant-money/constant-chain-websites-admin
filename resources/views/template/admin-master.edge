@@ -84,7 +84,7 @@
                 </a>
               </h6>
               <ul class="nav flex-column mb-2">
-                @if(permission(vPermissions, 'GET', 'admin.acl.roleindex'))
+                @if(permission(userPermissions, 'GET', 'admin.acl.roleindex'))
                 <li class="nav-item">
                   <a class="nav-link" href="{{route('admin.acl.roleindex')}}">
                     <span data-feather="file-text"></span>

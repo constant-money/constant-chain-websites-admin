@@ -37,7 +37,7 @@ class Permission {
         }
         if (view && typeof (view.share) === 'function') {
             view.share({
-                vPermissions: permissions
+                userPermissions: permissions
             })
         }
         await next()
