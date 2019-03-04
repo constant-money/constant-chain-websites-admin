@@ -27,7 +27,9 @@ Proposal GOV
                 <tr>
                 <th scope="row"><a href="{{ route('admin.proposal.govshow', { id: votingProposalGOV.id }) }}">{{ votingProposalGOV.id }}</a></th>
                     <td class="text-truncate" style="max-width: 100px;">
-                        <a href="{{ route('admin.user.show', { id : votingProposalGOV['$relations'].user.id }) }}">{{ votingProposalGOV['$relations'].user.email }}</a>
+                      @if(votingProposalGOV['$relations'] && votingProposalGOV['$relations'].user)
+                      <a href="{{ route('admin.user.show', { id : votingProposalGOV['$relations'].user.id }) }}">{{ votingProposalGOV['$relations'].user.email }}</a>
+                      @endif
                     </td>
                     <td class="text-truncate" style="max-width: 100px;">{{ votingProposalGOV.name }}</td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingProposalGOV.tx_id }}</td>
