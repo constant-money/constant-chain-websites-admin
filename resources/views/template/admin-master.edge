@@ -39,42 +39,54 @@
                     Dashboard <span class="sr-only"></span>
                   </a>
                 </li>
+                @if(permission(userPermissions, 'GET', 'admin.user.index'))
                 <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.user.index') }}">
                     <span data-feather="file"></span>
                     Users
                   </a>
                 </li>
+                @endif
+                @if(permission(userPermissions, 'GET', 'admin.candidate.index'))
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.candidate.index') }}">
                         <span data-feather="file"></span>
                         Candidate
                       </a>
                     </li>
+                @endif
+                @if(permission(userPermissions, 'GET', 'admin.portalborrow.index'))
                 <li class="nav-item">
-                  <a class="nav-link" href="/admin/portalborrow">
+                  <a class="nav-link" href="{{route('admin.portalborrow.index')}}">
                     <span data-feather="file"></span>
                     Portal Borrows
                   </a>
                 </li>
+                @endif
+                @if(permission(userPermissions, 'GET', 'admin.portalborrowresponse.index'))
                 <li class="nav-item">
                   <a class="nav-link" href="{{route('admin.portalborrowresponse.index')}}">
                     <span data-feather="file"></span>
                     Portal Borrow Reponse
                   </a>
                 </li>
+                @endif
+                @if(permission(userPermissions, 'GET', 'admin.proposal.dcbindex'))
                 <li class="nav-item">
                   <a class="nav-link" href="{{route('admin.proposal.dcbindex')}}">
                     <span data-feather="file"></span>
                     Proposal DCB
                   </a>
                 </li>
+                @endif
+                @if(permission(userPermissions, 'GET', 'admin.proposal.govindex'))
                 <li class="nav-item">
                   <a class="nav-link" href="{{route('admin.proposal.govindex')}}">
                     <span data-feather="file"></span>
                     Proposal GOV
                   </a>
                 </li>
+                @endif
               </ul>
 
               <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">

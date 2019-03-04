@@ -6,7 +6,7 @@ const PermissionPermissionDAO = use('App/DAO/PermissionPermission')
 
 class AclController {
     async roleIndex({ view }) {
-        const roles = await PermissionRoleDAO.findAll()
+        const roles = await PermissionRoleDAO.find({})
         return view.render('admin/acl/role_index', {
             roles: roles.rows,
         })

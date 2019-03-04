@@ -7,13 +7,6 @@ class PermissionRole {
         return await PermissionRoleModel.find(id)
     }
 
-    async findAll() {
-        let q = PermissionRoleModel
-            .query()
-            .orderBy('name', 'asc')
-        return await q.fetch()
-    }
-
     async find({ userId = 0 }) {
         let q = PermissionRoleModel
             .query()
