@@ -26,9 +26,12 @@ class Permission extends Command {
       role.name = 'admin'
       role.save()
     }
-    use('Route').list().forEach(r => {
+    const rs = use('Route').list()
+    for (let i = 0; i < rs.length; i++) {
+      const r = rs[i]
       if (typeof (r.handler) == typeof ('')) {
-        r.verbs.forEach(async (method) => {
+        for (let j = 0; j < r.verbs.length; j++) {
+          const method = r.verbs[j]
           if (method != 'HEAD') {
             let p = await Permission
               .query()
@@ -55,9 +58,9 @@ class Permission extends Command {
               await rp.save()
             }
           }
-        })
+        }
       }
-    });
+    }
   }
 }
 
