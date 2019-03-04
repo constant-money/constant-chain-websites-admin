@@ -9,7 +9,7 @@ class AuthController {
     async login({ request, response, session, auth, view }) {
         try {
             await auth.check()
-            return response.route('Admin/HomeController.dashboard')
+            return response.route('admin.home.index')
         } catch (error) {
         }
         if (request.method() == 'POST') {
@@ -78,9 +78,10 @@ class AuthController {
             await auth.check()
             await auth.logout()
         } catch (error) {
+            console.log(error)
         }
         session.put('PERMISSIONS', null)
-        return response.route('Admin/AuthController.login')
+        return response.route('admin.auth.login')
     }
 }
 
