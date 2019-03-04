@@ -5,6 +5,8 @@ const Config = use('Config')
 const Redis = use('Redis')
 const Hash = use('Hash')
 const ConstantApi = use('ConstantApi')
+const PermissionModel = use('App/Models/PermissionPermission')
+
 class AuthController {
     async login({ request, response, session, auth, view }) {
         try {
@@ -29,7 +31,6 @@ class AuthController {
                         } else {
                             throw new Error('token is invalid');
                         }
-                        const PermissionModel = use('App/Models/PermissionPermission')
                         let allPer = await PermissionModel.query()
                             .whereExists(function () {
                                 this.from('permission_role_permissions')

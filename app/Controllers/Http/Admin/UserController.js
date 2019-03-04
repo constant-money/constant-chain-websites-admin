@@ -38,7 +38,7 @@ class UserController {
         const { id = 0 } = params
         const user = await UserDAO.first(id)
         if (user == undefined) {
-            return response.route('Admin/UserController.index')
+            return response.route('admin.user.index')
         }
         return view.render('admin/users/form', {
             id: id,

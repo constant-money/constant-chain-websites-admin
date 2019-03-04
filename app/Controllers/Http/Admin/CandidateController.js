@@ -39,7 +39,7 @@ class CandidateController {
         const { id = 0 } = params
         const votingBoardCandidate = await VotingBoardCandidateDAO.first(id)
         if (votingBoardCandidate == undefined) {
-            return response.route('Admin/CandidateController.index')
+            return response.route('admin.candidate.index')
         }
         return view.render('admin/candidate/form', {
             id: id,

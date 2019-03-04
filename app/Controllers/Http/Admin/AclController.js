@@ -50,16 +50,19 @@ class AclController {
             return response.route('admin.acl.roleshow', { id: id })
         }
         const role = await PermissionRoleDAO.first(id)
-        const permissions = await PermissionPermissionDAO.find({})
-        const rolePermissions = await PermissionPermissionDAO.find({ roleId: id })
+        if (role == undefined) {
+            return response.route('admin.acl.roleindex')
+        }
+        const permissions = (await PermissionPermissionDAO.find({})).rows
+        const rolePermissions = (await PermissionPermissionDAO.find({ roleId: id })).rows
         let roleCheckPermissions = {}
-        rolePermissions.rows.forEach(rp => {
+        rolePermissions.forEach(rp => {
             roleCheckPermissions[rp.id] = true
         });
         return view.render('admin/acl/role_form', {
             role: role,
             roleCheckPermissions: roleCheckPermissions,
-            permissions: permissions.rows
+            permissions: permissions
         })
     }
 }

@@ -56,7 +56,7 @@ class ProposalController {
         const { id = 0 } = params
         const votingProposalDCB = await VotingProposalDCBDAO.first(id)
         if (votingProposalDCB == undefined) {
-            return response.route('Admin/ProposalController.dcbIndex')
+            return response.route('admin.proposal.dcbindex')
         }
         return view.render('admin/proposal/dcb/form', {
             id: id,
@@ -68,7 +68,7 @@ class ProposalController {
         const { id = 0 } = params
         const votingProposalGOV = await VotingProposalGOVDAO.first(id)
         if (votingProposalGOV == undefined) {
-            return response.route('Admin/ProposalController.govIndex')
+            return response.route('admin.proposal.govindex')
         }
         return view.render('admin/proposal/gov/form', {
             id: id,
@@ -130,7 +130,7 @@ class ProposalController {
         const { parentId = 0, id = 0 } = params
         const votingProposalDCBVote = await VotingProposalDCBVoteDAO.first(id)
         if (votingProposalDCBVote == undefined || votingProposalDCBVote.voting_proposal_dcb_id != parentId) {
-            return response.route('Admin/ProposalController.dcbVoterIndex', { id: parentId })
+            return response.route('admin.proposal.dcbvoterindex', { id: parentId })
         }
         return view.render('admin/proposal/dcb/voter_form', {
             id: id,
@@ -142,7 +142,7 @@ class ProposalController {
         const { parentId = 0, id = 0 } = params
         const votingProposalGOVVote = await VotingProposalGOVVoteDAO.first(id)
         if (votingProposalGOVVote == undefined || votingProposalGOVVote.voting_proposal_gov_id != parentId) {
-            return response.route('Admin/ProposalController.govVoterIndex', { id: parentId })
+            return response.route('admin.proposal.govvoterindex', { id: parentId })
         }
         return view.render('admin/proposal/gov/voter_form', {
             id: id,
