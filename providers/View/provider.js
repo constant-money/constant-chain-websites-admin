@@ -63,7 +63,6 @@ class ViewProvider extends ServiceProvider {
       return ''
     })
     View.global('permission', (vPermissions, method, action) => {
-      console.log(vPermissions)
       if(vPermissions == null || vPermissions == undefined) {
         return true
       }
