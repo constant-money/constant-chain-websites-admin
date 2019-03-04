@@ -40,12 +40,12 @@ Route.resource('admin/portalborrow', 'Admin/PortalborrowController')
 
 // ADMIN PORTAL BORROW RESPONSE
 Route.group(() => {
-  Route.get('/', 'Admin/PortalborrowresponseController.index').as('portalborrowresponse.index')
+  Route.get('/', 'Admin/PortalborrowresponseController.index').as('admin.portalborrowresponse.index')
   Route.post('/find', 'Admin/PortalborrowresponseController.find')
   Route.get('/find', ({ response }) => {
     response.redirect("/admin/portalborrowresponse");
   })
-  Route.get('/:id', 'Admin/PortalborrowresponseController.show').as('portalborrowresponse.show')
+  Route.get('/:id', 'Admin/PortalborrowresponseController.show').as('admin.portalborrowresponse.show')
 
 }).prefix('admin/portalborrowresponse')
 
