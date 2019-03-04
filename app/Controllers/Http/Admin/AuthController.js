@@ -34,13 +34,14 @@ class AuthController {
                         let allPer = await PermissionModel.query()
                             .whereExists(function () {
                                 this.from('permission_role_permissions')
-                                    .whereRaw('`permission_permissions`.`id` = `permission_role_permissions`.`permission_id`')
+                                    .whereRaw('permission_permissions.id = permission_role_permissions.permission_id')
                                     .whereExists(function () {
                                         this.from('permission_user_roles')
-                                            .whereRaw('`permission_user_roles`.`id` = `permission_role_permissions`.`role_id`')
+                                            .whereRaw('permission_user_roles.id = permission_role_permissions.role_id')
                                             .whereExists(function () {
                                                 this.from('users')
-                                                    .whereRaw('`users`.`id` = `permission_user_roles`.`user_id`')
+                                                    .whereRaw('users.id = permission_user_roles.user_id')
+                                                    .where('users.id', auth.user.id)
                                             })
                                     })
                             })
@@ -49,6 +50,7 @@ class AuthController {
                         allPer.rows.forEach(per => {
                             permissions.push(`${per.method}_${per.action}`)
                         });
+                        console.log(permissions)
                         session.put('PERMISSIONS', permissions)
 
                         // const age = Config.get('session.age', '2 hrs')
