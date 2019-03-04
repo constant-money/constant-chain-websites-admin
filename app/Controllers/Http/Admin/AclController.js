@@ -16,11 +16,15 @@ class AclController {
         const { id = 0 } = params
         if (request.method() == 'POST') {
             const { permissions = {} } = request.all()
+            let reqPermissions = []
+            Object.keys(permissions).forEach(e => {
+                reqPermissions.push(permissions[e])
+            })
             // delete permissions
             const rPermissions = (await PermissionPermissionDAO.find({ roleId: id })).rows
             for (let i = 0; i < rPermissions.length; i++) {
                 let p = rPermissions[i]
-                if (permissions[p.id] == undefined) {
+                if (!reqPermissions.includes(p.id.toString())) {
                     await PermissionRolePermissionDAO.deleteWhr({
                         role_id: id,
                         permission_id: p.id,
@@ -28,10 +32,8 @@ class AclController {
                 }
             }
             // add new permissions
-            let addPermissions = []
-            const pKeys = Object.keys(permissions)
-            for (let i = 0; i < pKeys.length; i++) {
-                let pid = pKeys[i]
+            for (let i = 0; i < reqPermissions.length; i++) {
+                let pid = reqPermissions[i]
                 let existed = false
                 for (let i = 0; i < rPermissions.length; i++) {
                     let p = rPermissions[i]
@@ -40,7 +42,6 @@ class AclController {
                     }
                 }
                 if (!existed) {
-                    addPermissions.push(pid)
                     await PermissionRolePermissionDAO.insert({
                         role_id: id,
                         permission_id: pid,

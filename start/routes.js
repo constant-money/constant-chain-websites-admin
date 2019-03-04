@@ -75,6 +75,10 @@ Route.group(() => {
     .get('/', 'Admin/UserController.index')
   Route
     .get('/:id', 'Admin/UserController.show')
+  Route
+    .post('/:id', 'Admin/UserController.show')
+  Route
+    .post('/:id/roles', 'Admin/UserController.roleIndex')
 })
   .middleware('auth')
   .prefix('admin/users')
@@ -127,7 +131,7 @@ Route.list().forEach(r => {
   if (typeof (r.handler) == typeof ('')) {
     r.as(r.handler.toLowerCase().replace('/', '.').replace('controller', ''))
     r.middleware('logger:' + r.name)
-    // r.middleware('permission:' + r.name)
+    r.middleware('permission:' + r.name)
   }
 });
 

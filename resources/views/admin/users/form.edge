@@ -6,7 +6,8 @@ User #{{ id }}
 
 @section('content')
   <div>
-        <form class="form-horizontal">
+        <form class="form-horizontal" method="POST">
+                {{ csrfField() }}
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">Email:</label>
                 <div class="col-sm-10">
@@ -30,7 +31,28 @@ User #{{ id }}
                 <div class="col-sm-10"> 
                     <input type="text" class="form-control" id="payment_address" disabled value="{{ user.payment_address }}">
                 </div>
-            </div>            
+            </div>   
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="is_admin">Admin:</label>
+                <div class="col-sm-10"> 
+                    <input type="checkbox" name="is_admin" {{ user.is_admin == 1 ? 'checked="checked"' : '' }} value="1">
+                </div>
+            </div>  
+            @if(permission(userPermissions, 'POST', 'admin.user.roleindex'))
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="roles">Roles:</label>
+                <div class="col-sm-10"> 
+                        @each(role in allRoles)
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="roles[{{ role.id }}]" {{ checkRoles[role.id] ? 'checked="checked"' : '' }} value="{{ role.id }}"> {{ role.name }}</label>
+                        </div>    
+                        @endeach
+                </div>
+            </div>  
+            @endif
+            <div class="form-group mx-sm-3 mb-2">
+                <button type="submit" class="btn btn-primary mb-2">Save</button>
+            </div>        
           </form>
   </div>
 @endsection

@@ -50,7 +50,6 @@ class AuthController {
                         allPer.rows.forEach(per => {
                             permissions.push(`${per.method}_${per.action}`)
                         });
-                        console.log(permissions)
                         session.put('PERMISSIONS', permissions)
 
                         // const age = Config.get('session.age', '2 hrs')
