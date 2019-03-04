@@ -127,7 +127,7 @@ Route.list().forEach(r => {
   if (typeof (r.handler) == typeof ('')) {
     r.as(r.handler.toLowerCase().replace('/', '.').replace('controller', ''))
     r.middleware('logger:' + r.name)
-    // r.middleware('permission:' + r.name)
+    r.middleware('permission:' + r.name)
   }
 });
 
