@@ -16,12 +16,16 @@ class ProposalController {
      * @param {View} ctx.view
      */
     async dcbIndex({ request, view }) {
-        const { email = '', page = 1, perPage = 20 } = request.all()
+        const { email = '', page = 1, perPage = 20, data='',from_date='',to_date='',tx_id='' } = request.all()
         const votingProposalDCBs = await VotingProposalDCBDAO.find(
-            { email: email, page: page, perPage: perPage }
+          { email: email, page: page, perPage: perPage, data, from_date, to_date, tx_id }
         )
         return view.render('admin/proposal/dcb/index', {
             email: email,
+            from_date,
+            to_date,
+            data,
+            tx_id,
             page: votingProposalDCBs.pages.page,
             perPage: votingProposalDCBs.pages.perPage,
             lastPage: votingProposalDCBs.pages.lastPage,
@@ -30,12 +34,16 @@ class ProposalController {
     }
 
     async govIndex({ request, view }) {
-        const { email = '', page = 1, perPage = 20 } = request.all()
+      const { email = '', page = 1, perPage = 20, data='',from_date='',to_date='',tx_id='' } = request.all()
         const votingProposalGOVs = await VotingProposalGOVDAO.find(
-            { email: email, page: page, perPage: perPage }
+          { email: email, page: page, perPage: perPage, data, from_date, to_date, tx_id }
         )
         return view.render('admin/proposal/gov/index', {
             email: email,
+            from_date,
+            to_date,
+            data,
+            tx_id,
             page: votingProposalGOVs.pages.page,
             perPage: votingProposalGOVs.pages.perPage,
             lastPage: votingProposalGOVs.pages.lastPage,
@@ -87,13 +95,14 @@ class ProposalController {
      */
     async dcbVoterIndex({ request, view, params }) {
         const { id = 0 } = params
-        const { email = '', page = 1, perPage = 20 } = request.all()
+        const { email = '', page = 1, perPage = 20, vote_amount_from, vote_amount_to, tx_id='', from_date='', to_date='' } = request.all()
         const votingProposalDCBVotes = await VotingProposalDCBVoteDAO.find(
-            { votingProposalDCBId: id, email: email, page: page, perPage: perPage }
+            { votingProposalDCBId: id, email: email, page: page, perPage: perPage, vote_amount_from, vote_amount_to, tx_id, from_date, to_date }
         )
         return view.render('admin/proposal/dcb/voter_index', {
             id: id,
             email: email,
+            vote_amount_from, vote_amount_to, tx_id, from_date, to_date,
             page: votingProposalDCBVotes.pages.page,
             perPage: votingProposalDCBVotes.pages.perPage,
             lastPage: votingProposalDCBVotes.pages.lastPage,
@@ -112,13 +121,14 @@ class ProposalController {
      */
     async govVoterIndex({ request, view, params }) {
         const { id = 0 } = params
-        const { email = '', page = 1, perPage = 20 } = request.all()
+        const { email = '', page = 1, perPage = 20, vote_amount_from, vote_amount_to, tx_id='', from_date='', to_date='' } = request.all()
         const votingProposalGOVVotes = await VotingProposalGOVVoteDAO.find(
-            { votingProposalGOVId: id, email: email, page: page, perPage: perPage }
+            { votingProposalGOVId: id, email: email, page: page, perPage: perPage, vote_amount_from, vote_amount_to, tx_id, from_date, to_date }
         )
         return view.render('admin/proposal/gov/voter_index', {
             id: id,
             email: email,
+            vote_amount_from, vote_amount_to, tx_id, from_date, to_date,
             page: votingProposalGOVVotes.pages.page,
             perPage: votingProposalGOVVotes.pages.perPage,
             lastPage: votingProposalGOVVotes.pages.lastPage,
