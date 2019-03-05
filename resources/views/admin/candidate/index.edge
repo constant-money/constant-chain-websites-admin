@@ -18,7 +18,7 @@ Candidate List
             <th scope="col">Email</th>
             <th scope="col">DCB</th>
             <th scope="col">CMB</th>
-            <th scope="col">Payment Address</th>
+            <th scope="col">GOV</th>
             <th scope="col">Date Created</th>
             <th scope="col"></th>
             </tr>
@@ -32,7 +32,7 @@ Candidate List
                     </td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.dcb }}</td>
                     <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.cmb }}</td>
-                    <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.payment_address }}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.gov }}</td>
                     <td>{{moment(votingBoardCandidate.created_at).format("DD-MM-YYYY")}}</td>
                     <td class="text-truncate" style="max-width: 30px;">
                         <a href="{{ route('admin.candidate.voterindex', { id : votingBoardCandidate.id }) }}">Voters</a>
