@@ -24,11 +24,31 @@ class PortalborrowresponseController {
   async find ({ request, response, view }) {
     const {body, _qs} = request;
     const {page=1, perPage=20} = _qs;
-    const {action=""} = body;
+    let {action="", constant_loan_response_tx_id="", email="", from_date="", to_date=""} = body;
     let query = Portalborrowresponse.query().whereNull("deleted_at");
+    if (constant_loan_response_tx_id) {
+      query = query.where("constant_loan_response_tx_id", constant_loan_response_tx_id)
+    }
     if (action) {
       query = query.where("action", action)
     }
+    if (email) {
+      query.whereExists(function () {
+        this.from('users')
+            .whereRaw('`users`.`id` = `portal_borrows_response`.`user_id`')
+            .where('users.email', 'like', '%' + email + '%')
+      })
+    }
+
+    if (from_date) {
+      from_date = moment(from_date,"DD-MM-YYYY").format("YYYY-MM-DD HH:mm:ss")
+      query = query.whereRaw("created_at >= ?", from_date)
+    }
+    if (to_date) {
+      to_date = moment(to_date,"DD-MM-YYYY").format("YYYY-MM-DD HH:mm:ss")
+      query = query.whereRaw("created_at <= ?", to_date)
+    }
+
     const result = await query.paginate(page,perPage);
     if (!result || result === null) {
       return view.render('admin.portal_borrow_response.index');

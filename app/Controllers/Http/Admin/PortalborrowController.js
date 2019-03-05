@@ -24,13 +24,30 @@ class PortalborrowController {
   async find ({ request, response, view }) {
     const {body, _qs} = request;
     const {page=1, perPage=20} = _qs;
-    const {hash="", loan_amount} = body;
+    const {loan_amount_from, loan_amount_to, loan_id="", key_digest="", tx_id, email=""} = body;
+    console.log(body);
     let query = Portalborrow.query().whereNull("deleted_at");
-    if (hash) {
-      query = query.where("hash", hash)
+    if (loan_amount_from) {
+      query = query.whereRaw("loan_amount >= ?", loan_amount_from)
     }
-    if (loan_amount) {
-      query = query.where("loan_amount", loan_amount)
+    if (loan_amount_to) {
+      query = query.whereRaw("loan_amount <= ? ", loan_amount_to)
+    }
+    if (loan_id) {
+      query = query.where("loan_id", loan_id)
+    }
+    if (key_digest) {
+      query = query.where("key_digest", key_digest)
+    }
+    if (tx_id) {
+      query = query.where("tx_id", tx_id)
+    }
+    if (email) {
+      query.whereExists(function () {
+        this.from('users')
+            .whereRaw('`users`.`id` = `portal_borrows`.`user_id`')
+            .where('users.email', 'like', '%' + email + '%')
+      })
     }
     const result = await query.paginate(page,perPage)
     return view.render('admin.portal_borrows.index', result.toJSON());
