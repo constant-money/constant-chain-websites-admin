@@ -4,35 +4,49 @@ Candidate Voters #{{ id }}
 @endsection
 @section('content')
   <div>
-    <form name="form" method="GET">
-        <br>
-        <table class="table table-hover table-sm">
-            <thead class="thead-light">
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Voter</th>
-                <th scope="col">Board Type</th>
-                <th scope="col">Tx Hash</th>
-                <th scope="col">Date Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                @each(votingBoardVote in votingBoardVotes)
-                    <tr>
-                    <th scope="row">{{ votingBoardVote.id }}</th>
-                        <td class="text-truncate" style="max-width: 100px;">
-                            <a href="{{ route('admin.user.show', { id : votingBoardVote['$relations'].voter.id }) }}">{{ votingBoardVote['$relations'].voter.email }}</a>
-                        </td>
-                        <td class="text-truncate" style="max-width: 30px;">{{ toText(['invalid', 'dcb', 'gov', 'cmb'][toInt(votingBoardVote.board_type)]) }}</td>
-                        <td class="text-truncate" style="max-width: 150px;">{{ toText(votingBoardVote.tx_id) }}</td>
-                        <td>{{moment(votingBoardVote.created_at).format("DD-MM-YYYY")}}</td>
-                    </tr>
-                @endeach
-            </tbody>
-        </table>
-        <br>
-        @!component('admin.components.pagination', urlPrefix=(route('admin.candidate.voterindex', {id : id}) + '?'), page=page, lastPage=lastPage, perPage=perPage)
+    <form name="form" method="GET" class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="email" class="sr-only">Voter Email</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="User Email" value="{{ email }}">
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="tx_id" class="sr-only">Transaction ID</label>
+            <input type="text" class="form-control" name="tx_id" id="tx_id" placeholder="Transaction ID" value="{{ tx_id }}">
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+            <label for="board_type" class="sr-only">Board Type</label>
+            {{--  <input type="text" class="form-control" name="board_type" id="board_type" placeholder="Board Type" value="{{ board_type }}">  --}}
+            @!component('admin.components.select_component', select_name='board_type',data=getBoardTypeArray(constant.BOARD_TYPE))
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Find</button>
     </form>
+    <br>
+    <table class="table table-hover table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Voter</th>
+            <th scope="col">Board Type</th>
+            <th scope="col">Tx Hash</th>
+            <th scope="col">Date Created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @each(votingBoardVote in votingBoardVotes)
+                <tr>
+                <th scope="row">{{ votingBoardVote.id }}</th>
+                    <td class="text-truncate" style="max-width: 100px;">
+                        <a href="{{ route('admin.user.show', { id : votingBoardVote['$relations'].voter.id }) }}">{{ votingBoardVote['$relations'].voter.email }}</a>
+                    </td>
+                    <td class="text-truncate" style="max-width: 30px;">{{ toText(['invalid', 'dcb', 'gov', 'cmb'][toInt(votingBoardVote.board_type)]) }}</td>
+                    <td class="text-truncate" style="max-width: 150px;">{{ toText(votingBoardVote.tx_id) }}</td>
+                    <td>{{moment(votingBoardVote.created_at).format("DD-MM-YYYY")}}</td>
+                </tr>
+            @endeach
+        </tbody>
+    </table>
+    <br>
+    @!component('admin.components.pagination', urlPrefix=(route('admin.candidate.voterindex', {id : id}) + '?'), page=page, lastPage=lastPage, perPage=perPage)
   </div>
 @endsection
 @section('suffix_script')
