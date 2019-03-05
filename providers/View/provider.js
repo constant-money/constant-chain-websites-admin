@@ -83,6 +83,16 @@ class ViewProvider extends ServiceProvider {
         return jsonString
       }
     })
+
+    View.global('getBoardTypeArray', (boardTypeObj = {}) => {
+      let data = [];
+      if (Object.keys(boardTypeObj).length == 0) return data;
+      Object.keys(boardTypeObj).forEach((key) => {
+        const item = {value: key, label: boardTypeObj[key]}
+        data.push(item);
+      });
+      return data;
+    })
   }
 }
 

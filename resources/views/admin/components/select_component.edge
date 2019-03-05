@@ -1,0 +1,8 @@
+<select class="custom-select" id="{{select_id}}" name="{{select_name}}">
+  @if(data)
+      <option value="">None</option>
+    @each(item in data)
+      <option value="{{item.value}}">{{item.label}}</option>
+    @endeach
+  @endif
+</select>
