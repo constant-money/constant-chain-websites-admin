@@ -14,12 +14,15 @@ class CandidateController {
      * @param {View} ctx.view
      */
     async index({ request, view }) {
-        const { email = '', page = 1, perPage = 20 } = request.all()
+        const { email = '', dcb='', cmb = "", gov="", page = 1, perPage = 20 } = request.all()
         const votingBoardCandidatesQ = await VotingBoardCandidateDAO.find(
-            { email: email, page: page, perPage: perPage }
+            { email: email, page: page, perPage: perPage, dcb, cmb, gov }
         )
         return view.render('admin/candidate/index', {
             email: email,
+            dcb,
+            cmb,
+            gov,
             page: votingBoardCandidatesQ.pages.page,
             perPage: votingBoardCandidatesQ.pages.perPage,
             lastPage: votingBoardCandidatesQ.pages.lastPage,
@@ -57,9 +60,9 @@ class CandidateController {
      */
     async voterIndex({ request, view, params }) {
         const { id = 0 } = params
-        const { page = 1, perPage = 20 } = request.all()
+        const { page = 1, perPage = 20, email="", tx_id="",board_type="" } = request.all()
         const votingBoardVotesQ = await VotingBoardVoteDAO.find(
-            { votingBoardCandidateId: id, page: page, perPage: perPage }
+            { votingBoardCandidateId: id, page: page, perPage: perPage, email, tx_id, board_type }
         )
         return view.render('admin/candidate/voter_index', {
             id: id,
@@ -67,6 +70,9 @@ class CandidateController {
             perPage: votingBoardVotesQ.pages.perPage,
             lastPage: votingBoardVotesQ.pages.lastPage,
             votingBoardVotes: votingBoardVotesQ.rows,
+            email,
+            tx_id,
+            board_type,
         })
     }
 }
