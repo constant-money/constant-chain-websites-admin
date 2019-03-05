@@ -2,11 +2,30 @@
 @section('content_name')
 Proposal GOV
 @endsection
+
+@section('style')
+  {{style('https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css')}}
+@endsection
+
+
 @section('content')
     <form class="form-inline">
         <div class="form-group mx-sm-3 mb-2">
-            <label for="email" class="sr-only">Email</label>
-        <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ email }}">
+            <label for="amount" class="sr-only">User Email</label>
+            <input type="email" class="form-control" name="email" id="email" placeholder="User Email" value="{{email}}"/>
+          </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <input type="text" class="form-control" name="tx_id" id="tx_id" placeholder="Transaction ID" value="{{tx_id}}" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <input type="text" class="form-control" name="data" id="data" placeholder="Data" value="{{data}}" />
+        </div>
+
+        <div class="form-group mx-sm-3 mb-2">
+          <input type="text" class="form-control" name="from_date" id="from_date" placeholder="Created From" value="{{from_date}}" />
+        </div>
+        <div class="form-group mx-sm-3 mb-2">
+          <input type="text" class="form-control" name="to_date" id="to_date" placeholder="Created To" value="{{to_date}}" />
         </div>
         <button type="submit" class="btn btn-primary mb-2">Find</button>
     </form>
@@ -35,7 +54,7 @@ Proposal GOV
                     <td class="text-truncate" style="max-width: 150px;">{{ votingProposalGOV.tx_id }}</td>
                     <td>{{moment(user.created_at).format("DD-MM-YYYY")}}</td>
                     <td class="text-truncate" style="max-width: 30px;">
-                        <a href="{{ route('admin.proposal.govvoterindex', { id: votingProposalGOV.id }) }}">Voters</a>
+                        <a href="{{ route('admin.proposal.govvoterindex', { id: votingProposalGOV.id }) }}">Voters ({{votingProposalGOV.vote_count}})</a>
                     </td>
                 </tr>
             @endeach
@@ -46,10 +65,26 @@ Proposal GOV
 @endsection
 @section('suffix_script')
 <script>
-    $(document).ready(function(){
-        $("#email").on("keyup", function() {
-            $("#form" ).submit();
-        });
-    });
+    // $(document).ready(function(){
+    //     $("#email").on("keyup", function() {
+    //         $("#form" ).submit();
+    //     });
+    // });
 </script>
+
+@section('script')
+    {{ script('https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js') }}
+    <script>
+        $('#from_date').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'dd-mm-yyyy',
+        });
+        $('#to_date').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'dd-mm-yyyy',
+        });
+    </script>
+  @endsection
+
+
 @endsection
