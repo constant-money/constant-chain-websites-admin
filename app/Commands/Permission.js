@@ -24,7 +24,7 @@ class Permission extends Command {
       console.log('add admin role')
       role = new Role()
       role.name = 'admin'
-      role.save()
+      await role.save()
     }
     const rs = use('Route').list()
     for (let i = 0; i < rs.length; i++) {
