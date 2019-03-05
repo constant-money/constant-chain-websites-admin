@@ -4,13 +4,32 @@
 PORTAL BORROW RESPONSE
 @endsection
 
+@section('style')
+  {{style('https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css')}}
+@endsection
+
 @section('content')
 
   <form class="form-inline" method="POST" action="/admin/portalborrowresponse/find" >
+    {{ csrfField() }}
+    <div class="form-group mx-sm-3 mb-2">
+        <label for="amount" class="sr-only">User Email</label>
+        <input type="email" class="form-control" name="email" id="email" placeholder="User Email">
+      </div>
+    <div class="form-group mx-sm-3 mb-2">
+      <input type="text" class="form-control" name="constant_loan_response_tx_id" id="constant_loan_response_tx_id" placeholder="Constant Loan Response Transaction">
+    </div>
     <div class="form-group mx-sm-3 mb-2">
       <label for="amount" class="sr-only">Action</label>
       <input type="text" class="form-control" name="action" id="action" placeholder="Action">
     </div>
+
+    <div class="form-group mx-sm-3 mb-2">
+        <input type="text" class="form-control" name="from_date" id="from_date" placeholder="Created From">
+      </div>
+      <div class="form-group mx-sm-3 mb-2">
+        <input type="text" class="form-control" name="to_date" id="to_date" placeholder="Created To">
+      </div>
     <button type="submit" class="btn btn-primary mb-2">Find</button>
   </form>
 
@@ -40,6 +59,21 @@ PORTAL BORROW RESPONSE
   </table>
 
   @!component('admin.components.pagination', urlPrefix=(route('admin.portalborrowresponse.index')+'?'), page=page, lastPage=lastPage, perPage=perPage)
+
+  @section('script')
+    {{ script('https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js') }}
+    <script>
+        $('#from_date').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'dd-mm-yyyy',
+        });
+        $('#to_date').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'dd-mm-yyyy',
+        });
+    </script>
+  @endsection
+
 
 @endsection
 
