@@ -47,7 +47,7 @@ Candidate List
                     <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.gov }}</td>
                     <td>{{moment(votingBoardCandidate.created_at).format("DD-MM-YYYY")}}</td>
                     <td class="text-truncate" style="max-width: 30px;">
-                        <a href="{{ route('admin.candidate.voterindex', { id : votingBoardCandidate.id }) }}">Voters</a>
+                        <a href="{{ route('admin.candidate.voterindex', { id : votingBoardCandidate.id }) }}">Voters ({{votingBoardCandidate.vote_count}})</a>
                     </td>
                 </tr>
             @endeach

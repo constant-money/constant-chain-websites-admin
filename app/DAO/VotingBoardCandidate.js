@@ -15,6 +15,7 @@ class VotingBoardCandidate {
         let q = VotingBoardCandidateModel
             .query()
             .with('user')
+            .withCount('votes as vote_count')
             .whereNull('deleted_at')
         if (email != '') {
             q.whereExists(function () {

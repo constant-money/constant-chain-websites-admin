@@ -10,6 +10,9 @@ class VotingBoardCandidate extends Model {
     user() {
         return this.belongsTo('App/Models/User', 'user_id', 'id')
     }
+    votes() {
+      return this.hasMany('App/Models/VotingBoardVote','id','voting_board_candidate_id')
+    }
 }
 
 module.exports = VotingBoardCandidate
