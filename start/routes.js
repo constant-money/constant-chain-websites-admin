@@ -17,16 +17,17 @@
 const Route = use('Route')
 // ROOT ROUTES
 Route.get('/', ({ response }) => {
-  response.redirect('admin')
+  return response.redirect('admin')
 })
 
 // ADMIN PANEL ROUTES
 Route.get('admin/', 'Admin/HomeController.index')
+  .middleware('auth')
 
 // ADMIN PORTAL BORROW
 Route.post('admin/portalborrow/find', 'Admin/PortalborrowController.find')
 Route.get('admin/portalborrow/find', ({ response }) => {
-  response.redirect("/admin/portalborrow");
+  return response.redirect("/admin/portalborrow");
 })
 Route.resource('admin/portalborrow', 'Admin/PortalborrowController')
 // Route.group(() => {
@@ -40,19 +41,19 @@ Route.resource('admin/portalborrow', 'Admin/PortalborrowController')
 
 // ADMIN PORTAL BORROW RESPONSE
 Route.group(() => {
-  Route.get('/', 'Admin/PortalborrowresponseController.index').as('admin.portalborrowresponse.index')
+  Route.get('/', 'Admin/PortalborrowresponseController.index')
   Route.post('/find', 'Admin/PortalborrowresponseController.find')
   Route.get('/find', ({ response }) => {
-    response.redirect("/admin/portalborrowresponse");
+    return response.redirect("/admin/portalborrowresponse");
   })
-  Route.get('/:id', 'Admin/PortalborrowresponseController.show').as('admin.portalborrowresponse.show')
+  Route.get('/:id', 'Admin/PortalborrowresponseController.show')
 
 }).prefix('admin/portalborrowresponse')
 
 // Home routes
-Route
-  .get('/admin/index', 'Admin/HomeController.index')
-  .middleware('auth')
+// Route
+//   .get('/admin/index', 'Admin/HomeController.index')
+//   .middleware('auth')
 
 Route
   .get('/admin/dashboard', 'Admin/HomeController.dashboard')
