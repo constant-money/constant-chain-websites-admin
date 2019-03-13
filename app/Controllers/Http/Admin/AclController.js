@@ -12,7 +12,7 @@ class AclController {
         })
     }
 
-    async roleShow({ request, response, view, params }) {
+    async roleShow({ request, response, session, view, params }) {
         const { id = 0 } = params
         if (request.method() == 'POST') {
             const { permissions = {} } = request.all()
@@ -48,6 +48,7 @@ class AclController {
                     })
                 }
             };
+            session.flash({ success: 'Update Role successful' })
             return response.route('admin.acl.roleshow', { id: id })
         }
         const role = await PermissionRoleDAO.first(id)
