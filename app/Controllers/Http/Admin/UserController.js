@@ -3,6 +3,8 @@
 const UserDAO = use('UserDAO')
 const PermissionRoleDAO = use('App/DAO/PermissionRole')
 const PermissionUserRoleDAO = use('App/DAO/PermissionUserRole')
+const UserKycsModel = use('App/Models/UserKycs')
+const ConstantApi = use('ConstantApi')
 
 class UserController {
     /**
@@ -80,8 +82,8 @@ class UserController {
                     }
                 };
             }
-            const { is_admin = 0 } = request.all()
-            user.is_admin = is_admin
+            const { role = 0 } = request.all()
+            user.role = role
             await user.save()
             return response.route('admin.user.show', { id: id })
         }
@@ -90,11 +92,13 @@ class UserController {
         userRoles.forEach(r => {
             checkRoles[r.id] = true
         });
+        const userKycs = await UserKycsModel.query().whereNull('deleted_at').where('user_id', user.id).first()
         return view.render('admin/users/form', {
             id: id,
             user: user,
             allRoles: allRoles,
             checkRoles: checkRoles,
+            userKycs: userKycs,
         })
     }
 
@@ -103,6 +107,26 @@ class UserController {
             status: 1,
             message: 'OK',
         })
+    }
+
+    async kyc({ request, response, session, params }) {
+        const { id = 0 } = params
+        const { approved, rejected } = request.all()
+        if (approved) {
+            const res = await ConstantApi.kyc(session.get('TOKEN'), id)
+            if (res.Error != undefined) {
+                throw new Error(res.Error.Message);
+                session
+                    .withErrors([{ field: 'error', message: 'Approve KYC failed!' }])
+                    .flashAll()
+            } else {
+                session.flash({ notification: 'Approve KYC successful!' })
+            }
+        }
+        if (rejected) {
+            session.flash({ notification: 'Reject KYC successful!' })
+        }
+        return response.route('admin.user.show', { id: id })
     }
 }
 

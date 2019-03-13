@@ -21,7 +21,7 @@ class AuthController {
                     .remember(true)
                     .attempt(email, password)
                 if (authCheck) {
-                    if (auth.user.is_admin != undefined && auth.user.is_admin == true) {
+                    if (auth.user.role == 2) {
                         const res = await ConstantApi.login(email, password)
                         if (res.Error != undefined) {
                             throw new Error(res.Error.Message);

@@ -33,14 +33,17 @@ User #{{ id }}
                 </div>
             </div>   
             <div class="form-group">
-                <label class="control-label col-sm-2" for="is_admin">Admin:</label>
+                <label class="control-label col-sm-2" for="role">Role:</label>
                 <div class="col-sm-10"> 
-                    <input type="checkbox" name="is_admin" {{ user.is_admin == 1 ? 'checked="checked"' : '' }} value="1">
+                    <select class="form-control" id="role" name="role">
+                        <option value="1" {{ user.role == 1 ? 'selected' : '' }}>Normal</option>
+                        <option value="2" {{ user.role == 2 ? 'selected' : '' }}>Admin</option>
+                    </select>
                 </div>
             </div>  
             @if(permission(userPermissions, 'POST', 'admin.user.roleindex'))
             <div class="form-group">
-                <label class="control-label col-sm-2" for="roles">Roles:</label>
+                <label class="control-label col-sm-2" for="roles">Permissions:</label>
                 <div class="col-sm-10"> 
                         @each(role in allRoles)
                         <div class="checkbox">
@@ -54,5 +57,22 @@ User #{{ id }}
                 <button type="submit" class="btn btn-primary mb-2">Save</button>
             </div>        
           </form>
+          @if(userKycs != null)
+          <form class="form-horizontal" method="POST" action="{{route('admin.user.kyc', {id : user.id})}}">
+            {{ csrfField() }}
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="full_name">FullName:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="full_name" disabled value="{{ userKycs.full_name }}">
+                </div>
+            </div> 
+            @if(permission(userPermissions, 'POST', 'admin.user.kyc'))
+            <div class="form-group mx-sm-3 mb-2">
+                <button type="submit" name="approved" value="1" class="btn btn-primary mb-2">Approve Kyc</button>
+                <button type="submit" name="rejected" value="1" class="btn btn-danger mb-2">Reject Kyc</button>
+            </div>
+            @endif
+          </form>
+          @endif
   </div>
 @endsection

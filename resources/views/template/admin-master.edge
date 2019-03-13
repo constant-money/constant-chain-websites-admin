@@ -113,6 +113,14 @@
           @endsection
 
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-top: 30px">
+            @if(flashMessage('notification'))
+              <span style="color: cornflowerblue; font-size: 20pt; margin-bottom: 50px">{{ flashMessage('notification') }}</span>
+              <br>
+            @endif
+            @if(hasErrorFor('error'))
+              <span style="color: red; font-size: 20pt; margin-bottom: 50px">{{ getErrorFor('error') }}</span>
+              <br>
+            @endif
               <h2>
                 @!section('content_name')
               </h2>

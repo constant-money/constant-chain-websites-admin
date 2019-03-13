@@ -3,11 +3,9 @@ const constantConf = require('../../config/constant')
 const request = require('request')
 
 class ConstantApi {
-    doPostJson(url, json) {
+    makeRequest(options) {
         return new Promise(function (resolve, reject) {
-            request.post(url, {
-                json: json
-            }, (error, res, body) => {
+            request(options, (error, res, body) => {
                 if (error) {
                     reject(error)
                     return
@@ -17,11 +15,32 @@ class ConstantApi {
         })
     }
     login(email, password) {
-        const url = `${constantConf.constantApiUrl}/auth/login`
-        return this.doPostJson(url, {
-            email: email,
-            password: password
-        })
+        const options = {
+            url: `${constantConf.constantApiUrl}/auth/login`,
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+            },
+            json: {
+                email: email,
+                password: password
+            }
+        };
+        return this.makeRequest(options)
+    }
+    kyc(token, userId) {
+        const options = {
+            url: `${constantConf.constantApiUrl}/admin/primetrust/kyc`,
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            json: {
+                UserID: parseInt(userId, 0),
+            }
+        };
+        return this.makeRequest(options)
     }
 }
 

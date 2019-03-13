@@ -80,6 +80,8 @@ Route.group(() => {
     .post('/:id', 'Admin/UserController.show')
   Route
     .post('/:id/roles', 'Admin/UserController.roleIndex')
+  Route
+    .post('/:id/kyc', 'Admin/UserController.kyc')
 })
   .middleware('auth')
   .prefix('admin/users')
