@@ -9,7 +9,6 @@
     {{--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  --}}
     {{ style('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css') }}
     {{ style('admin/css/dashboard') }}
-
     {{ script('https://code.jquery.com/jquery-3.3.1.slim.min.js') }}
 
     @!section('style')
@@ -113,19 +112,40 @@
           @endsection
 
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-top: 30px">
-            @if(flashMessage('notification'))
-              <span style="color: cornflowerblue; font-size: 20pt; margin-bottom: 50px">{{ flashMessage('notification') }}</span>
-              <br>
-            @endif
-            @if(hasErrorFor('error'))
-              <span style="color: red; font-size: 20pt; margin-bottom: 50px">{{ getErrorFor('error') }}</span>
-              <br>
-            @endif
+            <div class="col">
+              @if(flashMessage('success'))
+                <div class="alert alert-success">
+                  <a href="#" class="close" data-dismiss="alert">&times;</a>
+                  <strong>Success!</strong> {{ flashMessage('success') }}
+                </div>
+              @endif
+              @if(flashMessage('info'))
+                <div class="alert alert-info">
+                  <a href="#" class="close" data-dismiss="alert">&times;</a>
+                  <strong>Success!</strong> {{ flashMessage('info') }}
+                </div>
+              @endif
+              @if(flashMessage('warning'))
+                <div class="alert alert-warning">
+                  <a href="#" class="close" data-dismiss="alert">&times;</a>
+                  <strong>Success!</strong> {{ flashMessage('warning') }}
+                </div>
+              @endif
+              @if(flashMessage('error'))
+                <div class="alert alert-danger">
+                  <a href="#" class="close" data-dismiss="alert">&times;</a>
+                  <strong>Error!</strong> {{ flashMessage('error') }}
+                </div>
+              @endif
+            </div>
+            <div class="col">
               <h2>
                 @!section('content_name')
               </h2>
-              <br>
-            @!section('content')
+            </div>
+            <div class="col">
+              @!section('content')
+            </div>
           </main>
         </div>
       </div>

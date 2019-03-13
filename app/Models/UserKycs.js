@@ -10,11 +10,6 @@ class UserKycs extends Model {
     user() {
         return this.belongsTo('App/Models/User', 'user_id', 'id')
     }
-    async getByUserId(user_id) {
-        return await this.query()
-            .whereNull('deleted_at')
-            .where('user_id', user_id).first()
-    }
 }
 
 module.exports = UserKycs

@@ -38,7 +38,7 @@ class UserController {
      * @param {Response} ctx.response
      * @param {View} ctx.view
      */
-    async show({ request, response, auth, view, params }) {
+    async show({ request, response, session, auth, view, params }) {
         const { id = 0 } = params
         const user = await UserDAO.first(id)
         if (user == undefined) {
@@ -85,6 +85,7 @@ class UserController {
             const { role = 0 } = request.all()
             user.role = role
             await user.save()
+            session.flash({ success: 'Update User successful!' })
             return response.route('admin.user.show', { id: id })
         }
         const allRoles = (await PermissionRoleDAO.find({})).rows
@@ -113,18 +114,19 @@ class UserController {
         const { id = 0 } = params
         const { approved, rejected } = request.all()
         if (approved) {
-            const res = await ConstantApi.kyc(session.get('TOKEN'), id)
-            if (res.Error != undefined) {
-                throw new Error(res.Error.Message);
-                session
-                    .withErrors([{ field: 'error', message: 'Approve KYC failed!' }])
-                    .flashAll()
-            } else {
-                session.flash({ notification: 'Approve KYC successful!' })
+            try {
+                const res = await ConstantApi.kyc(session.get('TOKEN'), id)
+                if (res.Error != undefined) {
+                    session.flash({ error: `Approve KYC failed "${res.Error.Message}"` })
+                } else {
+                    session.flash({ success: 'Approve KYC successful' })
+                }
+            } catch (e) {
+                session.flash({ error: `Approve KYC failed "${e}"` })
             }
         }
         if (rejected) {
-            session.flash({ notification: 'Reject KYC successful!' })
+            session.flash({ success: 'Reject KYC successful' })
         }
         return response.route('admin.user.show', { id: id })
     }
