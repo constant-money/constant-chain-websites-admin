@@ -58,6 +58,7 @@ User #{{ id }}
             </div>        
           </form>
           @if(userKycs != null)
+          <h3>KYC INFOMATION</h3>
           <form class="form-horizontal" method="POST" action="{{route('admin.user.kyc', {id : user.id})}}">
             {{ csrfField() }}
             <div class="form-group">
@@ -66,7 +67,115 @@ User #{{ id }}
                     <input type="text" class="form-control" id="full_name" disabled value="{{ userKycs.full_name }}">
                 </div>
             </div> 
-            @if(permission(userPermissions, 'POST', 'admin.user.kyc'))
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">DOB:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="dob" disabled value="{{ userKycs.dob }}">
+                </div>
+            </div> 
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Gender:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="gender" disabled value="{{ userKycs.gender }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Tax Country:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="tax_country" disabled value="{{ userKycs.tax_country }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">tax_id_number:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="tax_id_number" disabled value="{{ userKycs.tax_id_number }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Address Street1:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="address_street1" disabled value="{{ userKycs.address_street1 }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Address Street2:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="address_street2" disabled value="{{ userKycs.address_street2 }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Address Region:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="address_region" disabled value="{{ userKycs.address_region }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Address City:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="address_city" disabled value="{{ userKycs.address_city }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Address Postal Code:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="address_postal_code" disabled value="{{ userKycs.address_postal_code }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Address Country:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="address_country" disabled value="{{ userKycs.address_country }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Phone Country Code:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="phone_country_code" disabled value="{{ userKycs.phone_country_code }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Phone Number:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="phone_number" disabled value="{{ userKycs.phone_number }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Primetrust Contact:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="primetrust_contact" disabled value="{{ userKycs.primetrust_contact }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Primetrust Contact Id:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="primetrust_contact_id" disabled value="{{ userKycs.primetrust_contact_id }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Verification Level:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="verification_level" disabled value="{{ userKycs.verification_level }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Verification Level:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="verification_level" disabled value="{{ userKycs.verification_level }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Primetrust Contact Error:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="primetrust_contact_error" disabled value="{{ userKycs.primetrust_contact_error }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="dob">Primetrust Contact Status:</label>
+                <div class="col-sm-10"> 
+                    <input type="text" class="form-control" id="primetrust_contact_status" disabled value="{{ userKycs.primetrust_contact_status }}">
+                </div>
+            </div>
+            @if(permission(userPermissions, 'POST', 'admin.user.kyc') && userKycs.primetrust_contact_status != 6)
             <div class="form-group mx-sm-3 mb-2">
                 <button type="submit" name="approved" value="1" class="btn btn-primary mb-2">Approve Kyc</button>
                 <button type="submit" name="rejected" value="1" class="btn btn-danger mb-2">Reject Kyc</button>
