@@ -1,60 +1,86 @@
 @layout('template.admin-master')
-@section('content_name')
-Candidate List
+@section('content_header')
+<h2>Candidate List</h2>
 @endsection
 @section('content')
-    <form class="form-inline">
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="email" class="sr-only">Email</label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="Email" value="{{ email }}">
+    <div class="col-xs-12">
+      <div class="box box-info">
+        <div class="box-body">
+          <div class="row" style="margin-top: 15px">
+            <div class="col-sm-12">
+              <form role="form">
+                <div class="row">
+                  <div class="form-group col-sm-1">
+                    <label>
+                      <input type="radio" name="candidateType" {{ candidateType == 'dcb' ? 'checked' : '' }} value="dcb" class="flat-red" />
+                      DCB
+                    </label>
+                  </div>
+                  <div class="form-group col-sm-1">
+                    <label>
+                      <input type="radio" name="candidateType" {{ candidateType == 'gov' ? 'checked' : '' }} value="gov" class="flat-red" />
+                      GOV
+                    </label>
+                  </div>
+                  <div class="form-group col-sm-2">
+                    <label>
+                      <input type="radio" name="candidateType" {{ candidateType == 'cmb' ? 'checked' : '' }} value="cmb" class="flat-red" />
+                      CMB
+                    </label>
+                  </div>
+                  <div class="form-group col-sm-6" style="position: relative; top: -8px">
+                    <input type="text" class="form-control" value="{{ candidateAddress }}" name="candidateAddress" placeholder="Candidate address"/>
+                  </div>
+                  <div class="form-group col-sm-1" style="position: relative; top: -8px">
+                    <button type="submit" class="btn btn-primary mb-2">Find</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row"></div>
+            <div class="row">
+              <div class="col-sm-12">
+                <table class="table table-bordered table-hover dataTable" role="grid">
+                  <thead>
+                    <tr role="row">
+                      <th>#</th>
+                      <th>Email</th>
+                      <th>Address</th>
+                      <th>Date Created</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @each(votingBoardCandidate in votingBoardCandidates)
+                        <tr role="row">
+                            <td><a href="{{ route('admin.candidate.show', { id : votingBoardCandidate.id }) }}">{{ votingBoardCandidate.id }}</a></td>
+                            <td style="max-width: 100px;">
+                                <a href="{{ route('admin.user.show', { id : votingBoardCandidate['$relations'].user.id }) }}">{{ votingBoardCandidate['$relations'].user.email }}</a>
+                            </td>
+                            <td style="max-width: 250px;">
+                              <span style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: inline-block;max-width: 100%;">{{ votingBoardCandidate.dcb || votingBoardCandidate.cmb || votingBoardCandidate.gov }}</span>
+                            </td>
+                            <td style="max-width: 30px;">{{moment(votingBoardCandidate.created_at).format("DD-MM-YYYY")}}</td>
+                            <td class="text-truncate" style="max-width: 30px;">
+                                <a href="{{ route('admin.candidate.voterindex', { id : votingBoardCandidate.id }) }}">Voters ({{votingBoardCandidate.vote_count}})</a>
+                            </td>
+                        </tr>
+                    @endeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-7">
+                @!component('admin.components.pagination', urlPrefix=(route('admin.candidate.index') + '?email=' + email + '&candidateType=' + candidateType + '&candidateAddress=' + candidateAddress + '&'), candidateType=candidateType, candidateAddress=candidateAddress, page=page, lastPage=lastPage, perPage=perPage)
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="dcb" class="sr-only">DCB</label>
-            <input type="text" class="form-control" name="dcb" id="dcb" placeholder="DCB" value="{{ dcb }}">
-        </div>
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="cmb" class="sr-only">CMB</label>
-            <input type="text" class="form-control" name="cmb" id="cmb" placeholder="CMB" value="{{ cmb }}">
-        </div>
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="gov" class="sr-only">GOV</label>
-            <input type="text" class="form-control" name="gov" id="gov" placeholder="GOV" value="{{ gov }}">
-        </div>
-        <button type="submit" class="btn btn-primary mb-2">Find</button>
-    </form>
-    <br>
-    <table class="table table-hover table-sm">
-        <thead class="thead-light">
-            <tr>
-            <th scope="col">#</th>
-            <th scope="col">Email</th>
-            <th scope="col">DCB</th>
-            <th scope="col">CMB</th>
-            <th scope="col">GOV</th>
-            <th scope="col">Date Created</th>
-            <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            @each(votingBoardCandidate in votingBoardCandidates)
-                <tr>
-                <th scope="row"><a href="{{ route('admin.candidate.show', { id : votingBoardCandidate.id }) }}">{{ votingBoardCandidate.id }}</a></th>
-                    <td class="text-truncate" style="max-width: 100px;">
-                        <a href="{{ route('admin.user.show', { id : votingBoardCandidate['$relations'].user.id }) }}">{{ votingBoardCandidate['$relations'].user.email }}</a>
-                    </td>
-                    <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.dcb }}</td>
-                    <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.cmb }}</td>
-                    <td class="text-truncate" style="max-width: 150px;">{{ votingBoardCandidate.gov }}</td>
-                    <td>{{moment(votingBoardCandidate.created_at).format("DD-MM-YYYY")}}</td>
-                    <td class="text-truncate" style="max-width: 30px;">
-                        <a href="{{ route('admin.candidate.voterindex', { id : votingBoardCandidate.id }) }}">Voters ({{votingBoardCandidate.vote_count}})</a>
-                    </td>
-                </tr>
-            @endeach
-        </tbody>
-    </table>
-    <br>
-    @!component('admin.components.pagination', urlPrefix=(route('admin.candidate.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+      </div>
+    </div>
 @endsection
 @section('suffix_script')
 <script>

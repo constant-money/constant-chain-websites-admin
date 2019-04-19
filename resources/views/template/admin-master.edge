@@ -7,147 +7,122 @@
 
     <!-- Bootstrap CSS -->
     {{--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  --}}
-    {{ style('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css') }}
-    {{ style('admin/css/dashboard') }}
+    {{ style('https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css') }}
+    {{ style('https://adminlte.io/themes/AdminLTE/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}
+    {{ style('https://adminlte.io/themes/AdminLTE/bower_components/Ionicons/css/ionicons.min.css') }}
+    {{ style('https://adminlte.io/themes/AdminLTE/plugins/iCheck/all.css') }}
+    {{ style('https://use.fontawesome.com/releases/v5.8.1/css/all.css') }}
+    {{ style('admin/css/adminlte/dist/css/AdminLTE.min.css') }}
+    {{ style('admin/css/adminlte/dist/css/skins/_all-skins.min.css') }}
+    {{ style('admin/css/adminlte/dist/css/skins/_all-skins.min.css') }}
     {{ script('https://code.jquery.com/jquery-3.3.1.slim.min.js') }}
 
     @!section('style')
 
   <title>Constant Admin Panel</title>
   </head>
-  <body>
-    <div>
-      @section('topbar')
-      <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin">CONSTANT ADMIN PANEL</a>
-        <ul class="navbar-nav px-3">
-          <li class="nav-item text-nowrap">
-          <a class="nav-link" href="{{ route('admin.auth.logout') }}">Sign out</a>
-          </li>
-        </ul>
-      </nav>
-      @endsection
-
-      <div class="container-fluid">
-        <div class="row">
-
-          @section('sidebar')
-          <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-            <div class="sidebar-sticky">
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">
-                    <span data-feather="home"></span>
-                    Dashboard <span class="sr-only"></span>
+  <body class="skin-blue sidebar-mini">
+    <div class="wrapper">
+      <header class="main-header">
+        <a href="/" class="logo">
+          Constant Admin Panel
+        </a>
+        <nav class="navbar navbar-static-top">
+         <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+         </a>
+         <div class="navbar-custom-menu">
+            <ul class="nav navbar-nav">
+              <li>
+                <a href="#" data-toggle="control-sidebar">
+                  <i class="fas fa fa-sign-out-alt"></i>
+                </a>
+              </li>
+            </ul>
+         </div>
+        </nav>
+      </header>
+      <aside class="main-sidebar">
+        <section class="sidebar">
+          <div class="user-panel">
+            <div class="pull-left image">
+              <img src="/admin/image/user2-160x160.jpg" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+              <p>Constant User</p>
+              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+            </div>
+          </div>
+          <ul class="sidebar-menu tree">
+                <li class="treeview">
+                  <a href="#">
+                    <i class="fas fa fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
                   </a>
                 </li>
-                @if(permission(userPermissions, 'GET', 'admin.user.index'))
-                <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.user.index') }}">
-                    <span data-feather="file"></span>
-                    Users
+                <!-- @if(permission(userpermissions, 'get', 'admin.user.index')) -->
+                <li class="treeview">
+                <a href="{{ route('admin.user.index') }}">
+                    <i class="fas fa fa-users"></i>
+                    <span>Users</span>
                   </a>
                 </li>
-                @endif
-                @if(permission(userPermissions, 'GET', 'admin.candidate.index'))
-                <li class="nav-item">
+                <!-- @endif -->
+                <!-- @if(permission(userpermissions, 'get', 'admin.candidate.index')) -->
+                <li class="treeview">
                     <a class="nav-link" href="{{ route('admin.candidate.index') }}">
-                        <span data-feather="file"></span>
-                        Candidate
+                      <i class="fas fa fa-vote-yea"></i>
+                      <span>Candidate</span>
                       </a>
                     </li>
-                @endif
-                @if(permission(userPermissions, 'GET', 'admin.portalborrow.index'))
-                <li class="nav-item">
+                <!-- @endif -->
+                <!-- @if(permission(userpermissions, 'get', 'admin.portalborrow.index')) -->
+                <li class="treeview">
                   <a class="nav-link" href="{{route('admin.portalborrow.index')}}">
-                    <span data-feather="file"></span>
-                    Portal Borrows
+                      <i class="fas fa fa-vote-yea"></i>
+                    <span>Portal borrows</span>
                   </a>
                 </li>
-                @endif
-                @if(permission(userPermissions, 'GET', 'admin.portalborrowresponse.index'))
-                <li class="nav-item">
+                <!-- @endif -->
+                <!-- @if(permission(userpermissions, 'get', 'admin.portalborrowresponse.index')) -->
+                <li class="treeview">
                   <a class="nav-link" href="{{route('admin.portalborrowresponse.index')}}">
-                    <span data-feather="file"></span>
-                    Portal Borrow Reponse
+                      <i class="fas fa fa-vote-yea"></i>
+                    <span>Portal borrow reponse</span>
                   </a>
                 </li>
-                @endif
-                @if(permission(userPermissions, 'GET', 'admin.proposal.dcbindex'))
-                <li class="nav-item">
+                <!-- @endif -->
+                <!-- @if(permission(userpermissions, 'get', 'admin.proposal.dcbindex')) -->
+                <li class="treeview">
                   <a class="nav-link" href="{{route('admin.proposal.dcbindex')}}">
-                    <span data-feather="file"></span>
-                    Proposal DCB
+                      <i class="fas fa fa-vote-yea"></i>
+                    <span>Proposal dcb</span>
                   </a>
                 </li>
-                @endif
-                @if(permission(userPermissions, 'GET', 'admin.proposal.govindex'))
-                <li class="nav-item">
+                <!-- @endif -->
+                <!-- @if(permission(userpermissions, 'get', 'admin.proposal.govindex')) -->
+                <li class="treeview">
                   <a class="nav-link" href="{{route('admin.proposal.govindex')}}">
-                    <span data-feather="file"></span>
-                    Proposal GOV
+                      <i class="fas fa fa-vote-yea"></i>
+                    <span>Proposal gov</span>
                   </a>
                 </li>
-                @endif
-              </ul>
-
-              <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                <span>ACL Settings</span>
-                <a class="d-flex align-items-center text-muted" href="#">
-                  <span data-feather="plus-circle"></span>
-                </a>
-              </h6>
-              <ul class="nav flex-column mb-2">
-                @if(permission(userPermissions, 'GET', 'admin.acl.roleindex'))
-                <li class="nav-item">
-                  <a class="nav-link" href="{{route('admin.acl.roleindex')}}">
-                    <span data-feather="file-text"></span>
-                    Roles
-                  </a>
-                </li>
-                @endif
-              </ul>
-            </div>
-          </nav>
-          @endsection
-
-          <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-top: 20px">
-            <div class="col">
-              @if(flashMessage('success'))
-                <div class="alert alert-success">
-                  <a href="#" class="close" data-dismiss="alert">&times;</a>
-                  <strong>Success!</strong> {{ flashMessage('success') }}
-                </div>
-              @endif
-              @if(flashMessage('info'))
-                <div class="alert alert-info">
-                  <a href="#" class="close" data-dismiss="alert">&times;</a>
-                  <strong>Success!</strong> {{ flashMessage('info') }}
-                </div>
-              @endif
-              @if(flashMessage('warning'))
-                <div class="alert alert-warning">
-                  <a href="#" class="close" data-dismiss="alert">&times;</a>
-                  <strong>Success!</strong> {{ flashMessage('warning') }}
-                </div>
-              @endif
-              @if(flashMessage('error'))
-                <div class="alert alert-danger">
-                  <a href="#" class="close" data-dismiss="alert">&times;</a>
-                  <strong>Error!</strong> {{ flashMessage('error') }}
-                </div>
-              @endif
-            </div>
-            <div class="col">
-              <h2>
-                @!section('content_name')
-              </h2>
-            </div>
-            <div class="col" style="margin-top: 20px">
-              @!section('content')
-            </div>
-          </main>
-        </div>
+                <!-- @endif -->
+          </ul>
+        </section>
+      </aside>
+      <div class="content-wrapper">
+        <section class="content-header">
+          @!section('content_header')
+        </section>
+        <section class="content">
+          <div class="row">
+            @!section('content')
+          </div>
+        </section>
       </div>
     </div>
     @!section('suffix_script')
@@ -157,8 +132,12 @@
     {{--  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>  --}}
     {{--  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  --}}
     {{ script('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js') }}
-    {{ script('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js') }}
-
+    <!-- {{ script('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js') }} -->
+    {{ script('https://adminlte.io/themes/AdminLTE/bower_components/bootstrap/dist/js/bootstrap.min.js') }}
+    {{ script('https://adminlte.io/themes/AdminLTE/bower_components/fastclick/lib/fastclick.js') }}
+    {{ script('admin/js/icheck/icheck.min.js') }}
+    {{ script('admin/js/adminlte/dist/adminlte.min.js') }}
+    {{ script('admin/js/constant.js') }}
     @!section('script')
   </body>
 </html>

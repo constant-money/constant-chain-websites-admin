@@ -1,11 +1,10 @@
-<nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-end">
+<div class="dataTables_paginate paging_simple_numbers">
+  <ul class="pagination">
         @each(pageIndex in pageNumbers(page, lastPage))
         @if(pageIndex == page)
-        <li class="page-item active">
+        <li class="paginate_button active">
             <span class="page-link">
                 {{ pageIndex }}
-                <span class="sr-only">(current)</span>
             </span>
         </li>
         @elseif(pageIndex == -1)
@@ -14,5 +13,5 @@
         <li class="page-item"><a class="page-link" href="{{ urlPrefix }}page={{ pageIndex }}&perPage={{ perPage }}">{{ pageIndex }}</a></li>
         @endif
         @endeach
-    </ul>
-</nav>
+  </ul>
+</div>
