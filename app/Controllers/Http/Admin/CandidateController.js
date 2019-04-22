@@ -73,20 +73,13 @@ class CandidateController {
    */
   async voterIndex ({ request, view, params }) {
     const { id = 0 } = params
-    const {
-      page = 1,
-      perPage = 20,
-      email = '',
-      tx_id = '',
-      board_type = ''
-    } = request.all()
+    const { page = 1, perPage = 20, email = '', txId = '' } = request.all()
     const votingBoardVotesQ = await VotingBoardVoteDAO.find({
       votingBoardCandidateId: id,
       page: page,
       perPage: perPage,
       email,
-      tx_id,
-      board_type
+      txId
     })
     return view.render('admin/candidate/voter_index', {
       id: id,
@@ -95,8 +88,7 @@ class CandidateController {
       lastPage: votingBoardVotesQ.pages.lastPage,
       votingBoardVotes: votingBoardVotesQ.rows,
       email,
-      tx_id,
-      board_type
+      txId
     })
   }
 }

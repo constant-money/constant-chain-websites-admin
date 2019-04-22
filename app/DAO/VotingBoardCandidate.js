@@ -35,7 +35,6 @@ class VotingBoardCandidate {
       }
     }
     if (candidateType == 'cmb') {
-      console.log('123', candidateType, candidateAddress)
       if (candidateAddress) {
         q.whereExists(function () {
           q.where('cmb', 'like', `${candidateAddress}%`)
@@ -57,6 +56,8 @@ class VotingBoardCandidate {
         })
       }
     }
+
+    q.orderBy('vote_count', 'desc')
     return await q.paginate(page, perPage)
   }
 }
