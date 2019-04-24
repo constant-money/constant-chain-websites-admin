@@ -1,187 +1,113 @@
 @layout('template.admin-master')
-
-@section('content_name')
+@section('content_header')
 User #{{ id }}
 @endsection
-
 @section('content')
-  <div>
-        <form class="form-horizontal" method="POST">
-                {{ csrfField() }}
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="email">Email:</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="email" disabled value="{{ user.email }}">
+  <div class="col-xs-12">
+    <div class="box box-info">
+      <div class="box-body">
+        <div class="row" style="margin-top: 15px">
+          <div class="col-sm-12">
+            <form role="form" method="POST">
+              <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+              <div class="box-body">
+                <div class="row">
+                  <div class="form-group col-xs-3">
+                    <label>First name</label>
+                    <input type="text" class="form-control" name="firstName" value={{ user.first_name }}>
+                  </div>
+                  <div class="form-group col-xs-3">
+                    <label>Last name</label>
+                    <input type="text" class="form-control" name="lastName" value={{ user.last_name }}>
+                  </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="firstname">First Name:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="firstname" disabled value="{{ user.first_name }}">
+                <div class="row">
+                  <div class="form-group col-xs-6">
+                    <label>Email address</label>
+                    <input type="text" class="form-control" name="email" value={{ user.email }}>
+                  </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="firstname">Last Name:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="firstname" disabled value="{{ user.last_name }}">
+                <div class="row">
+                  <div class="form-group col-xs-12">
+                    <label>Payment address</label>
+                    <input type="text" class="form-control"  disabled value={{ user.payment_address }}>
+                  </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="payment_address">Payment Address:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="payment_address" disabled value="{{ user.payment_address }}">
+                <div class="row">
+                  <div class="form-group col-xs-12">
+                    <label>Public key</label>
+                    <input type="text" class="form-control"  disabled value={{ user.pubkey }}>
+                  </div>
                 </div>
-            </div>   
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="role">Role:</label>
-                <div class="col-sm-10"> 
-                    <select class="form-control" id="role" name="role">
-                        <option value="1" {{ user.role == 1 ? 'selected' : '' }}>Normal</option>
-                        <option value="2" {{ user.role == 2 ? 'selected' : '' }}>Admin</option>
-                    </select>
+                <div class="row">
+                  <div class="form-group">
+                      <label class="control-label col-sm-2" for="role">Role:</label>
+                      <div class="col-sm-4">
+                          <select class="form-control" id="role" name="role">
+                              <option value="1" {{ user.role == 1 ? 'selected' : '' }}>Normal</option>
+                              <option value="2" {{ user.role == 2 ? 'selected' : '' }}>Admin</option>
+                          </select>
+                      </div>
+                  </div>
                 </div>
-            </div>  
-            @if(permission(userPermissions, 'POST', 'admin.user.roleindex'))
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="roles">Permissions:</label>
-                <div class="col-sm-10"> 
-                        @each(role in allRoles)
-                        <div class="checkbox">
-                            <label><input type="checkbox" name="roles[{{ role.id }}]" {{ checkRoles[role.id] ? 'checked="checked"' : '' }} value="{{ role.id }}"> {{ role.name }}</label>
-                        </div>    
-                        @endeach
+                <div class="row">
+                  <div class="form-group col-xs-6">
+                    <button type="button" class="btn btn-default" onclick="location.href='/admin/users'">Cancel</button>
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                  </div>
                 </div>
-            </div>  
-            @endif
-            <div class="form-group mx-sm-3 mb-2">
-                <button type="submit" class="btn btn-primary mb-2">Save</button>
-            </div>        
-          </form>
-          @if(userKycs != null)
-          <h3>KYC INFOMATION</h3>
-          <form class="form-horizontal" method="POST" action="{{route('admin.user.kyc', {id : user.id})}}">
-            {{ csrfField() }}
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="full_name">FullName:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="full_name" disabled value="{{ userKycs.full_name }}">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="box box-info">
+      <div class="box-body">
+        <div class="row" style="margin-top: 15px">
+          <div class="col-sm-12">
+            <form role="form" method="POST">
+              <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+              <div class="box-body">
+                <div class="row">
+                  <div class="form-group col-xs-3">
+                    <label>First name</label>
+                    <input type="text" class="form-control" name="firstName" value={{ user.first_name }}>
+                  </div>
+                  <div class="form-group col-xs-3">
+                    <label>Last name</label>
+                    <input type="text" class="form-control" name="lastName" value={{ user.last_name }}>
+                  </div>
                 </div>
-            </div> 
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">DOB:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="dob" disabled value="{{ userKycs.dob }}">
+                <div class="row">
+                  <div class="form-group col-xs-6">
+                    <label>Email address</label>
+                    <input type="text" class="form-control" name="email" value={{ user.email }}>
+                  </div>
                 </div>
-            </div> 
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Gender:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="gender" disabled value="{{ userKycs.gender }}">
+                <div class="row">
+                  <div class="form-group col-xs-12">
+                    <label>Payment address</label>
+                    <input type="text" class="form-control"  disabled value={{ user.payment_address }}>
+                  </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Tax Country:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="tax_country" disabled value="{{ userKycs.tax_country }}">
+                <div class="row">
+                  <div class="form-group col-xs-12">
+                    <label>Public key</label>
+                    <input type="text" class="form-control"  disabled value={{ user.pubkey }}>
+                  </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">tax_id_number:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="tax_id_number" disabled value="{{ userKycs.tax_id_number }}">
+                <div class="row">
+                  <div class="form-group col-xs-6">
+                    <button type="button" class="btn btn-default" onclick="location.href='/admin/users'">Cancel</button>
+                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
+                  </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Address Street1:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="address_street1" disabled value="{{ userKycs.address_street1 }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Address Street2:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="address_street2" disabled value="{{ userKycs.address_street2 }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Address Region:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="address_region" disabled value="{{ userKycs.address_region }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Address City:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="address_city" disabled value="{{ userKycs.address_city }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Address Postal Code:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="address_postal_code" disabled value="{{ userKycs.address_postal_code }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Address Country:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="address_country" disabled value="{{ userKycs.address_country }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Phone Country Code:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="phone_country_code" disabled value="{{ userKycs.phone_country_code }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Phone Number:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="phone_number" disabled value="{{ userKycs.phone_number }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Primetrust Contact:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="primetrust_contact" disabled value="{{ userKycs.primetrust_contact }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Primetrust Contact Id:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="primetrust_contact_id" disabled value="{{ userKycs.primetrust_contact_id }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Verification Level:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="verification_level" disabled value="{{ userKycs.verification_level }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Verification Level:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="verification_level" disabled value="{{ userKycs.verification_level }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Primetrust Contact Error:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="primetrust_contact_error" disabled value="{{ userKycs.primetrust_contact_error }}">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="dob">Primetrust Contact Status:</label>
-                <div class="col-sm-10"> 
-                    <input type="text" class="form-control" id="primetrust_contact_status" disabled value="{{ userKycs.primetrust_contact_status }}">
-                </div>
-            </div>
-            @if(permission(userPermissions, 'POST', 'admin.user.kyc') && userKycs.primetrust_contact_status != 6)
-            <div class="form-group mx-sm-3 mb-2">
-                <button type="submit" name="approved" value="1" class="btn btn-primary mb-2">Approve Kyc</button>
-                <button type="submit" name="rejected" value="1" class="btn btn-danger mb-2">Reject Kyc</button>
-            </div>
-            @endif
-          </form>
-          @endif
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 @endsection

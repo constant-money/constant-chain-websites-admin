@@ -1,47 +1,67 @@
-
 const constantConf = require('../../config/constant')
 const request = require('request')
 
 class ConstantApi {
-    makeRequest(options) {
-        return new Promise(function (resolve, reject) {
-            request(options, (error, res, body) => {
-                if (error) {
-                    reject(error)
-                    return
-                }
-                resolve(body)
-            })
-        })
+  makeRequest (options) {
+    return new Promise(function (resolve, reject) {
+      request(options, (error, res, body) => {
+        if (error) {
+          reject(error)
+          return
+        }
+        resolve(body)
+      })
+    })
+  }
+  login (email, password) {
+    const options = {
+      url: `${constantConf.constantApiUrl}/auth/login`,
+      method: 'POST',
+      headers: {
+        Accept: 'application/json'
+      },
+      json: {
+        email: email,
+        password: password
+      }
     }
-    login(email, password) {
-        const options = {
-            url: `${constantConf.constantApiUrl}/auth/login`,
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-            },
-            json: {
-                email: email,
-                password: password
-            }
-        };
-        return this.makeRequest(options)
+    return this.makeRequest(options)
+  }
+  kyc (token, userId) {
+    const options = {
+      url: `${constantConf.constantApiUrl}/admin/primetrust/kyc`,
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      json: {
+        UserID: parseInt(userId, 0)
+      }
     }
-    kyc(token, userId) {
-        const options = {
-            url: `${constantConf.constantApiUrl}/admin/primetrust/kyc`,
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            json: {
-                UserID: parseInt(userId, 0),
-            }
-        };
-        return this.makeRequest(options)
+    return this.makeRequest(options)
+  }
+  createNewUser (
+    token,
+    { firstName, lastName, email, password, confirmPassword }
+  ) {
+    const options = {
+      url: `${constantConf.constantApiUrl}/auth/register`,
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      json: {
+        FirstName: firstName,
+        LastName: lastName,
+        Email: email,
+        Password: password,
+        ConfirmPassword: confirmPassword
+      }
     }
+    return this.makeRequest(options)
+  }
 }
 
 module.exports = new ConstantApi()

@@ -1,42 +1,106 @@
 @layout('template.admin-master')
-@section('content_name')
-Users
+@section('content_header')
+<h2>Users</h2>
 @endsection
 @section('content')
-    <form class="form-inline">
-        <div class="form-group mx-sm-3 mb-2">
-            <label for="email" class="sr-only">Email</label>
-        <input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ email }}">
+    <div class="col-xs-12">
+      <div class="box box-info">
+        <div class="box-body">
+          <div class="row" style="margin-top: 15px">
+            <div class="col-sm-10">
+              <form role="form">
+                <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+                <div class="row">
+                  <div class="form-group col-sm-3" style="position: relative; top: -8px">
+                    <input type="text" class="form-control" value="{{ email }}" name="email" placeholder="Email"/>
+                  </div>
+                  <div class="form-group col-sm-3" style="position: relative; top: -8px">
+                    <input type="text" class="form-control" value="{{ name }}" name="name" placeholder="User name"/>
+                  </div>
+                  <div class="form-group col-sm-3" style="position: relative; top: -8px">
+                    <input type="text" class="form-control" value="{{ paymentAddress }}" name="paymentAddress" placeholder="Payment address"/>
+                  </div>
+                  <div class="form-group col-sm-1" style="position: relative; top: -8px">
+                    <button type="submit" class="btn btn-primary mb-2">Find</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-sm-2" style="position: relative; top: -8px">
+              <input type="button" class="btn btn-success pull-right" value="Create user" onclick="location.href='/admin/users/new'" />
+            </div>
+          </div>
+          <div class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="row"></div>
+            <div class="row">
+              <div class="col-sm-12">
+                <table id="users" class="table table-bordered table-hover dataTable" role="grid">
+                  <thead>
+                    <tr role="row">
+                      <th>#</th>
+                      <th>Email</th>
+                      <th>Name</th>
+                      <th>Payment Address</th>
+                      <th>Date Created</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      @each(user in users)
+                          <tr>
+                          <th scope="row"><a href="{{ route('admin.user.show', { id : user.id }) }}">{{ user.id }}</a></th>
+                              <td class="text-truncate" style="max-width: 130px;">{{ user.email }}</td>
+                              <td class="text-truncate" style="max-width: 100px;">{{ user.first_name + ' ' + user.last_name}}</td>
+                              <td class="text-truncate" style="max-width: 150px;">
+                                <span style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: inline-block;max-width: 100%;">
+                                {{ user.payment_address }}
+                                </span>
+                              </td>
+                              <td>{{moment(user.created_at).format("DD-MM-YYYY")}}</td>
+                              <td>
+                                <button class="btn btn-info viewKeys" data-user-id={{ user.id }} data-user-pm={{ user.payment_address }} data-user-pubkey={{ user.pubkey }} data-user-privkey={{ user.priv_key }}>View keys</button>
+                                @if(user.is_active == 1)
+                                  <button class="btn btn-danger acde deactiveUser" data-user-id={{ user.id }}>Deactive</button>
+                                @else
+                                  <button class="btn btn-primary acde activeUser" data-user-id={{ user.id }}>Active</button>
+                                @endif
+                              </td>
+                          </tr>
+                      @endeach
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-7">
+                @!component('admin.components.pagination', urlPrefix=(route('admin.candidate.index') + '?email=' + email + '&candidateType=' + candidateType + '&candidateAddress=' + candidateAddress + '&'), candidateType=candidateType, candidateAddress=candidateAddress, page=page, lastPage=lastPage, perPage=perPage)
+              </div>
+            </div>
+            <div class="modal fade" id="modal-info" style="display: none;">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Info Modal</h4>
+                  </div>
+                  <div class="modal-body" style="word-break: break-all;">
+                    <p>Payment address: <span id="userPaymentAddress"></span></p>
+                    <p>Public key: <span id="userPublicKey"></span></p>
+                    <p>Private key: <span id="userPrivateKey"></span></p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->
+            </div>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary mb-2">Find</button>
-    </form>
-    <br>
-    <table class="table table-hover table-sm">
-        <thead class="thead-light">
-            <tr>
-            <th scope="col">#</th>
-            <th scope="col">Email</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Last Name</th>
-            <th scope="col">Payment Address</th>
-            <th scope="col">Date Created</th>
-            </tr>
-        </thead>
-        <tbody>
-            @each(user in users)
-                <tr>
-                <th scope="row"><a href="{{ route('admin.user.show', { id : user.id }) }}">{{ user.id }}</a></th>
-                    <td class="text-truncate" style="max-width: 100px;">{{ user.email }}</td>
-                    <td class="text-truncate" style="max-width: 100px;">{{ user.first_name }}</td>
-                    <td class="text-truncate" style="max-width: 100px;">{{ user.last_name }}</td>
-                    <td class="text-truncate" style="max-width: 150px;">{{ user.payment_address }}</td>
-                    <td>{{moment(user.created_at).format("DD-MM-YYYY")}}</td>
-                </tr>
-            @endeach
-        </tbody>
-    </table>
-    <br>
-    @!component('admin.components.pagination', urlPrefix=(route('admin.user.index') + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+      </div>
+    </div>
 @endsection
 @section('suffix_script')
 <script>
