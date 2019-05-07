@@ -38,6 +38,7 @@ class UserController {
       email,
       paymentAddress,
       name,
+      admin,
       page: usersQ.pages.page,
       perPage: usersQ.pages.perPage,
       lastPage: usersQ.pages.lastPage,

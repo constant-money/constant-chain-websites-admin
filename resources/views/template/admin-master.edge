@@ -53,7 +53,7 @@
             </div>
             <div class="pull-left info">
               <p>Constant User</p>
-              <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+              <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
           </div>
           <ul class="sidebar-menu tree" data-widget="tree">
@@ -93,7 +93,7 @@
                 </li>
                 <!-- @endif -->
                 <!-- @if(permission(userpermissions, 'get', 'admin.candidate.index')) -->
-                <li class="treeview">
+                <li>
                     <a class="nav-link" href="{{ route('admin.candidate.index') }}">
                       <i class="fas fa fa-vote-yea"></i>
                       <span>Candidate</span>
@@ -118,19 +118,30 @@
                 <!-- @endif -->
                 <!-- @if(permission(userpermissions, 'get', 'admin.proposal.dcbindex')) -->
                 <li class="treeview">
-                  <a class="nav-link" href="{{route('admin.proposal.dcbindex')}}">
-                      <i class="fas fa fa-vote-yea"></i>
-                    <span>Proposal dcb</span>
+                  <a href="#">
+                    <i class="fa fas fa-users-cog"></i>
+                    <span>Proposals</span>
+                    <span class="pull-right-container">
+                      <i class="fas fa-angle-left pull-right"></i>
+                    </span>
                   </a>
+                  <ul class="treeview-menu" style="display: none">
+                    <li>
+                      <a href="{{route('admin.proposal.dcbindex')}}">
+                        <i class="fa fas fa-edit"></i>
+                        DCB
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{route('admin.proposal.govindex')}}">
+                        <i class="fa fas fa-edit"></i>
+                        GOV
+                      </a>
+                    </li>
+                  </ul>
                 </li>
                 <!-- @endif -->
                 <!-- @if(permission(userpermissions, 'get', 'admin.proposal.govindex')) -->
-                <li class="treeview">
-                  <a class="nav-link" href="{{route('admin.proposal.govindex')}}">
-                      <i class="fas fa fa-vote-yea"></i>
-                    <span>Proposal gov</span>
-                  </a>
-                </li>
                 <!-- @endif -->
           </ul>
         </section>

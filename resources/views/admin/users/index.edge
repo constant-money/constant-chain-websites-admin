@@ -26,9 +26,11 @@
                 </div>
               </form>
             </div>
+            @if(!admin)
             <div class="col-sm-2" style="position: relative; top: -8px">
               <input type="button" class="btn btn-success pull-right" value="Create user" onclick="location.href='/admin/users/new'" />
             </div>
+            @endif
           </div>
           <div class="dataTables_wrapper form-inline dt-bootstrap">
             <div class="row"></div>

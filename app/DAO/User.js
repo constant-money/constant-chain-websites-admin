@@ -26,9 +26,9 @@ class User {
         .orWhere('last_name', 'LIKE', `%${name}%`)
     }
     if (admin) {
-      q.where('is_admin', '=', 1)
+      q.where('role', '=', 2)
     } else {
-      q.where('is_admin', '=', 0)
+      q.where('role', '<', 2)
     }
     return await q.paginate(page, perPage)
   }
