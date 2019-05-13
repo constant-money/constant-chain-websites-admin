@@ -107,6 +107,13 @@ Route.group(() => {
   .prefix('admin/proposal')
 
 Route.group(() => {
+  Route.get('/', 'Admin/ReserveController.index')
+  Route.get('/:id', 'Admin/ReserveController.show')
+})
+  .middleware('auth')
+  .prefix('admin/reserve')
+
+Route.group(() => {
   Route.get('/roles', 'Admin/AclController.roleIndex')
   Route.get('/roles/:id', 'Admin/AclController.roleShow')
   Route.post('/roles/:id', 'Admin/AclController.roleShow')

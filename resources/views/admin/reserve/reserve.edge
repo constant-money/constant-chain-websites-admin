@@ -1,6 +1,10 @@
 @layout('template.admin-master')
 @section('content_header')
-  Portal
+Reserve
+@endsection
+
+@section('style')
+  {{style('https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css')}}
 @endsection
 
 @section('content')
@@ -19,15 +23,6 @@
                   <div class="form-group col-sm-3" style="position: relative; top: -8px">
                     <input type="text" class="form-control" value="{{ txId }}" name="txId" placeholder="Transaction ID"/>
                   </div>
-                  <div class="form-group col-sm-5" style="position: relative; top: -8px">
-                    <input type="text" class="form-control" value="{{ loanId }}" name="loan_id" id="loan_id" placeholder="Loan ID">
-                  </div>
-                  <div class="form-group col-sm-3" style="position: relative; top: -8px">
-                    <input type="number" class="form-control" value="{{ loanAmountFrom }}" name="loanAmountFrom" id="loan_amount_from" placeholder="Loan Amount From">
-                  </div>
-                  <div class="form-group col-sm-3" style="position: relative; top: -8px">
-                    <input type="number" class="form-control" value="{{ loanAmountTo }}" name="loanAmountTo" id="loan_amount_from" placeholder="Loan Amount From">
-                  </div>
                   <div class="form-group col-sm-1" style="position: relative; top: -8px">
                     <button type="submit" class="btn btn-primary mb-2">Find</button>
                   </div>
@@ -43,41 +38,41 @@
                   <thead>
                     <tr role="row">
                       <th>#</th>
-                      <th>User</th>
-                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Amount</th>
                       <th>Transaction ID</th>
-                      <th>Data</th>
+                      <th>Status</th>
                       <th>Date Created</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                      @each(votingProposalDCB in votingProposalDCBs)
+                      @each(reserve in reserves)
                           <tr>
-                          <td scope="row">{{ votingProposalDCB.id }}</td>
+                          <td scope="row">
+                          <a href="{{ route('admin.reserve.show', { id: reserve.id }) }}">
+                          {{ reserve.id }}
+                          </a>
+                          </td>
                               <td class="text-truncate" style="max-width: 100px;">
-                                  <a href="{{ route('admin.user.show', { id : votingProposalDCB['$relations'].user.id }) }}">
+                                  <a href="{{ route('admin.user.show', { id : reserve['$relations'].user.id }) }}">
                                   <span style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: inline-block;max-width: 100%;">
-                                  {{ votingProposalDCB['$relations'].user.email }}
+                                  {{ reserve['$relations'].user.email }}
                                   </span>
                                   </a>
                               </td>
-                              <td class="text-truncate" style="max-width: 100px;">{{ votingProposalDCB.name }}</td>
+                              <td>{{ reserve.amount / 100 }} USD</td>
                               <td class="text-truncate" style="max-width: 150px;">
-                                <a href="https://test-explorer-constant-chain.constant.money/{{ votingProposalDCB.tx_id }} target="_blank">
+                                <a href="https://test-explorer-constant-chain.constant.money/{{ reserve.tx_hash }} target="_blank">
                                 <span style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;display: inline-block;max-width: 100%;">
-                                {{ votingProposalDCB.tx_id }}
+                                {{ reserve.tx_hash }}
                                 </span>
                                 </a>
                               </td>
-                              <td>{{ votingProposalDCB.beautifulData }}</td>
+                              <td>{{ reserve.statusStr }}</td>
                               <td>{{moment(user.created_at).format("DD-MM-YYYY HH:mm:ss")}}</td>
-                              <td class="text-truncate" style="max-width: 30px;">
-                                  @if(votingProposalDCB.vote_count == 0)
-                                  Voters ({{votingProposalDCB.vote_count}})
-                                  @else
-                                  <a href="{{ route('admin.proposal.dcbvoterindex', { id: votingProposalDCB.id }) }}">Voters ({{votingProposalDCB.vote_count}})</a>
-                                  @endif
+                              <td>
+                                <button class="btn btn-info" onclick="location.href='/admin/reserve/{{ reserve.id }}'">View details</button>
                               </td>
                           </tr>
                       @endeach
@@ -87,7 +82,7 @@
             </div>
             <div class="row">
               <div class="col-sm-7">
-                @!component('admin.components.pagination', urlPrefix=(route('admin.proposal.dcbindex', { id: id }) + '?email=' + email + '&'), page=page, lastPage=lastPage, perPage=perPage)
+                @!component('admin.components.pagination', urlPrefix=(route('admin.reserve.index') + '?email=' + email + '&type=' + type + '&txId=' + txId + '&'), page=page, lastPage=lastPage, perPage=perPage)
               </div>
             </div>
           </div>
@@ -95,5 +90,28 @@
       </div>
     </div>
   </div>
+@endsection
+@section('suffix_script')
+<script>
+    // $(document).ready(function(){
+    //     $("#email").on("keyup", function() {
+    //         $("#form" ).submit();
+    //     });
+    // });
+</script>
+
+@section('script')
+  {{ script('https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js') }}
+  <script>
+      $('#from_date').datepicker({
+          uiLibrary: 'bootstrap4',
+          format: 'dd-mm-yyyy',
+      });
+      $('#to_date').datepicker({
+          uiLibrary: 'bootstrap4',
+          format: 'dd-mm-yyyy',
+      });
+  </script>
+@endsection
 @endsection
 

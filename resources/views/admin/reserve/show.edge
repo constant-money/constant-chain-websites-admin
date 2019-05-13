@@ -1,0 +1,57 @@
+@layout('template.admin-master')
+@section('content_header')
+Reserve #{{ id }}
+@endsection
+@section('content')
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box box-info">
+      <div class="box-body">
+        <div class="row" style="margin-top: 15px">
+          <div class="col-sm-12">
+            <form role="form">
+              <div class="box-body">
+                <div class="row">
+                  <div class="form-group col-xs-3">
+                    <label>Type</label>
+                    <input type="text" class="form-control" disabled value={{ reserve.reserveTypeStr }}>
+                  </div>
+                  <div class="form-group col-xs-3">
+                    <label>Amount</label>
+                    <input type="text" class="form-control" disabled value="{{ reserve.amount / 100 }} USD">
+                  </div>
+                  <div class="form-group col-xs-3">
+                    <label>Status</label>
+                    <input type="text" class="form-control" disabled value={{ reserve.statusStr }}>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-xs-6">
+                    <label>Transaction ID</label>
+                    <input type="text" class="form-control" disabled value={{ reserve.tx_hash }}>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-xs-12">
+                    <label>Primetrust request data</label>
+                    <textarea class="form-control" rows="15" disabled>{{ reserve.beautifulExtRequest }}</textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-xs-12">
+                    <label>Primetrust response data</label>
+                    <textarea class="form-control" rows="15" disabled>{{ reserve.beautifulExtResponse }}</textarea>
+                  </div>
+                </div>
+                <div class="row">
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
+

@@ -8,6 +8,7 @@ Proposal GOV
 @endsection
 
 @section('content')
+  <div class="row">
     <div class="col-xs-12">
       <div class="box box-info">
         <div class="box-body">
@@ -67,7 +68,9 @@ Proposal GOV
                                 </span>
                                 </a>
                               </td>
-                              <td>{{ votingProposalGOV.beautifulData }}</td>
+                              <td style="max-width: 220px">
+                              <textarea class="form-control" rows="12" cols="35" disabled>{{ votingProposalGOV.beautifulData }}</textarea>
+                              </td>
                               <td>{{moment(user.created_at).format("DD-MM-YYYY HH:mm:ss")}}</td>
                               <td class="text-truncate" style="max-width: 30px;">
                                   @if(votingProposalGOV.vote_count == 0)
@@ -91,6 +94,7 @@ Proposal GOV
         </div>
       </div>
     </div>
+  </div>
 @endsection
 @section('suffix_script')
 <script>

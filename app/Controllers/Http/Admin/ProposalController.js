@@ -35,7 +35,7 @@ class ProposalController {
       txId
     })
     votingProposalDCBs.rows.forEach(function (v) {
-      v.beautifulData = JSON.stringify(JSON.parse(v.data), undefined, 2)
+      v.beautifulData = JSON.stringify(JSON.parse(v.data), null, '\t')
     })
     return view.render('admin/proposal/dcb/index', {
       email,
@@ -70,7 +70,7 @@ class ProposalController {
       txId
     })
     votingProposalGOVs.rows.forEach(function (v) {
-      v.beautifulData = JSON.stringify(JSON.parse(v.data), undefined, 2)
+      v.beautifulData = JSON.stringify(JSON.parse(v.data), null, '\t')
     })
     return view.render('admin/proposal/gov/index', {
       email,

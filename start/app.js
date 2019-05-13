@@ -1,6 +1,6 @@
 'use strict'
 
-const path = require("path");
+const path = require('path')
 
 /*
 |--------------------------------------------------------------------------
@@ -34,9 +34,7 @@ const providers = [
 | Providers for migrations, tests etc.
 |
 */
-const aceProviders = [
-  '@adonisjs/lucid/providers/MigrationsProvider'
-]
+const aceProviders = ['@adonisjs/lucid/providers/MigrationsProvider']
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +59,7 @@ const aliases = {
   VotingProposalGOVModel: 'App/Models/VotingProposalGOV',
   VotingProposalDCBVoteModel: 'App/Models/VotingProposalDCBVote',
   VotingProposalGOVVoteModel: 'App/Models/VotingProposalGOVVote',
+  ReserveModel: 'App/Models/Reserve',
   // services
   UserDAO: 'App/DAO/User',
   VotingBoardCandidateDAO: 'App/DAO/VotingBoardCandidate',
@@ -69,9 +68,10 @@ const aliases = {
   VotingProposalGOVDAO: 'App/DAO/VotingProposalGOV',
   VotingProposalDCBVoteDAO: 'App/DAO/VotingProposalDCBVote',
   VotingProposalGOVVoteDAO: 'App/DAO/VotingProposalGOVVote',
+  ReserveDAO: 'App/DAO/Reserve',
   // utils
   CommonUtils: 'App/Utilities/CommonUtils',
-  ConstantApi: 'App/Utilities/ConstantApi',
+  ConstantApi: 'App/Utilities/ConstantApi'
 }
 
 /*
@@ -82,8 +82,6 @@ const aliases = {
 | Here you store ace commands for your package
 |
 */
-const commands = [
-  'App/Commands/Permission',
-]
+const commands = ['App/Commands/Permission']
 
 module.exports = { providers, aceProviders, aliases, commands }

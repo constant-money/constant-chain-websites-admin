@@ -14,7 +14,7 @@
     {{ style('https://use.fontawesome.com/releases/v5.8.1/css/all.css') }}
     {{ style('admin/css/adminlte/dist/css/AdminLTE.min.css') }}
     {{ style('admin/css/adminlte/dist/css/skins/_all-skins.min.css') }}
-    {{ style('admin/css/adminlte/dist/css/skins/_all-skins.min.css') }}
+    {{ style('admin/css/morris.css') }}
     {{ script('https://code.jquery.com/jquery-3.3.1.slim.min.js') }}
 
     @!section('style')
@@ -57,7 +57,7 @@
             </div>
           </div>
           <ul class="sidebar-menu tree" data-widget="tree">
-                <li class="treeview">
+                <li>
                   <a href="#">
                     <i class="fas fa fa-tachometer-alt"></i>
                     <span>Dashboard</span>
@@ -83,6 +83,33 @@
                       <a href="{{ route('admin.user.index') }}">
                         <i class="fa fas fa-edit"></i>
                         Users
+                      </a>
+                    </li>
+                  </ul>
+                  <!-- <a href="{{ route('admin.user.index') }}"> -->
+                  <!--   <i class="fas fa fa-users"></i> -->
+                  <!--   <span>Users</span> -->
+                  <!-- </a> -->
+                </li>
+                <li class="treeview">
+                  <a href="#">
+                    <i class="fa fas fa-users-cog"></i>
+                    <span>Reserves</span>
+                    <span class="pull-right-container">
+                      <i class="fas fa-angle-left pull-right"></i>
+                    </span>
+                  </a>
+                  <ul class="treeview-menu" style="display: none">
+                    <li>
+                      <a href="{{ route('admin.reserve.index') }}?type=purchase">
+                        <i class="fa fas fa-edit"></i>
+                        Purchase
+                      </a>
+                    </li>
+                    <li>
+                      <a href="{{ route('admin.reserve.index') }}?type=redeem">
+                        <i class="fa fas fa-edit"></i>
+                        Redeem
                       </a>
                     </li>
                   </ul>
@@ -183,9 +210,7 @@
           @!section('content_header')
         </section>
         <section class="content">
-          <div class="row">
-            @!section('content')
-          </div>
+          @!section('content')
         </section>
       </div>
     </div>
@@ -201,7 +226,12 @@
     {{ script('https://adminlte.io/themes/AdminLTE/bower_components/fastclick/lib/fastclick.js') }}
     {{ script('admin/js/icheck/icheck.min.js') }}
     {{ script('admin/js/adminlte/dist/adminlte.min.js') }}
+    {{ script('admin/js/raphael.min.js') }}
+    {{ script('admin/js/morris.min.js') }}
+    {{ script('admin/js/jquery-jvectormap-1.2.2.min.js') }}
+    {{ script('admin/js/jquery-jvectormap-world-mill-en.js') }}
     {{ script('admin/js/constant.js') }}
+    <!-- {{ script('admin/js/demo.js') }} -->
     @!section('script')
   </body>
 </html>
