@@ -1,5 +1,6 @@
 'use strict'
 
+const moment = require('moment')
 const ReserveDAO = use('ReserveDAO')
 
 class ReserveController {
@@ -112,6 +113,38 @@ class ReserveController {
     return view.render('admin/reserve/show', {
       id: id,
       reserve
+    })
+  }
+
+  async dashboard ({ request, view }) {
+    let { dateRange } = request.all()
+    const ranges = dateRange ? dateRange.split('-') : []
+    const fromDate =
+      ranges.length > 0
+        ? moment.utc(ranges[0].trim(), 'DD/MM/YYYY').format('YYYY-MM-DD')
+        : moment
+          .utc()
+          .subtract(7, 'days')
+          .format('YYYY-MM-DD')
+    const toDate =
+      ranges.length > 0
+        ? moment.utc(ranges[1].trim(), 'DD/MM/YYYY').format('YYYY-MM-DD')
+        : moment.utc().format('YYYY-MM-DD')
+
+    const stats = ReserveDAO.stats(fromDate, toDate)
+    const statsByDate = ReserveDAO.statsByDate(fromDate, toDate)
+    const data = await Promise.all([stats, statsByDate])
+
+    if (!dateRange) {
+      dateRange =
+        moment.utc(fromDate).format('DD/MM/YYYY') +
+        ' - ' +
+        moment.utc(toDate).format('DD/MM/YYYY')
+    }
+    return view.render('admin/reserve/dashboard', {
+      dateRange,
+      stats: data[0],
+      statsByDate: data[1]
     })
   }
 }

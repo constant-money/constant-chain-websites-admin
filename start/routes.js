@@ -108,6 +108,7 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('/', 'Admin/ReserveController.index')
+  Route.get('/dashboard', 'Admin/ReserveController.dashboard')
   Route.get('/:id', 'Admin/ReserveController.show')
 })
   .middleware('auth')

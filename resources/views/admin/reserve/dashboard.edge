@@ -1,0 +1,132 @@
+@layout('template.admin-master')
+@section('content_header')
+Dashboard
+@endsection
+
+@section('content')
+    <div class="row">
+      <div class="box-body">
+        <div class="row" style="margin-top: 15px">
+          <div class="col-sm-10">
+            <form role="form">
+              <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+              <div class="row">
+                <div class="form-group col-sm-4" style="position: relative; top: -8px">
+                  <div class="input-group">
+                    <div class="input-group-addon">
+                      <i class="fa fa-calendar"></i>
+                    </div>
+                    <input type="text" class="form-control" value="{{ dateRange }}" name="dateRange" placeholder="Choose date" id="dateRange"/>
+                  </div>
+                </div>
+                <div class="form-group col-sm-1" style="position: relative; top: -8px">
+                  <button type="submit" class="btn btn-primary mb-2">Find</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <section class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-6 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+              <div class="inner">
+                @if(stats.length)
+                <h3>{{ stats[0].total_reserves }}</h3>
+                @else
+                <h3>0</h3>
+                @endif
+
+                <p>Purchases</p>
+              </div>
+              <a href="/admin/reserve?type=purchase" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-6 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+              <div class="inner">
+                @if(stats.length)
+                <h3>{{ stats[0].total_reserves_amount }} USD</h3>
+                @else
+                <h3>0 USD</h3>
+                @endif
+
+                <p>Total Purchase Amount</p>
+              </div>
+              <a href="/admin/reserve?type=purchase" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="box box-solid">
+            <div class="box-header ui-sortable-handle" style="cursor: move;">
+              <i class="fa fa-th"></i>
+
+              <h3 class="box-title">Reserve Stats</h3>
+            </div>
+            <div class="box-body border-radius-none">
+              <div class="chart" id="reserveStats"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+      </section>
+      <section class="col-lg-6">
+        <div class="row">
+          <div class="col-lg-6 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+              <div class="inner">
+                @if(stats.length)
+                <h3>{{ stats[1].total_reserves_amount }}</h3>
+                @else
+                <h3>0</h3>
+                @endif
+
+                <p>Redeems</p>
+              </div>
+              <a href="/admin/reserve?type=redeem" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-6 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+              <div class="inner">
+                @if(stats.length)
+                <h3>{{ stats[1].total_reserves_amount }} USD</h3>
+                @else
+                <h3>0 USD</h3>
+                @endif
+
+                <p>Total Redeem Amount</p>
+              </div>
+              <a href="/admin/reserve?type=redeem" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="box box-solid">
+            <div class="box-header ui-sortable-handle" style="cursor: move;">
+              <i class="fa fa-th"></i>
+
+              <h3 class="box-title">Reserve Amount Stats</h3>
+            </div>
+            <div class="box-body border-radius-none">
+              <div class="chart" id="amountStats"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+      </section>
+    </div>
+@endsection
+@section('suffix_script')
+<script>
+    var stats = {{{ toJSON(stats) }}}
+    var statsByDate = {{{ toJSON(statsByDate) }}}
+    var dateRange = '{{ dateRange }}'
+</script>
+
+@endsection
+

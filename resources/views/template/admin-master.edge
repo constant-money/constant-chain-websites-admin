@@ -13,6 +13,8 @@
     {{ style('https://adminlte.io/themes/AdminLTE/plugins/iCheck/all.css') }}
     {{ style('https://use.fontawesome.com/releases/v5.8.1/css/all.css') }}
     {{ style('admin/css/adminlte/dist/css/AdminLTE.min.css') }}
+    {{ style('admin/css/daterangepicker.css') }}
+    {{ style('admin/css/bootstrap-datepicker.min.css') }}
     {{ style('admin/css/adminlte/dist/css/skins/_all-skins.min.css') }}
     {{ style('admin/css/morris.css') }}
     {{ script('https://code.jquery.com/jquery-3.3.1.slim.min.js') }}
@@ -100,6 +102,12 @@
                     </span>
                   </a>
                   <ul class="treeview-menu" style="display: none">
+                    <li>
+                      <a href="{{ route('admin.reserve.dashboard') }}">
+                        <i class="fa fas fa-edit"></i>
+                        Dashboard
+                      </a>
+                    </li>
                     <li>
                       <a href="{{ route('admin.reserve.index') }}?type=purchase">
                         <i class="fa fas fa-edit"></i>
@@ -230,6 +238,9 @@
     {{ script('admin/js/morris.min.js') }}
     {{ script('admin/js/jquery-jvectormap-1.2.2.min.js') }}
     {{ script('admin/js/jquery-jvectormap-world-mill-en.js') }}
+    {{ script('admin/js/moment.min.js') }}
+    {{ script('admin/js/daterangepicker.js') }}
+    {{ script('admin/js/bootstrap-daterangepicker.min.js') }}
     {{ script('admin/js/constant.js') }}
     <!-- {{ script('admin/js/demo.js') }} -->
     @!section('script')
