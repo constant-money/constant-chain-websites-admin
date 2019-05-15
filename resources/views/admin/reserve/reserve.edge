@@ -70,7 +70,7 @@ Reserve
                                 </a>
                               </td>
                               <td>{{ reserve.statusStr }}</td>
-                              <td>{{moment(user.created_at).format("DD-MM-YYYY HH:mm:ss")}}</td>
+                              <td>{{moment(reserve.created_at).format("DD-MM-YYYY HH:mm:ss")}}</td>
                               <td>
                                 <button class="btn btn-info" onclick="location.href='/admin/reserve/{{ reserve.id }}'">View details</button>
                               </td>

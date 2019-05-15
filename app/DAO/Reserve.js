@@ -58,6 +58,7 @@ class Reserve {
     if (status) {
       q = q.where('status', '=', status)
     }
+    q.orderBy('created_at', 'desc')
     return await q.paginate(page, perPage)
   }
 
