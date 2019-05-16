@@ -117,7 +117,7 @@ class ReserveController {
   }
 
   async dashboard ({ request, view }) {
-    let { dateRange } = request.all()
+    let { dateRange, userId } = request.all()
     const ranges = dateRange ? dateRange.split('-') : []
     const fromDate =
       ranges.length > 0
@@ -131,8 +131,8 @@ class ReserveController {
         ? moment.utc(ranges[1].trim(), 'DD/MM/YYYY').format('YYYY-MM-DD')
         : moment.utc().format('YYYY-MM-DD')
 
-    const stats = ReserveDAO.stats(fromDate, toDate)
-    const statsByDate = ReserveDAO.statsByDate(fromDate, toDate)
+    const stats = ReserveDAO.stats({ userId, fromDate, toDate })
+    const statsByDate = ReserveDAO.statsByDate({ userId, fromDate, toDate })
     const data = await Promise.all([stats, statsByDate])
 
     if (!dateRange) {
@@ -143,6 +143,7 @@ class ReserveController {
     }
     return view.render('admin/reserve/dashboard', {
       dateRange,
+      userId,
       stats: data[0],
       statsByDate: data[1]
     })

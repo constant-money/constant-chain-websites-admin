@@ -78,13 +78,15 @@ $(function () {
     $('#modal-info').modal('show')
   })
 
-  $('#dateRange').daterangepicker({
-    startDate: dateRange.split(' - ')[0],
-    endDate: dateRange.split(' - ')[1],
-    locale: {
-      format: 'DD/MM/YYYY'
-    }
-  })
+  if (typeof dateRange !== 'undefined') {
+    $('#dateRange').daterangepicker({
+      startDate: dateRange.split(' - ')[0],
+      endDate: dateRange.split(' - ')[1],
+      locale: {
+        format: 'DD/MM/YYYY'
+      }
+    })
+  }
 
   /* Morris.js Charts */
   // Sales chart
@@ -109,24 +111,27 @@ $(function () {
   //   lineColors: ['#a0d0e0', '#3c8dbc'],
   //   hideHover : 'auto'
   // });
-  new Morris.Area({
-    element: 'reserveStats',
-    resize: true,
-    data: statsByDate,
-    xkey: 'date',
-    ykeys: ['total_purchase', 'total_redeem'],
-    labels: ['Purchase', 'Redeem'],
-    lineColors: ['#a0d0e0', '#3c8dbc'],
-    hideHover: 'auto'
-  })
-  new Morris.Area({
-    element: 'amountStats',
-    resize: true,
-    data: statsByDate,
-    xkey: 'date',
-    ykeys: ['total_purchase_amount', 'total_redeem_amount'],
-    labels: ['Purchase', 'Redeem'],
-    lineColors: ['#a0d0e0', '#3c8dbc'],
-    hideHover: 'auto'
-  })
+
+  if (typeof statsByDate !== 'undefined') {
+    new Morris.Area({
+      element: 'reserveStats',
+      resize: true,
+      data: statsByDate,
+      xkey: 'date',
+      ykeys: ['total_purchase', 'total_redeem'],
+      labels: ['Purchase', 'Redeem'],
+      lineColors: ['#a0d0e0', '#3c8dbc'],
+      hideHover: 'auto'
+    })
+    new Morris.Area({
+      element: 'amountStats',
+      resize: true,
+      data: statsByDate,
+      xkey: 'date',
+      ykeys: ['total_purchase_amount', 'total_redeem_amount'],
+      labels: ['Purchase', 'Redeem'],
+      lineColors: ['#a0d0e0', '#3c8dbc'],
+      hideHover: 'auto'
+    })
+  }
 })

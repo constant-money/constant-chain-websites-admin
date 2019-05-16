@@ -1,5 +1,6 @@
 'use strict'
 
+const Database = use('Database')
 const VotingBoardCandidateModel = use('VotingBoardCandidateModel')
 
 class VotingBoardCandidate {
@@ -59,6 +60,29 @@ class VotingBoardCandidate {
 
     q.orderBy('vote_count', 'desc')
     return await q.paginate(page, perPage)
+  }
+
+  async totalCandidates () {
+    try {
+      const data = await Database.raw(
+        `
+        select sub1.total as total_dcb, sub2.total as total_gov from
+        (
+          select count(*) as total from voting_board_candidate
+          where dcb != ''
+        ) sub1
+        join
+        (
+          select count(*) as total from voting_board_candidate
+          where gov != ''
+        ) sub2
+        `
+      )
+      return data[0]
+    } catch (e) {
+      console.log(e)
+      return []
+    }
   }
 }
 

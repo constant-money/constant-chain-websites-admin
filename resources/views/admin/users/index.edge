@@ -62,6 +62,7 @@
                               <td>{{moment(user.created_at).format("DD-MM-YYYY")}}</td>
                               <td>
                                 <button class="btn btn-info viewKeys" data-user-id={{ user.id }} data-user-pm={{ user.payment_address }} data-user-pubkey={{ user.pubkey }} data-user-privkey={{ user.priv_key }}>View keys</button>
+                                <button class="btn btn-info" onclick="location.href = '/admin/reserve/dashboard?userId=' + {{  user.id }}">Reserve stats</button>
                                 @if(user.is_active == 1)
                                   <button class="btn btn-danger acde deactiveUser" data-user-id={{ user.id }}>Deactive</button>
                                 @else

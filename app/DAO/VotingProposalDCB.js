@@ -42,6 +42,10 @@ class VotingProposalDCB {
     }
     return await q.paginate(page, perPage)
   }
+
+  async totalDCBProposals () {
+    return await VotingProposalDCBModel.query().count('id as total')
+  }
 }
 
 module.exports = new VotingProposalDCB()

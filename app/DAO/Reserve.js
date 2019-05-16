@@ -52,7 +52,7 @@ class Reserve {
       q.whereExists(function () {
         this.from('users')
           .whereRaw('users.id = reserves.user_id')
-          .where('users.email', 'like', '%' + email + '%')
+          .where('users.email', '=', email)
       })
     }
     if (status) {
@@ -62,16 +62,20 @@ class Reserve {
     return await q.paginate(page, perPage)
   }
 
-  async stats (fromDate, toDate) {
+  async stats ({ userId = 0, fromDate, toDate }) {
     try {
-      const data = await Database.raw(
-        `select reserve_type, count(reserve_type) as total_reserves, sum(amount) / 100 as total_reserves_amount
+      let query = `
+        select reserve_type, count(reserve_type) as total_reserves, sum(amount) / 100 as total_reserves_amount
          from reserves
-         where created_at between ? and ?
-         group by reserve_type
-        `,
-        [fromDate, toDate]
-      )
+         where created_at >= ? and created_at <= ?`
+      const params = [fromDate, toDate]
+      if (userId) {
+        query += ' and user_id = ?'
+        params.push(userId)
+      }
+      query += ' group by reserve_type'
+
+      const data = await Database.raw(query, params)
       return data[0]
     } catch (e) {
       console.log(e)
@@ -79,8 +83,28 @@ class Reserve {
     }
   }
 
-  async statsByDate (fromDate, toDate) {
+  async statsByDate ({ userId, fromDate, toDate }) {
     try {
+      let r1 = `
+      select count(*) as total, sum(amount) as amount, date(created_at) as d
+      from reserves
+      where reserve_type = 0
+      `
+      if (userId) {
+        r1 += ` and user_id = ${userId}`
+      }
+      r1 += ' group by date(created_at)'
+
+      let r2 = `
+      select count(*) as total, sum(amount) as amount, date(created_at) as d
+      from reserves
+      where reserve_type = 1
+      `
+      if (userId) {
+        r2 += ` and user_id = ${userId}`
+      }
+      r2 += ' group by date(created_at)'
+
       const data = await Database.raw(
         `
         select sub1.date, coalesce(r1.total, 0) as total_purchase, coalesce(r1.amount / 100, 0) as total_purchase_amount, coalesce(r2.total, 0) as total_redeem, coalesce(r2.amount / 100,0) as total_redeem_amount
@@ -94,19 +118,9 @@ select * from
  (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
 where date between ? and ?
 ) sub1
-left outer join (
-	select count(*) as total, sum(amount) as amount, date(created_at) as d
-	from reserves
-	where reserve_type = 0
-	group by date(created_at)
-) r1
+left outer join ( ${r1} ) r1
 on sub1.date = r1.d
-left outer join (
-	select count(*) as total, sum(amount) as amount, date(created_at) as d
-	from reserves
-	where reserve_type = 1
-	group by date(created_at)
-) r2
+left outer join ( ${r2} ) r2
 on sub1.date = r2.d
 order by sub1.date asc
         `,

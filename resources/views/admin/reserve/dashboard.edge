@@ -9,13 +9,13 @@ Dashboard
         <div class="row" style="margin-top: 15px">
           <div class="col-sm-10">
             <form role="form">
-              <input type="hidden" name="_csrf" value="{{ csrfToken }}">
               <div class="row">
                 <div class="form-group col-sm-4" style="position: relative; top: -8px">
                   <div class="input-group">
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
+                    <input type="hidden" class="form-control" value="{{ userId }}" name="userId" />
                     <input type="text" class="form-control" value="{{ dateRange }}" name="dateRange" placeholder="Choose date" id="dateRange"/>
                   </div>
                 </div>
@@ -35,7 +35,7 @@ Dashboard
             <!-- small box -->
             <div class="small-box bg-aqua">
               <div class="inner">
-                @if(stats.length)
+                @if(stats.length && stats[0].reserve_type === 0)
                 <h3>{{ stats[0].total_reserves }}</h3>
                 @else
                 <h3>0</h3>
@@ -50,7 +50,7 @@ Dashboard
             <!-- small box -->
             <div class="small-box bg-green">
               <div class="inner">
-                @if(stats.length)
+                @if(stats.length && stats[0].reserve_type === 0)
                 <h3>{{ stats[0].total_reserves_amount }} USD</h3>
                 @else
                 <h3>0 USD</h3>
@@ -81,7 +81,11 @@ Dashboard
             <div class="small-box bg-yellow">
               <div class="inner">
                 @if(stats.length)
-                <h3>{{ stats[1].total_reserves_amount }}</h3>
+                  @if(stats[0].reserve_type === 1)
+                    <h3>{{ stats[0].total_reserves }}</h3>
+                  @else
+                    <h3>{{ stats[1].total_reserves }}</h3>
+                  @endif
                 @else
                 <h3>0</h3>
                 @endif
@@ -96,7 +100,11 @@ Dashboard
             <div class="small-box bg-red">
               <div class="inner">
                 @if(stats.length)
-                <h3>{{ stats[1].total_reserves_amount }} USD</h3>
+                  @if(stats[0].reserve_type === 1)
+                    <h3>{{ stats[0].total_reserves_amount }} USD</h3>
+                  @else
+                    <h3>{{ stats[1].total_reserves_amount }} USD</h3>
+                  @endif
                 @else
                 <h3>0 USD</h3>
                 @endif
@@ -124,6 +132,7 @@ Dashboard
 @section('suffix_script')
 <script>
     var stats = {{{ toJSON(stats) }}}
+    console.log(stats)
     var statsByDate = {{{ toJSON(statsByDate) }}}
     var dateRange = '{{ dateRange }}'
 </script>

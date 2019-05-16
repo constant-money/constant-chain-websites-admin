@@ -41,6 +41,10 @@ class VotingProposalGOV {
     }
     return await q.paginate(page, perPage)
   }
+
+  async totalGOVProposals () {
+    return await VotingProposalGOVModel.query().count('id as total')
+  }
 }
 
 module.exports = new VotingProposalGOV()

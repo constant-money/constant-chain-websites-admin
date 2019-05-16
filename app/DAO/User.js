@@ -10,6 +10,10 @@ class User {
       .first()
   }
 
+  async totalUsers () {
+    return await UserModel.query().count('id as total')
+  }
+
   async find ({ email, paymentAddress, name, admin, page, perPage }) {
     let q = UserModel.query().whereNull('deleted_at')
     if (email != null && email != '') {
